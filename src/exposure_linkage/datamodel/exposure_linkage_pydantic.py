@@ -66,14 +66,25 @@ class LinkMLMeta(RootModel):
         return key in self.root
 
 
-linkml_meta = LinkMLMeta({'default_prefix': 'expo',
+linkml_meta = LinkMLMeta({'annotations': {'ga4gh_maturity': {'tag': 'ga4gh_maturity', 'value': 'Draft'},
+                     'ga4gh_product_type': {'tag': 'ga4gh_product_type',
+                                            'value': 'Data Model or Ontology'}},
+     'default_prefix': 'expo',
      'default_range': 'string',
      'description': 'Describes how an environmental exposure dataset was linked to '
-                    'cohort participants. One ExposureLinkageRecord = one exposure '
-                    'variable linked in one cohort. Converted from "Implementation '
-                    '1 - GA4GH Metadata Schema".',
+                    'cohort participants. One ExposureLinkageRecord describes one '
+                    'exposure variable linked in one cohort. Developed by the '
+                    'GA4GH Human Exposome Data Standards Study Group; converted '
+                    'from "Implementation 1 - GA4GH Metadata Schema".',
      'id': 'https://w3id.org/ga4gh/exposure-linkage',
      'imports': ['linkml:types'],
+     'in_language': 'en',
+     'keywords': ['exposome',
+                  'environmental exposure',
+                  'place-based exposure',
+                  'spatial linkage',
+                  'cohort metadata',
+                  'GA4GH'],
      'license': 'Apache-2.0',
      'name': 'exposure_linkage',
      'prefixes': {'CAS': {'prefix_prefix': 'CAS',
@@ -92,12 +103,18 @@ linkml_meta = LinkMLMeta({'default_prefix': 'expo',
                             'prefix_reference': 'https://orcid.org/'},
                   'PUBCHEM': {'prefix_prefix': 'PUBCHEM',
                               'prefix_reference': 'http://rdf.ncbi.nlm.nih.gov/pubchem/compound/CID'},
+                  'bibo': {'prefix_prefix': 'bibo',
+                           'prefix_reference': 'http://purl.org/ontology/bibo/'},
                   'expo': {'prefix_prefix': 'expo',
                            'prefix_reference': 'https://w3id.org/ga4gh/exposure-linkage/'},
                   'linkml': {'prefix_prefix': 'linkml',
                              'prefix_reference': 'https://w3id.org/linkml/'}},
+     'see_also': ['https://www.ga4gh.org/product/human-exposome-data-standards/',
+                  'https://doi.org/10.5281/zenodo.21877291',
+                  'https://github.com/ga4gh/GA4GH_PLACE_BASED_EXPOSURE_STANDARD'],
      'source_file': 'src/exposure_linkage/schema/exposure_linkage.yaml',
-     'title': 'GA4GH Environmental Exposure Linkage Metadata',
+     'status': 'bibo:draft',
+     'title': 'GA4GH Place-Based Exposure Metadata Schema',
      'types': {'CURIE': {'base': 'URIorCURIE',
                          'description': 'Compact identifier, e.g. INCHIKEY:..., '
                                         'ENVO:..., MESH:...',
