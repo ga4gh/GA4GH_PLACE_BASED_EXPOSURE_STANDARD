@@ -1,0 +1,17 @@
+# Changes here will be overwritten by Copier
+_commit: v0.5.0-10-gc213e4e
+_src_path: https://github.com/linkml/linkml-project-copier
+add_example: false
+copyright_year: '2026'
+email: TODO-contact@example.org
+existing_license_file: ''
+full_name: GA4GH Human Exposome Data Standards Study Group
+gh_action_docs_preview: true
+gh_action_pypi: false
+github_org: ga4gh
+license: Apache-2.0
+project_description: 'GA4GH Place-Based Exposure Metadata Standard: a LinkML schema
+    describing how environmental exposure datasets are linked to cohort participants.'
+project_name: exposure-linkage
+project_slug: exposure_linkage
+
