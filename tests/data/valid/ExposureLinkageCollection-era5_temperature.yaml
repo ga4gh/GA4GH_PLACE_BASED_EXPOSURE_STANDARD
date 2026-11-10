@@ -1,0 +1,49 @@
+# ILLUSTRATIVE ONLY - placeholder values, not a real cohort linkage.
+# Covers: REANALYSIS origin, GLOBAL scope, GRID_DEGREE resolution, an ongoing
+# dataset with last_updated, a URL citation with access date, and a quoted
+# "NO" country code (unquoted NO is read as boolean false by YAML 1.1).
+records:
+  - id: EBC-T2M-ERA5-EXAMPLE
+    cohort:
+      name: Example Birth Cohort
+      acronym: EBC
+      collection_countries: ["NO", SE]
+    exposure:
+      domain: CLIMATE_WEATHER
+      name: 2 m air temperature
+      unit: Cel
+      is_categorical: false
+    source_data:
+      origin: REANALYSIS
+      dataset_name: ERA5
+      dataset_version: "5"
+      citations:
+        - url: https://example.org/era5-documentation
+          accessed: "2025-01-15"
+          used_for_linkage: true
+      geographic_coverage:
+        scope: GLOBAL
+      spatial_resolution:
+        type: GRID_DEGREE
+        cell_width: 0.25
+        cell_height: 0.25
+      temporal_coverage:
+        start: "1940-01"
+        ongoing: true
+        last_updated: "2025-01"
+      temporal_resolution: HOURLY
+      validation_reported: false
+      uncertainty:
+        type: NOT_AVAILABLE
+    linkage:
+      spatial_linkage_unit: GRID_CELL_CONTAINING_ADDRESS
+      operation: POINT_IN_POLYGON
+      geocoding_precision: STREET
+      geocoder: Example national address register 2019
+      aggregation: DAILY_MEAN
+      participant_coverage_pct: 99.5
+      coverage_unit: PARTICIPANTS
+      exposure_window: PRENATAL
+      exposure_window_detail: Each trimester reported separately.
+      residential_history: FULL_HISTORY
+      linkage_date: "2025-02-01"

@@ -1,0 +1,50 @@
+# ILLUSTRATIVE ONLY - placeholder values, not a real cohort linkage.
+# Covers: ADMINISTRATIVE_UNIT resolution, an ISO 3166-2 subdivision code,
+# PERIODIC_UPDATE with update_frequency, POSTCODE_CENTROID with
+# POPULATION_WEIGHTED weighting and its population dataset, and MIXED
+# geocoding precision with a breakdown.
+records:
+  - id: ECS-IMD-POSTCODE-EXAMPLE
+    cohort:
+      name: Example Cohort Study
+      acronym: ECS
+      collection_countries: [GB]
+    exposure:
+      domain: SOCIODEMOGRAPHIC
+      name: Area deprivation index
+      unit: "1"
+    source_data:
+      origin: ADMINISTRATIVE_RECORD
+      dataset_name: Example deprivation index
+      dataset_version: "2019"
+      citations:
+        - url: https://example.org/deprivation-index
+          accessed: "2024-11-01"
+          used_for_linkage: true
+      geographic_coverage:
+        scope: COUNTRIES_OR_REGIONS
+        regions: [GB-ENG]
+        description: England only
+      spatial_resolution:
+        type: ADMINISTRATIVE_UNIT
+        admin_unit_name: LSOA
+        admin_unit_approx_population: 1500
+      temporal_coverage:
+        start: "2019"
+        end: "2019"
+      temporal_resolution: PERIODIC_UPDATE
+      update_frequency: P4Y
+    linkage:
+      spatial_linkage_unit: POSTCODE_CENTROID
+      centroid_weighting: POPULATION_WEIGHTED
+      centroid_areal_unit: postcode unit
+      population_dataset: Example census 2011 population counts
+      operation: ADMINISTRATIVE_ASSIGNMENT
+      geocoding_precision: MIXED
+      geocoding_mixed_breakdown: 80% postcode centroid, 20% census unit centroid
+      aggregation: COMPOSITE_INDEX
+      participant_coverage_pct: 100
+      coverage_unit: PARTICIPANTS
+      exposure_window: YEAR_BEFORE_RECRUITMENT
+      residential_history: BASELINE_ONLY
+      linkage_date: "2022-09-30"

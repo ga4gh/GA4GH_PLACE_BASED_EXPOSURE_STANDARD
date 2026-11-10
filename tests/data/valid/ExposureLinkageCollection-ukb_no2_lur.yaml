@@ -1,0 +1,61 @@
+# ILLUSTRATIVE ONLY - values are placeholders, not real UKB/ELAPSE figures.
+# Covers: GRID_METRIC resolution, CIRCULAR_BUFFER with several radii,
+# geocoded address linkage, validation metrics with and without units.
+records:
+  - id: UKB-NO2-LUR-EXAMPLE
+    cohort:
+      name: UK Biobank
+      acronym: UKB
+      collection_countries: [GB]
+    exposure:
+      domain: AIR_POLLUTION
+      name: NO2
+      ontology_terms:
+        - PUBCHEM:3032552
+      unit: ug/m3
+    source_data:
+      origin: LAND_USE_REGRESSION
+      dataset_name: Example LUR model
+      dataset_version: "2.0"
+      citations:
+        - doi: 10.1234/example.lur
+          used_for_linkage: true
+      geographic_coverage:
+        scope: COUNTRIES_OR_REGIONS
+        regions: [GB]
+        description: UK-wide
+      spatial_resolution:
+        type: GRID_METRIC
+        cell_width: 100
+        cell_height: 100
+      temporal_coverage:
+        start: "2010"
+        end: "2010"
+      temporal_resolution: ANNUAL
+      validation_reported: true
+      validation_metrics:
+        - metric: R2
+          validation_design: LOOCV_SPATIAL
+          value: 0.6
+        - metric: RMSE
+          validation_design: LOOCV_SPATIAL
+          value: 5.0
+          unit: ug/m3
+      uncertainty:
+        type: MODEL_LEVEL_RMSE_ONLY
+    linkage:
+      spatial_linkage_unit: GEOCODED_ADDRESS
+      operation: CIRCULAR_BUFFER
+      buffer_radii_m: [100, 300, 1000]
+      geocoding_precision: BUILDING
+      geocoder: Example geocoder 2020-03
+      aggregation: MEAN_WITHIN_BUFFER
+      participant_coverage_pct: 97
+      coverage_unit: PARTICIPANTS
+      exposure_window: YEAR_BEFORE_RECRUITMENT
+      residential_history: BASELINE_ONLY
+      linkage_date: "2021-06-01"
+    creators:
+      - name: Jane Example
+        email: jane@example.org
+        role: senior investigator

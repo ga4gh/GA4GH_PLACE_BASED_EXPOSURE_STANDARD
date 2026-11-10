@@ -1,0 +1,84 @@
+# ILLUSTRATIVE ONLY - placeholder values, not a real cohort linkage.
+# Covers: two records in one file, EU27 scope, NETWORK_BUFFER with a mode,
+# MULTI_YEAR_MEAN with aggregation_n, "not validated" (empty metrics list),
+# and a relinkage after a geocoder update.
+records:
+  - id: EXC-NDVI-NET500-EXAMPLE
+    cohort:
+      name: Example Multi-Country Cohort
+      acronym: EXC
+      collection_countries: [NL, BE]
+    exposure:
+      domain: GREEN_SPACE
+      name: NDVI
+      unit: "1"
+    source_data:
+      origin: SATELLITE_DERIVED
+      dataset_name: Example NDVI composite
+      dataset_version: "006"
+      citations:
+        - doi: 10.1234/example.ndvi
+          used_for_linkage: true
+        - text: Example Author et al. (2020). Example NDVI methods paper.
+      geographic_coverage:
+        scope: EU27
+      spatial_resolution:
+        type: GRID_METRIC
+        cell_width: 250
+        cell_height: 250
+      temporal_coverage:
+        start: "2012"
+        end: "2016"
+      temporal_resolution: MONTHLY
+      validation_reported: false
+      validation_metrics: []
+    linkage:
+      spatial_linkage_unit: GEOCODED_ADDRESS
+      operation: NETWORK_BUFFER
+      network_mode: WALKING
+      network_distance_m: 500
+      geocoding_precision: BUILDING
+      geocoder: Example geocoder v3
+      aggregation: MULTI_YEAR_MEAN
+      aggregation_n: 5
+      participant_coverage_pct: 92
+      coverage_unit: PARTICIPANTS
+      study_area_coverage_pct: 100
+      exposure_window: N_YEARS_BEFORE_INDEX
+      exposure_window_years: 5
+      residential_history: BASELINE_ONLY
+      linkage_date: "2021-03-10"
+      relinkages:
+        - date: "2023-05-02"
+          reason: Geocoder updated to v4.
+  - id: EXC-NDVI-BUF300-EXAMPLE
+    cohort:
+      name: Example Multi-Country Cohort
+      acronym: EXC
+      collection_countries: [NL, BE]
+    exposure:
+      domain: GREEN_SPACE
+      name: NDVI
+      unit: "1"
+    source_data:
+      origin: SATELLITE_DERIVED
+      dataset_name: Example NDVI composite
+      dataset_version: "006"
+      citations:
+        - doi: 10.1234/example.ndvi
+          used_for_linkage: true
+      geographic_coverage:
+        scope: EU27
+      spatial_resolution:
+        type: GRID_METRIC
+        cell_width: 250
+        cell_height: 250
+      temporal_coverage:
+        start: "2012"
+        end: "2016"
+      temporal_resolution: MONTHLY
+    linkage:
+      spatial_linkage_unit: GEOCODED_ADDRESS
+      operation: CIRCULAR_BUFFER
+      buffer_radii_m: [300]
+      aggregation: MEAN_WITHIN_BUFFER

@@ -1,0 +1,4 @@
+# INVALID - derived from valid/ExposureLinkageCollection-minimal_core.yaml
+# with exactly one error: the collection has no records.
+# expected_error: 'records' is a required property
+{}
