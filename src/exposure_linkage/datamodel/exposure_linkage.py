@@ -70,8 +70,10 @@ INCHIKEY = CurieNamespace('INCHIKEY', 'https://identifiers.org/inchikey:')
 MESH = CurieNamespace('MESH', 'http://id.nlm.nih.gov/mesh/')
 ORCID = CurieNamespace('ORCID', 'https://orcid.org/')
 PUBCHEM = CurieNamespace('PUBCHEM', 'http://rdf.ncbi.nlm.nih.gov/pubchem/compound/CID')
+DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
 EXPO = CurieNamespace('expo', 'https://w3id.org/ga4gh/exposure-linkage/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
+SCHEMA = CurieNamespace('schema', 'http://schema.org/')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = EXPO
 
@@ -720,8 +722,8 @@ class Person(YAMLRoot):
     """
     _inherited_slots: ClassVar[list[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = EXPO["Person"]
-    class_class_curie: ClassVar[str] = "expo:Person"
+    class_class_uri: ClassVar[URIRef] = SCHEMA["Person"]
+    class_class_curie: ClassVar[str] = "schema:Person"
     class_name: ClassVar[str] = "Person"
     class_model_uri: ClassVar[URIRef] = EXPO.Person
 
@@ -1270,7 +1272,7 @@ class slots:
 slots.exposureLinkageCollection__records = Slot(uri=EXPO.records, name="exposureLinkageCollection__records", curie=EXPO.curie('records'),
                    model_uri=EXPO.exposureLinkageCollection__records, domain=None, range=Union[dict[Union[str, ExposureLinkageRecordId], Union[dict, ExposureLinkageRecord]], list[Union[dict, ExposureLinkageRecord]]])
 
-slots.exposureLinkageRecord__id = Slot(uri=EXPO.id, name="exposureLinkageRecord__id", curie=EXPO.curie('id'),
+slots.exposureLinkageRecord__id = Slot(uri=DCTERMS.identifier, name="exposureLinkageRecord__id", curie=DCTERMS.curie('identifier'),
                    model_uri=EXPO.exposureLinkageRecord__id, domain=None, range=URIRef)
 
 slots.exposureLinkageRecord__cohort = Slot(uri=EXPO.cohort, name="exposureLinkageRecord__cohort", curie=EXPO.curie('cohort'),
@@ -1285,10 +1287,10 @@ slots.exposureLinkageRecord__source_data = Slot(uri=EXPO.source_data, name="expo
 slots.exposureLinkageRecord__linkage = Slot(uri=EXPO.linkage, name="exposureLinkageRecord__linkage", curie=EXPO.curie('linkage'),
                    model_uri=EXPO.exposureLinkageRecord__linkage, domain=None, range=Union[dict, Linkage])
 
-slots.exposureLinkageRecord__creators = Slot(uri=EXPO.creators, name="exposureLinkageRecord__creators", curie=EXPO.curie('creators'),
+slots.exposureLinkageRecord__creators = Slot(uri=DCTERMS.creator, name="exposureLinkageRecord__creators", curie=DCTERMS.curie('creator'),
                    model_uri=EXPO.exposureLinkageRecord__creators, domain=None, range=Optional[Union[Union[dict, Person], list[Union[dict, Person]]]])
 
-slots.cohort__name = Slot(uri=EXPO.name, name="cohort__name", curie=EXPO.curie('name'),
+slots.cohort__name = Slot(uri=SCHEMA.name, name="cohort__name", curie=SCHEMA.curie('name'),
                    model_uri=EXPO.cohort__name, domain=None, range=str)
 
 slots.cohort__acronym = Slot(uri=EXPO.acronym, name="cohort__acronym", curie=EXPO.curie('acronym'),
@@ -1521,10 +1523,10 @@ slots.relinkage__date = Slot(uri=EXPO.date, name="relinkage__date", curie=EXPO.c
 slots.relinkage__reason = Slot(uri=EXPO.reason, name="relinkage__reason", curie=EXPO.curie('reason'),
                    model_uri=EXPO.relinkage__reason, domain=None, range=str)
 
-slots.person__name = Slot(uri=EXPO.name, name="person__name", curie=EXPO.curie('name'),
+slots.person__name = Slot(uri=SCHEMA.name, name="person__name", curie=SCHEMA.curie('name'),
                    model_uri=EXPO.person__name, domain=None, range=Optional[str])
 
-slots.person__email = Slot(uri=EXPO.email, name="person__email", curie=EXPO.curie('email'),
+slots.person__email = Slot(uri=SCHEMA.email, name="person__email", curie=SCHEMA.curie('email'),
                    model_uri=EXPO.person__email, domain=None, range=Optional[str],
                    pattern=re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$'))
 
