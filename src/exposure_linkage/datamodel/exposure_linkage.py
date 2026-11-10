@@ -78,7 +78,7 @@ DEFAULT_ = EXPO
 
 # Types
 class RegionCode(String):
-    """ ISO 3166-1 alpha-2 or ISO 3166-2 subdivision (e.g. US-NC). """
+    """ ISO 3166-1 alpha-2 country code, or ISO 3166-2 subdivision code (e.g. US-NC). """
     type_class_uri = XSD["string"]
     type_class_curie = "xsd:string"
     type_name = "RegionCode"
@@ -86,7 +86,7 @@ class RegionCode(String):
 
 
 class PartialDate(String):
-    """ ISO 8601 YYYY, YYYY-MM or YYYY-MM-DD. """
+    """ ISO 8601 calendar date at year, month or day precision (YYYY, YYYY-MM or YYYY-MM-DD). """
     type_class_uri = XSD["string"]
     type_class_curie = "xsd:string"
     type_name = "PartialDate"
@@ -94,7 +94,7 @@ class PartialDate(String):
 
 
 class CURIE(Uriorcurie):
-    """ Compact identifier, e.g. INCHIKEY:..., ENVO:..., MESH:... """
+    """ Compact identifier using a prefix declared in this schema, e.g. INCHIKEY:..., ENVO:..., MESH:... """
     type_class_uri = XSD["anyURI"]
     type_class_curie = "xsd:anyURI"
     type_name = "CURIE"
@@ -102,7 +102,7 @@ class CURIE(Uriorcurie):
 
 
 class UcumCode(String):
-    """ UCUM case-sensitive code, e.g. ug/m3, ng/m3, [ppb], [ppm], Cel, mm, m/s, W/m2, /km2, %, 1 (dimensionless index). dB(A) has no UCUM code - use "dB" with weighting recorded in exposure_variable. """
+    """ UCUM case-sensitive code, e.g. ug/m3, ng/m3, [ppb], [ppm], Cel, mm, m/s, W/m2, /km2, %, 1 (dimensionless index). dB(A) has no UCUM code - use "dB" and record the weighting in the exposure variable name. """
     type_class_uri = XSD["string"]
     type_class_curie = "xsd:string"
     type_name = "UcumCode"
@@ -117,7 +117,7 @@ class ExposureLinkageRecordId(extended_str):
 @dataclass(repr=False)
 class ExposureLinkageCollection(YAMLRoot):
     """
-    Container so one file can hold many records.
+    Container so that one file can hold many exposure linkage records.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -139,7 +139,7 @@ class ExposureLinkageCollection(YAMLRoot):
 @dataclass(repr=False)
 class ExposureLinkageRecord(YAMLRoot):
     """
-    One exposure variable linked to one cohort.
+    One exposure variable linked to the participants of one cohort.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -191,7 +191,8 @@ class ExposureLinkageRecord(YAMLRoot):
 @dataclass(repr=False)
 class Cohort(YAMLRoot):
     """
-    CSV: Cohort / Study Name; Country of Participant Data Collection
+    The cohort or study whose participants were linked. Replaces the CSV fields "Cohort / Study Name" and "Country of
+    Participant Data Collection".
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -227,7 +228,8 @@ class Cohort(YAMLRoot):
 @dataclass(repr=False)
 class ExposureVariable(YAMLRoot):
     """
-    CSV: Exposure Domain; Exposure Variable Name; Ontology Term ID; Unit
+    The environmental exposure that was linked. Replaces the CSV fields "Exposure Domain", "Exposure Variable Name",
+    "Ontology / Taxonomy Term ID" and "Unit of Measure".
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -273,7 +275,7 @@ class ExposureVariable(YAMLRoot):
 @dataclass(repr=False)
 class SourceDataset(YAMLRoot):
     """
-    The upstream exposure product (model, satellite, monitors...).
+    The upstream exposure product (model, satellite product, monitoring network, ...).
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -353,6 +355,9 @@ class SourceDataset(YAMLRoot):
 
 @dataclass(repr=False)
 class Citation(YAMLRoot):
+    """
+    A reference to the source data or its documentation. At least one of doi, url or text is required.
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["Citation"]
@@ -387,6 +392,9 @@ class Citation(YAMLRoot):
 
 @dataclass(repr=False)
 class GeographicCoverage(YAMLRoot):
+    """
+    Area covered by a source dataset.
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["GeographicCoverage"]
@@ -416,6 +424,9 @@ class GeographicCoverage(YAMLRoot):
 
 @dataclass(repr=False)
 class SpatialResolution(YAMLRoot):
+    """
+    Spatial resolution of a source dataset, as numbers rather than strings such as "100 m x 100 m".
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["SpatialResolution"]
@@ -452,6 +463,9 @@ class SpatialResolution(YAMLRoot):
 
 @dataclass(repr=False)
 class TemporalCoverage(YAMLRoot):
+    """
+    Period covered by a source dataset.
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["TemporalCoverage"]
@@ -484,6 +498,9 @@ class TemporalCoverage(YAMLRoot):
 
 @dataclass(repr=False)
 class ValidationMetric(YAMLRoot):
+    """
+    One reported validation metric of a source dataset.
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["ValidationMetric"]
@@ -518,6 +535,9 @@ class ValidationMetric(YAMLRoot):
 
 @dataclass(repr=False)
 class Uncertainty(YAMLRoot):
+    """
+    Uncertainty information for a source dataset.
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["Uncertainty"]
@@ -689,6 +709,9 @@ class Linkage(YAMLRoot):
 
 @dataclass(repr=False)
 class Relinkage(YAMLRoot):
+    """
+    A later re-run of a linkage.
+    """
     _inherited_slots: ClassVar[list[str]] = []
 
     class_class_uri: ClassVar[URIRef] = EXPO["Relinkage"]
@@ -716,7 +739,7 @@ class Relinkage(YAMLRoot):
 @dataclass(repr=False)
 class Person(YAMLRoot):
     """
-    CSV: Creator(s)
+    A creator of the linkage. Replaces the CSV field "Creator(s)".
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -1007,7 +1030,9 @@ class CountryCodeEnum(EnumDefinitionImpl):
     )
 
 class ExposureDomainEnum(EnumDefinitionImpl):
-
+    """
+    Broad domain of an environmental exposure.
+    """
     AIR_POLLUTION = PermissibleValue(text="AIR_POLLUTION")
     CLIMATE_WEATHER = PermissibleValue(text="CLIMATE_WEATHER")
     GREEN_SPACE = PermissibleValue(text="GREEN_SPACE")
@@ -1019,14 +1044,19 @@ class ExposureDomainEnum(EnumDefinitionImpl):
     LIGHT_POLLUTION = PermissibleValue(text="LIGHT_POLLUTION")
     BIODIVERSITY = PermissibleValue(text="BIODIVERSITY")
     INDOOR_HOME_ENVIRONMENT = PermissibleValue(text="INDOOR_HOME_ENVIRONMENT")
-    OTHER = PermissibleValue(text="OTHER")
+    OTHER = PermissibleValue(
+        text="OTHER",
+        description="Any other domain; give it in domain_other.")
 
     _defn = EnumDefinition(
         name="ExposureDomainEnum",
+        description="Broad domain of an environmental exposure.",
     )
 
 class DataOriginEnum(EnumDefinitionImpl):
-
+    """
+    How the source exposure data were produced.
+    """
     MONITORING_STATION = PermissibleValue(text="MONITORING_STATION")
     LAND_USE_REGRESSION = PermissibleValue(text="LAND_USE_REGRESSION")
     CHEMICAL_TRANSPORT_MODEL = PermissibleValue(text="CHEMICAL_TRANSPORT_MODEL")
@@ -1036,37 +1066,62 @@ class DataOriginEnum(EnumDefinitionImpl):
     ADMINISTRATIVE_RECORD = PermissibleValue(text="ADMINISTRATIVE_RECORD")
     REANALYSIS = PermissibleValue(
         text="REANALYSIS",
-        description="Added - ERA5-type products were otherwise unclassifiable.")
+        description="Reanalysis products such as ERA5. Added because they were otherwise unclassifiable.")
     OTHER = PermissibleValue(text="OTHER")
 
     _defn = EnumDefinition(
         name="DataOriginEnum",
+        description="How the source exposure data were produced.",
     )
 
 class GeographicScopeEnum(EnumDefinitionImpl):
-
-    COUNTRIES_OR_REGIONS = PermissibleValue(text="COUNTRIES_OR_REGIONS")
-    EU27 = PermissibleValue(text="EU27")
-    GLOBAL = PermissibleValue(text="GLOBAL")
+    """
+    Kind of geographic coverage.
+    """
+    COUNTRIES_OR_REGIONS = PermissibleValue(
+        text="COUNTRIES_OR_REGIONS",
+        description="Listed countries or subdivisions; give them in regions.")
+    EU27 = PermissibleValue(
+        text="EU27",
+        description="The 27 EU member states.")
+    GLOBAL = PermissibleValue(
+        text="GLOBAL",
+        description="Worldwide coverage.")
 
     _defn = EnumDefinition(
         name="GeographicScopeEnum",
+        description="Kind of geographic coverage.",
     )
 
 class SpatialResolutionTypeEnum(EnumDefinitionImpl):
-
-    GRID_METRIC = PermissibleValue(text="GRID_METRIC")
-    GRID_DEGREE = PermissibleValue(text="GRID_DEGREE")
-    ADMINISTRATIVE_UNIT = PermissibleValue(text="ADMINISTRATIVE_UNIT")
-    POINT_ADDRESS = PermissibleValue(text="POINT_ADDRESS")
-    POINT_GPS = PermissibleValue(text="POINT_GPS")
+    """
+    Kind of spatial support of a source dataset.
+    """
+    GRID_METRIC = PermissibleValue(
+        text="GRID_METRIC",
+        description="Regular grid with cell size in metres.")
+    GRID_DEGREE = PermissibleValue(
+        text="GRID_DEGREE",
+        description="Regular grid with cell size in degrees.")
+    ADMINISTRATIVE_UNIT = PermissibleValue(
+        text="ADMINISTRATIVE_UNIT",
+        description="Values per administrative area.")
+    POINT_ADDRESS = PermissibleValue(
+        text="POINT_ADDRESS",
+        description="Values at address points.")
+    POINT_GPS = PermissibleValue(
+        text="POINT_GPS",
+        description="Values at GPS points.")
 
     _defn = EnumDefinition(
         name="SpatialResolutionTypeEnum",
+        description="Kind of spatial support of a source dataset.",
     )
 
 class TemporalResolutionEnum(EnumDefinitionImpl):
-
+    """
+    Temporal resolution of a source dataset.
+    """
     SUB_HOURLY = PermissibleValue(text="SUB_HOURLY")
     HOURLY = PermissibleValue(text="HOURLY")
     DAILY = PermissibleValue(text="DAILY")
@@ -1077,91 +1132,152 @@ class TemporalResolutionEnum(EnumDefinitionImpl):
     MULTI_YEAR_AVERAGE = PermissibleValue(text="MULTI_YEAR_AVERAGE")
     EVENT_BASED = PermissibleValue(text="EVENT_BASED")
     STATIC = PermissibleValue(text="STATIC")
-    PERIODIC_UPDATE = PermissibleValue(text="PERIODIC_UPDATE")
+    PERIODIC_UPDATE = PermissibleValue(
+        text="PERIODIC_UPDATE",
+        description="Static snapshots refreshed at an interval; give it in update_frequency.")
 
     _defn = EnumDefinition(
         name="TemporalResolutionEnum",
+        description="Temporal resolution of a source dataset.",
     )
 
 class ValidationMetricEnum(EnumDefinitionImpl):
-
-    R2 = PermissibleValue(text="R2")
-    RMSE = PermissibleValue(text="RMSE")
-    NRMSE_PCT = PermissibleValue(text="NRMSE_PCT")
-    MEAN_BIAS = PermissibleValue(text="MEAN_BIAS")
-    RELATIVE_BIAS_PCT = PermissibleValue(text="RELATIVE_BIAS_PCT")
-    PEARSON_R = PermissibleValue(text="PEARSON_R")
+    """
+    Validation statistic.
+    """
+    R2 = PermissibleValue(
+        text="R2",
+        description="Coefficient of determination.")
+    RMSE = PermissibleValue(
+        text="RMSE",
+        description="Root mean squared error.")
+    NRMSE_PCT = PermissibleValue(
+        text="NRMSE_PCT",
+        description="Normalised root mean squared error, in percent.")
+    MEAN_BIAS = PermissibleValue(
+        text="MEAN_BIAS",
+        description="Mean bias.")
+    RELATIVE_BIAS_PCT = PermissibleValue(
+        text="RELATIVE_BIAS_PCT",
+        description="Relative bias, in percent.")
+    PEARSON_R = PermissibleValue(
+        text="PEARSON_R",
+        description="Pearson correlation coefficient.")
 
     _defn = EnumDefinition(
         name="ValidationMetricEnum",
+        description="Validation statistic.",
     )
 
 class ValidationDesignEnum(EnumDefinitionImpl):
-
-    LOOCV_SPATIAL = PermissibleValue(text="LOOCV_SPATIAL")
-    INDEPENDENT_TEST_SET_SPATIAL = PermissibleValue(text="INDEPENDENT_TEST_SET_SPATIAL")
-    TEMPORAL = PermissibleValue(text="TEMPORAL")
-    OVERALL = PermissibleValue(text="OVERALL")
-    GROUND_MONITOR_COMPARISON = PermissibleValue(text="GROUND_MONITOR_COMPARISON")
+    """
+    How a validation was carried out.
+    """
+    LOOCV_SPATIAL = PermissibleValue(
+        text="LOOCV_SPATIAL",
+        description="Leave-one-out cross-validation over sites.")
+    INDEPENDENT_TEST_SET_SPATIAL = PermissibleValue(
+        text="INDEPENDENT_TEST_SET_SPATIAL",
+        description="Validation against held-out sites.")
+    TEMPORAL = PermissibleValue(
+        text="TEMPORAL",
+        description="Validation against held-out time periods.")
+    OVERALL = PermissibleValue(
+        text="OVERALL",
+        description="Validation reported without a stated design.")
+    GROUND_MONITOR_COMPARISON = PermissibleValue(
+        text="GROUND_MONITOR_COMPARISON",
+        description="Comparison against ground monitors.")
 
     _defn = EnumDefinition(
         name="ValidationDesignEnum",
+        description="How a validation was carried out.",
     )
 
 class UncertaintyTypeEnum(EnumDefinitionImpl):
-
+    """
+    Form in which uncertainty is available.
+    """
     NOT_AVAILABLE = PermissibleValue(text="NOT_AVAILABLE")
-    SD_PER_UNIT = PermissibleValue(text="SD_PER_UNIT")
-    PREDICTION_INTERVAL_95 = PermissibleValue(text="PREDICTION_INTERVAL_95")
+    SD_PER_UNIT = PermissibleValue(
+        text="SD_PER_UNIT",
+        description="Standard deviation per spatial unit.")
+    PREDICTION_INTERVAL_95 = PermissibleValue(
+        text="PREDICTION_INTERVAL_95",
+        description="95% prediction interval.")
     FULL_PREDICTIVE_DISTRIBUTION = PermissibleValue(text="FULL_PREDICTIVE_DISTRIBUTION")
-    MODEL_LEVEL_RMSE_ONLY = PermissibleValue(text="MODEL_LEVEL_RMSE_ONLY")
+    MODEL_LEVEL_RMSE_ONLY = PermissibleValue(
+        text="MODEL_LEVEL_RMSE_ONLY",
+        description="Only a model-level RMSE is available.")
 
     _defn = EnumDefinition(
         name="UncertaintyTypeEnum",
+        description="Form in which uncertainty is available.",
     )
 
 class SpatialLinkageUnitEnum(EnumDefinitionImpl):
-
+    """
+    Participant location used for the linkage.
+    """
     GEOCODED_ADDRESS = PermissibleValue(text="GEOCODED_ADDRESS")
     GPS_COORDINATE = PermissibleValue(text="GPS_COORDINATE")
     POSTCODE_CENTROID = PermissibleValue(text="POSTCODE_CENTROID")
     CENSUS_TRACT_CENTROID = PermissibleValue(text="CENSUS_TRACT_CENTROID")
-    LSOA_CENTROID = PermissibleValue(text="LSOA_CENTROID")
+    LSOA_CENTROID = PermissibleValue(
+        text="LSOA_CENTROID",
+        description="Centroid of a Lower Layer Super Output Area (England and Wales).")
     MUNICIPALITY_CENTROID = PermissibleValue(text="MUNICIPALITY_CENTROID")
     OTHER_AREAL_CENTROID = PermissibleValue(text="OTHER_AREAL_CENTROID")
     GRID_CELL_CONTAINING_ADDRESS = PermissibleValue(text="GRID_CELL_CONTAINING_ADDRESS")
 
     _defn = EnumDefinition(
         name="SpatialLinkageUnitEnum",
+        description="Participant location used for the linkage.",
     )
 
 class CentroidWeightingEnum(EnumDefinitionImpl):
-
+    """
+    How an areal centroid was computed.
+    """
     GEOMETRIC = PermissibleValue(text="GEOMETRIC")
-    POPULATION_WEIGHTED = PermissibleValue(text="POPULATION_WEIGHTED")
+    POPULATION_WEIGHTED = PermissibleValue(
+        text="POPULATION_WEIGHTED",
+        description="Population-weighted centroid; give the population dataset.")
     AREA_WEIGHTED = PermissibleValue(text="AREA_WEIGHTED")
 
     _defn = EnumDefinition(
         name="CentroidWeightingEnum",
+        description="How an areal centroid was computed.",
     )
 
 class LinkageOperationEnum(EnumDefinitionImpl):
-
+    """
+    GIS operation used to assign exposure values to locations.
+    """
     POINT_IN_POLYGON = PermissibleValue(text="POINT_IN_POLYGON")
-    CIRCULAR_BUFFER = PermissibleValue(text="CIRCULAR_BUFFER")
-    NETWORK_BUFFER = PermissibleValue(text="NETWORK_BUFFER")
+    CIRCULAR_BUFFER = PermissibleValue(
+        text="CIRCULAR_BUFFER",
+        description="Euclidean buffer; give the radii in buffer_radii_m.")
+    NETWORK_BUFFER = PermissibleValue(
+        text="NETWORK_BUFFER",
+        description="Street-network buffer; give network_mode.")
     NEAREST_FEATURE = PermissibleValue(text="NEAREST_FEATURE")
     AREAL_INTERPOLATION = PermissibleValue(text="AREAL_INTERPOLATION")
     INTERSECTION = PermissibleValue(text="INTERSECTION")
-    KERNEL_DENSITY_WEIGHTED = PermissibleValue(text="KERNEL_DENSITY_WEIGHTED")
+    KERNEL_DENSITY_WEIGHTED = PermissibleValue(
+        text="KERNEL_DENSITY_WEIGHTED",
+        description="Kernel-weighted surface; give kernel_bandwidth_m.")
     ADMINISTRATIVE_ASSIGNMENT = PermissibleValue(text="ADMINISTRATIVE_ASSIGNMENT")
 
     _defn = EnumDefinition(
         name="LinkageOperationEnum",
+        description="GIS operation used to assign exposure values to locations.",
     )
 
 class NetworkModeEnum(EnumDefinitionImpl):
-
+    """
+    Travel mode for a network buffer.
+    """
     WALKING = PermissibleValue(text="WALKING")
     CYCLING = PermissibleValue(text="CYCLING")
     DRIVING = PermissibleValue(text="DRIVING")
@@ -1169,10 +1285,13 @@ class NetworkModeEnum(EnumDefinitionImpl):
 
     _defn = EnumDefinition(
         name="NetworkModeEnum",
+        description="Travel mode for a network buffer.",
     )
 
 class GeocodingPrecisionEnum(EnumDefinitionImpl):
-
+    """
+    Precision of participant geocodes.
+    """
     BUILDING = PermissibleValue(
         text="BUILDING",
         description="< 5 m")
@@ -1188,15 +1307,20 @@ class GeocodingPrecisionEnum(EnumDefinitionImpl):
     CENSUS_UNIT_CENTROID = PermissibleValue(
         text="CENSUS_UNIT_CENTROID",
         description="> 500 m")
-    MIXED = PermissibleValue(text="MIXED")
+    MIXED = PermissibleValue(
+        text="MIXED",
+        description="Several levels; give the shares in geocoding_mixed_breakdown.")
     UNKNOWN = PermissibleValue(text="UNKNOWN")
 
     _defn = EnumDefinition(
         name="GeocodingPrecisionEnum",
+        description="Precision of participant geocodes.",
     )
 
 class AggregationEnum(EnumDefinitionImpl):
-
+    """
+    Summary statistic applied to exposure values.
+    """
     ANNUAL_MEAN = PermissibleValue(text="ANNUAL_MEAN")
     MONTHLY_MEAN = PermissibleValue(text="MONTHLY_MEAN")
     DAILY_MEAN = PermissibleValue(text="DAILY_MEAN")
@@ -1206,9 +1330,13 @@ class AggregationEnum(EnumDefinitionImpl):
     WARM_SEASON_MEAN = PermissibleValue(text="WARM_SEASON_MEAN")
     COLD_SEASON_MEAN = PermissibleValue(text="COLD_SEASON_MEAN")
     NIGHT_TIME_MEAN = PermissibleValue(text="NIGHT_TIME_MEAN")
-    MULTI_YEAR_MEAN = PermissibleValue(text="MULTI_YEAR_MEAN")
+    MULTI_YEAR_MEAN = PermissibleValue(
+        text="MULTI_YEAR_MEAN",
+        description="Mean over N years; give N in aggregation_n.")
     CUMULATIVE_SUM = PermissibleValue(text="CUMULATIVE_SUM")
-    PERCENTILE = PermissibleValue(text="PERCENTILE")
+    PERCENTILE = PermissibleValue(
+        text="PERCENTILE",
+        description="The Nth percentile; give N in aggregation_n.")
     PRESENCE_ABSENCE = PermissibleValue(text="PRESENCE_ABSENCE")
     DISTANCE_TO_NEAREST = PermissibleValue(text="DISTANCE_TO_NEAREST")
     COUNT_WITHIN_BUFFER = PermissibleValue(text="COUNT_WITHIN_BUFFER")
@@ -1220,10 +1348,13 @@ class AggregationEnum(EnumDefinitionImpl):
 
     _defn = EnumDefinition(
         name="AggregationEnum",
+        description="Summary statistic applied to exposure values.",
     )
 
 class CoverageUnitEnum(EnumDefinitionImpl):
-
+    """
+    Unit that a coverage percentage counts.
+    """
     PARTICIPANTS = PermissibleValue(text="PARTICIPANTS")
     HOUSEHOLDS = PermissibleValue(text="HOUSEHOLDS")
     CLINICAL_SITES = PermissibleValue(text="CLINICAL_SITES")
@@ -1232,12 +1363,17 @@ class CoverageUnitEnum(EnumDefinitionImpl):
 
     _defn = EnumDefinition(
         name="CoverageUnitEnum",
+        description="Unit that a coverage percentage counts.",
     )
 
 class ExposureWindowEnum(EnumDefinitionImpl):
-
+    """
+    Period of exposure that linked values represent.
+    """
     YEAR_BEFORE_RECRUITMENT = PermissibleValue(text="YEAR_BEFORE_RECRUITMENT")
-    N_YEARS_BEFORE_INDEX = PermissibleValue(text="N_YEARS_BEFORE_INDEX")
+    N_YEARS_BEFORE_INDEX = PermissibleValue(
+        text="N_YEARS_BEFORE_INDEX",
+        description="N years before an index date; give N in exposure_window_years.")
     PRENATAL = PermissibleValue(text="PRENATAL")
     PERICONCEPTION = PermissibleValue(text="PERICONCEPTION")
     INFANCY = PermissibleValue(text="INFANCY")
@@ -1249,10 +1385,13 @@ class ExposureWindowEnum(EnumDefinitionImpl):
 
     _defn = EnumDefinition(
         name="ExposureWindowEnum",
+        description="Period of exposure that linked values represent.",
     )
 
 class ResidentialHistoryEnum(EnumDefinitionImpl):
-
+    """
+    Extent to which residential moves were accounted for.
+    """
     BASELINE_ONLY = PermissibleValue(text="BASELINE_ONLY")
     FULL_HISTORY = PermissibleValue(text="FULL_HISTORY")
     PARTIAL_HISTORY = PermissibleValue(text="PARTIAL_HISTORY")
@@ -1261,6 +1400,7 @@ class ResidentialHistoryEnum(EnumDefinitionImpl):
 
     _defn = EnumDefinition(
         name="ResidentialHistoryEnum",
+        description="Extent to which residential moves were accounted for.",
     )
 
 # Slots

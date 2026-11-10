@@ -127,7 +127,7 @@ Submitting JSON avoids both.
 ```bash
 just install      # install dependencies
 just test         # schema generation, Python datamodel, conformance tests, example run
-just lint         # linkml-lint
+just lint         # linkml-lint (config in .linkmllint.yaml)
 just gen-project  # generate JSON Schema, OWL, SHACL, SQL, Java, TypeScript, ... into project/
 just testdoc      # build and serve the documentation site
 ```
