@@ -1,25 +1,47 @@
-# Repository for the GA4GH Human Exposome Data Standards Working Group 
+# GA4GH Place-Based Exposure Metadata Standard
 
-## Scope 
+Repository for the GA4GH Human Exposome Data Standards Working Group.
 
-Environmental exposures such as air pollution, diet, physical activity, and social stress can influence the onset of disease. These effects often accumulate slowly over time and can depend on multiple factors such as lifestyle, occupation, and living conditions. Currently, environmental data is captured in different ways by research groups internationally, making it hard to compare or combine this information. 
+## Scope
 
-[The Human Exposome Data Standards Study Group](https://www.ga4gh.org/product/human-exposome-data-standards/) is working to solve a big problem in global health research: there are not yet consistent, shared ways to describe how the environment affects human health — especially over long periods of time and across different populations. 
+Environmental exposures such as air pollution, diet, physical activity, and social stress can influence the onset of disease. These effects often accumulate slowly over time and can depend on multiple factors such as lifestyle, occupation, and living conditions. Currently, environmental data is captured in different ways by research groups internationally, making it hard to compare or combine this information.
+
+[The Human Exposome Data Standards Study Group](https://www.ga4gh.org/product/human-exposome-data-standards/) is working to solve a big problem in global health research: there are not yet consistent, shared ways to describe how the environment affects human health — especially over long periods of time and across different populations.
 
 ## Documentation
 
 Find out more about the aims of the Human Exposome Data Standards Group here: https://doi.org/10.5281/zenodo.21877291
 
-Documentation laying out how to implement the place-based exposure standard below are under development but will be in README format. 
+We are creating a machine-readable *Place-Based Exposures Metadata Schema*, written in
+[LinkML](https://linkml.io). Each **record** describes one exposure variable linked to one
+cohort. Generated schema documentation is published with the project website
+(`just testdoc` serves it locally).
 
-We are creating a machine-readable *Place-Based Exposures Metadata Schema*. Each
-**record** describes one exposure variable linked to one cohort. Find out more about the work in 
+## Repository layout
+
+```
+src/exposure_linkage/schema/exposure_linkage.yaml   # LinkML source - edit this file only
+src/exposure_linkage/datamodel/                     # generated Python datamodels (dataclasses, pydantic)
+tests/data/valid/                                   # examples that MUST pass validation
+tests/data/invalid/                                 # examples that MUST fail, one error each
+tests/data/problem/invalid/                         # rules stated in the schema, not yet enforced
+tests/test_data.py                                  # conformance tests over tests/data
+project/                                            # other generated artefacts (git-ignored)
+docs/                                               # mkdocs site; docs/elements is generated
+```
+
+Released artefacts (merged LinkML YAML and JSON Schema) are generated into `docs/schema/`
+by `just gen-doc` and published with the website.
 
 ## Place-based Exposures MetaData Schema (draft 0.1.0)
-This is the first version of the standard. The schema contains both *Core* and *Recommended* Elements. When appropriate, the schema advises on what existing ontologies are required. 
 
-| Field | Machine-readable form | Why | Info |
-|---|---|---|---|
+This is the first version of the standard (GA4GH maturity: *Draft*). The schema contains
+both *Core* and *Recommended* elements. When appropriate, the schema advises on what
+existing ontologies are required. Titles of schema elements keep the original spreadsheet
+field names, so each field below can be traced to the schema.
+
+| Field | Machine-readable form | Why |
+|---|---|---|
 | Cohort / Study Name | `cohort.name` + `cohort.acronym` | No parsing of "Name (ACR)" |
 | Country of data collection | `cohort.collection_countries[]` (ISO 3166-1 enum) | Rejects invalid codes such as `UK` |
 | Exposure Domain | `exposure.domain` enum + `domain_other` | "Other (specify)" becomes a required field |
@@ -47,9 +69,10 @@ This is the first version of the standard. The schema contains both *Core* and *
 | Geocoding Database Version | `geocoder` + `relinkages[]` `{date, reason}` | |
 | Creator(s) | `creators[]`: `{name, email, orcid, role}` | ORCID gives a persistent identity |
 
-
 **Tiers.** CORE fields are `required: true`. Recommended fields carry LinkML's
 `recommended: true`; LinkML tooling reports them as warnings, and JSON Schema ignores them.
+[`ExposureLinkageCollection-minimal_core.yaml`](tests/data/valid/ExposureLinkageCollection-minimal_core.yaml)
+is the smallest valid record, using CORE fields only.
 
 ## Conditional rules enforced
 
@@ -67,18 +90,54 @@ This is the first version of the standard. The schema contains both *Core* and *
 | spatial resolution is `ADMINISTRATIVE_UNIT` | `admin_unit_name` |
 | `scope = COUNTRIES_OR_REGIONS` | `regions` |
 | `temporal_resolution = PERIODIC_UPDATE` | `update_frequency` |
-| `ongoing = true` | `last_updated` |
+| `ongoing = true` | `last_updated` (stated in the schema, **not yet enforced** — see below) |
 | any citation | at least one of `doi`, `url`, `text` |
+
+Every rule has a counter-example in [`tests/data/invalid/`](tests/data/invalid/) that
+breaks exactly that rule, and declares the error it must raise. Together with the valid
+examples, these form the conformance suite run by `just test`.
+
+The `ongoing = true` rule is not enforced by the generated JSON Schema, because LinkML's
+JSON Schema generator compiles the boolean precondition to the string `"true"`. Its
+counter-example lives in [`tests/data/problem/invalid/`](tests/data/problem/invalid/) as
+an expected failure until that is fixed.
 
 ## Validating a submission
 
+Requires [uv](https://docs.astral.sh/uv/) and [just](https://just.systems/).
+
 ```bash
-pip install jsonschema pyyaml
-python tools/validate.py my_cohort_metadata.yaml
+just install
+just validate my_cohort_metadata.yaml
 ```
 
-YAML pitfall: quote country codes in data files (`["NO"]`, not `[NO]`). Unquoted `NO`
-(Norway) is read as boolean `false` by YAML 1.1 parsers. Submitting JSON avoids this.
+Without `just`: `uv run linkml-validate -s src/exposure_linkage/schema/exposure_linkage.yaml -C ExposureLinkageCollection my_cohort_metadata.yaml`.
+Any JSON Schema 2020-12 validator can also use the published `exposure_linkage.schema.json`.
+
+YAML pitfalls: YAML 1.1 parsers convert some unquoted values. Quote them in data files:
+
+- country codes: `["NO"]`, not `[NO]`. Unquoted `NO` (Norway) is read as boolean `false`.
+- dates: `"2021-06-01"`, not `2021-06-01`. Unquoted dates become date objects and fail
+  the string check.
+
+Submitting JSON avoids both.
+
+## Development
+
+```bash
+just install      # install dependencies
+just test         # schema generation, Python datamodel, conformance tests, example run
+just lint         # linkml-lint
+just gen-project  # generate JSON Schema, OWL, SHACL, SQL, Java, TypeScript, ... into project/
+just testdoc      # build and serve the documentation site
+```
+
+To add an example, put a `ExposureLinkageCollection-<name>.yaml` file in `tests/data/valid/`
+or `tests/data/invalid/`. Invalid examples must contain exactly one error and a
+`# expected_error: <message substring>` header line.
+
+This project follows the [linkml-project-copier](https://github.com/linkml/linkml-project-copier)
+template; `just update` pulls in template updates.
 
 ## Open items for the Work Stream
 
@@ -88,3 +147,4 @@ YAML pitfall: quote country codes in data files (`["NO"]`, not `[NO]`). Unquoted
   `OntologyClass` structure for `ontology_terms`.
 - Register a persistent `w3id.org` namespace to replace the placeholder `id`.
 - Confirm UCUM handling for dB(A) and other weighted noise metrics, which have no UCUM code.
+- Enforce the `ongoing = true → last_updated` rule in the generated JSON Schema.
