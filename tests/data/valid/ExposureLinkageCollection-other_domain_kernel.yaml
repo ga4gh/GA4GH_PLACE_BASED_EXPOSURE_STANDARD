@@ -1,0 +1,64 @@
+# ILLUSTRATIVE ONLY - placeholder values, not a real cohort linkage.
+# Covers: domain OTHER with domain_other, KERNEL_DENSITY_WEIGHTED with its
+# bandwidth, PERCENTILE with aggregation_n, a text-only citation, an
+# uncertainty interval, and a creator with an ORCID (ORCID's documentation
+# example identifier).
+records:
+  - id: ECC-PEST-KDE-EXAMPLE
+    cohort:
+      name: Example Californian Cohort
+      acronym: ECC
+      collection_countries: [US]
+    exposure:
+      domain: OTHER
+      domain_other: Agricultural pesticide application
+      name: Pesticide application density
+      unit: kg/km2
+    source_data:
+      origin: OTHER
+      dataset_name: Example pesticide use reports
+      dataset_version: "2018"
+      citations:
+        - text: Example State Agency (2019). Pesticide use reporting, 2018 release.
+          used_for_linkage: true
+      geographic_coverage:
+        scope: COUNTRIES_OR_REGIONS
+        regions: [US-CA]
+      spatial_resolution:
+        type: GRID_METRIC
+        cell_width: 1000
+        cell_height: 1000
+      temporal_coverage:
+        start: "2018-01-01"
+        end: "2018-12-31"
+      temporal_resolution: ANNUAL
+      validation_reported: true
+      validation_metrics:
+        - metric: PEARSON_R
+          validation_design: GROUND_MONITOR_COMPARISON
+          value: 0.71
+      uncertainty:
+        type: PREDICTION_INTERVAL_95
+        lower: 0.2
+        upper: 3.4
+        unit: kg/km2
+        carried_to_participant_level: false
+    linkage:
+      spatial_linkage_unit: GPS_COORDINATE
+      operation: KERNEL_DENSITY_WEIGHTED
+      kernel_bandwidth_m: 1000
+      kernel_grid_resolution_m: 100
+      geocoding_precision: BUILDING
+      geocoder: Not applicable (GPS)
+      aggregation: PERCENTILE
+      aggregation_n: 95
+      participant_coverage_pct: 88
+      coverage_unit: HOUSEHOLDS
+      exposure_window: PRENATAL
+      residential_history: PARTIAL_HISTORY
+      residential_history_detail: Moves during pregnancy recorded where reported.
+      linkage_date: "2020-07-15"
+    creators:
+      - name: Josiah Carberry
+        orcid: ORCID:0000-0002-1825-0097
+        role: data manager

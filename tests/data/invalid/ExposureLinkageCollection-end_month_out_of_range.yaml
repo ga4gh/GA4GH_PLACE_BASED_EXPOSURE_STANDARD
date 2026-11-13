@@ -1,0 +1,33 @@
+# INVALID - derived from valid/ExposureLinkageCollection-minimal_core.yaml
+# with exactly one error: month 13 does not exist.
+# expected_error: '2020-13' does not match
+records:
+  - id: MIN-PM25-EXAMPLE
+    cohort:
+      name: Example Cohort Study
+      acronym: ECS
+      collection_countries:
+        - DE
+    exposure:
+      domain: AIR_POLLUTION
+      name: PM2.5
+    source_data:
+      origin: CHEMICAL_TRANSPORT_MODEL
+      dataset_name: Example CTM
+      dataset_version: '2023'
+      citations:
+        - doi: 10.1234/example.ctm
+      geographic_coverage:
+        scope: COUNTRIES_OR_REGIONS
+        regions:
+          - DE
+      spatial_resolution:
+        type: POINT_ADDRESS
+      temporal_coverage:
+        start: '2015'
+        end: 2020-13
+      temporal_resolution: ANNUAL
+    linkage:
+      spatial_linkage_unit: GEOCODED_ADDRESS
+      operation: POINT_IN_POLYGON
+      aggregation: ANNUAL_MEAN
