@@ -43,7 +43,7 @@ Please use our [Issue Tracker][issues] for any of the following:
 
 ### Questions and Discussions
 
-Please use our [Discussions forum][discussions] to ask general questions or contribute to discussions.
+Please use our [Discussions forum](https://github.com/ga4gh/GA4GH_PLACE_BASED_EXPOSURE_STANDARD/discussions/15) to ask general questions or contribute to discussions.
 
 <a id="adding-elements"></a>
 
