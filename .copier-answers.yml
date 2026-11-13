@@ -3,9 +3,9 @@ _commit: v0.5.0-10-gc213e4e
 _src_path: https://github.com/linkml/linkml-project-copier
 add_example: false
 copyright_year: '2026'
-email: TODO-contact@example.org
+email: clinpheno_wsm@ga4gh.org
 existing_license_file: ''
-full_name: GA4GH Human Exposome Data Standards Study Group
+full_name: GA4GH Human Exposome Data Standards Working Group
 gh_action_docs_preview: true
 gh_action_pypi: false
 github_org: ga4gh
