@@ -7,7 +7,7 @@
 # Note:
 # - just works fine with quoted variables of dot-env files like this one
 LINKML_SCHEMA_NAME="exposure_linkage"
-LINKML_SCHEMA_AUTHOR="GA4GH Human Exposome Data Standards Study Group <TODO-contact@example.org>"
+LINKML_SCHEMA_AUTHOR="GA4GH Human Exposome Data Standards Study Group <clinpheno_wsm@ga4gh.org>"
 LINKML_SCHEMA_DESCRIPTION="GA4GH Place-Based Exposure Metadata Standard: a LinkML schema describing how environmental exposure datasets are linked to cohort participants."
 LINKML_SCHEMA_SOURCE_DIR="src/exposure_linkage/schema"
 
