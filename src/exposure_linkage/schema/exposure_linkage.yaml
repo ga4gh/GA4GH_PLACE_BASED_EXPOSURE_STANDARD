@@ -19,6 +19,7 @@ prefixes:
   CAS: "https://identifiers.org/cas:"
   DTXSID: https://comptox.epa.gov/dashboard/chemical/details/
   ORCID: https://orcid.org/
+  dcterms: http://purl.org/dc/terms/
 default_prefix: expo
 default_range: string
 imports:
@@ -70,6 +71,7 @@ classes:
       id:
         identifier: true
         description: Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.
+        slot_uri: dcterms:identifier
       cohort:
         range: Cohort
         required: true
@@ -91,6 +93,7 @@ classes:
         multivalued: true
         inlined_as_list: true
         recommended: true
+        slot_uri: dcterms:creator
 
   Cohort:
     description: "CSV: Cohort / Study Name; Country of Participant Data Collection"
@@ -98,6 +101,7 @@ classes:
       name:
         required: true
         description: Full name, e.g. UK Biobank.
+        slot_uri: schema:name
       acronym:
         required: true
         description: e.g. UKB. Split out of the old "Name (ACRONYM)" string.
@@ -547,10 +551,13 @@ classes:
 
   Person:
     description: "CSV: Creator(s)"
+    class_uri: schema:Person
     attributes:
       name:
+        slot_uri: schema:name
       email:
         pattern: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+        slot_uri: schema:email
       orcid:
         range: CURIE
         description: e.g. ORCID:0000-0002-1825-0097

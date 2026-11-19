@@ -92,6 +92,8 @@ linkml_meta = LinkMLMeta({'default_prefix': 'expo',
                             'prefix_reference': 'https://orcid.org/'},
                   'PUBCHEM': {'prefix_prefix': 'PUBCHEM',
                               'prefix_reference': 'http://rdf.ncbi.nlm.nih.gov/pubchem/compound/CID'},
+                  'dcterms': {'prefix_prefix': 'dcterms',
+                              'prefix_reference': 'http://purl.org/dc/terms/'},
                   'expo': {'prefix_prefix': 'expo',
                            'prefix_reference': 'https://w3id.org/ga4gh/exposure-linkage/'},
                   'linkml': {'prefix_prefix': 'linkml',
@@ -600,12 +602,14 @@ class ExposureLinkageRecord(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/ga4gh/exposure-linkage'})
 
-    id: str = Field(default=..., description="""Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord']} })
+    id: str = Field(default=..., description="""Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.""", json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord'], 'slot_uri': 'dcterms:identifier'} })
     cohort: Cohort = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord']} })
     exposure: ExposureVariable = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord']} })
     source_data: SourceDataset = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord']} })
     linkage: Linkage = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord']} })
-    creators: Optional[list[Person]] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord'], 'recommended': True} })
+    creators: Optional[list[Person]] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['ExposureLinkageRecord'],
+         'recommended': True,
+         'slot_uri': 'dcterms:creator'} })
 
 
 class Cohort(ConfiguredBaseModel):
@@ -614,7 +618,8 @@ class Cohort(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/ga4gh/exposure-linkage'})
 
-    name: str = Field(default=..., description="""Full name, e.g. UK Biobank.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Cohort', 'ExposureVariable', 'Person']} })
+    name: str = Field(default=..., description="""Full name, e.g. UK Biobank.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Cohort', 'ExposureVariable', 'Person'],
+         'slot_uri': 'schema:name'} })
     acronym: str = Field(default=..., description="""e.g. UKB. Split out of the old \"Name (ACRONYM)\" string.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Cohort']} })
     collection_countries: list[CountryCodeEnum] = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Cohort']} })
 
@@ -884,10 +889,12 @@ class Person(ConfiguredBaseModel):
     """
     CSV: Creator(s)
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'from_schema': 'https://w3id.org/ga4gh/exposure-linkage'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'schema:Person',
+         'from_schema': 'https://w3id.org/ga4gh/exposure-linkage'})
 
-    name: Optional[str] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['Cohort', 'ExposureVariable', 'Person']} })
-    email: Optional[str] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['Person']} })
+    name: Optional[str] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['Cohort', 'ExposureVariable', 'Person'],
+         'slot_uri': 'schema:name'} })
+    email: Optional[str] = Field(default=None, json_schema_extra = { "linkml_meta": {'domain_of': ['Person'], 'slot_uri': 'schema:email'} })
     orcid: Optional[URIorCURIE] = Field(default=None, description="""e.g. ORCID:0000-0002-1825-0097""", json_schema_extra = { "linkml_meta": {'domain_of': ['Person']} })
     role: Optional[str] = Field(default=None, description="""e.g. senior investigator""", json_schema_extra = { "linkml_meta": {'domain_of': ['Person']} })
 
