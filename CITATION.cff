@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: If you use this standard, please cite it using the metadata from this file.
+type: software
+title: GA4GH Place-Based Exposure Metadata Schema
+abstract: >-
+  A LinkML schema describing how an environmental exposure dataset was linked
+  to cohort participants. One record describes one exposure variable linked in
+  one cohort.
+authors:
+  - name: GA4GH Human Exposome Data Standards Study Group
+version: 0.1.0
+license: Apache-2.0
+repository-code: https://github.com/ga4gh/GA4GH_PLACE_BASED_EXPOSURE_STANDARD
+url: https://www.ga4gh.org/product/human-exposome-data-standards/
+keywords:
+  - exposome
+  - environmental exposure
+  - place-based exposure
+  - LinkML
+  - GA4GH
+references:
+  - type: report
+    title: Aims of the GA4GH Human Exposome Data Standards Study Group
+    authors:
+      - name: GA4GH Human Exposome Data Standards Study Group
+    doi: 10.5281/zenodo.21877291

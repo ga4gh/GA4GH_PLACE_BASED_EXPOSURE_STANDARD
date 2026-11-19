@@ -2,7 +2,7 @@
 # Schema: exposure_linkage
 #
 # id: https://w3id.org/ga4gh/exposure-linkage
-# description: Describes how an environmental exposure dataset was linked to cohort participants. One ExposureLinkageRecord = one exposure variable linked in one cohort. Converted from "Implementation 1 - GA4GH Metadata Schema".
+# description: Describes how an environmental exposure dataset was linked to cohort participants. One ExposureLinkageRecord describes one exposure variable linked in one cohort. Developed by the GA4GH Human Exposome Data Standards Study Group; converted from "Implementation 1 - GA4GH Metadata Schema".
 # license: Apache-2.0
 
 import dataclasses
@@ -70,6 +70,7 @@ INCHIKEY = CurieNamespace('INCHIKEY', 'https://identifiers.org/inchikey:')
 MESH = CurieNamespace('MESH', 'http://id.nlm.nih.gov/mesh/')
 ORCID = CurieNamespace('ORCID', 'https://orcid.org/')
 PUBCHEM = CurieNamespace('PUBCHEM', 'http://rdf.ncbi.nlm.nih.gov/pubchem/compound/CID')
+BIBO = CurieNamespace('bibo', 'http://purl.org/ontology/bibo/')
 EXPO = CurieNamespace('expo', 'https://w3id.org/ga4gh/exposure-linkage/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
