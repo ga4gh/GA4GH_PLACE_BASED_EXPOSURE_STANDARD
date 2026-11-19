@@ -1,0 +1,1705 @@
+{
+    "$defs": {
+        "AggregationEnum": {
+            "description": "Summary statistic applied to exposure values.",
+            "enum": [
+                "ANNUAL_MEAN",
+                "MONTHLY_MEAN",
+                "DAILY_MEAN",
+                "DAILY_MAX",
+                "DAILY_MIN",
+                "EIGHT_HOUR_MEAN",
+                "WARM_SEASON_MEAN",
+                "COLD_SEASON_MEAN",
+                "NIGHT_TIME_MEAN",
+                "MULTI_YEAR_MEAN",
+                "CUMULATIVE_SUM",
+                "PERCENTILE",
+                "PRESENCE_ABSENCE",
+                "DISTANCE_TO_NEAREST",
+                "COUNT_WITHIN_BUFFER",
+                "MEAN_WITHIN_BUFFER",
+                "COMPOSITE_INDEX",
+                "RAW_TIME_SERIES"
+            ],
+            "title": "AggregationEnum",
+            "type": "string"
+        },
+        "CentroidWeightingEnum": {
+            "description": "How an areal centroid was computed.",
+            "enum": [
+                "GEOMETRIC",
+                "POPULATION_WEIGHTED",
+                "AREA_WEIGHTED"
+            ],
+            "title": "CentroidWeightingEnum",
+            "type": "string"
+        },
+        "Citation": {
+            "additionalProperties": false,
+            "anyOf": [
+                {
+                    "properties": {
+                        "doi": {}
+                    },
+                    "required": [
+                        "doi"
+                    ]
+                },
+                {
+                    "properties": {
+                        "url": {}
+                    },
+                    "required": [
+                        "url"
+                    ]
+                },
+                {
+                    "properties": {
+                        "text": {}
+                    },
+                    "required": [
+                        "text"
+                    ]
+                }
+            ],
+            "description": "A reference to the source data or its documentation. At least one of doi, url or text is required.",
+            "properties": {
+                "accessed": {
+                    "description": "Date the URL was accessed. Required when url is given without a DOI.",
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "doi": {
+                    "description": "Bare DOI, without the doi: prefix or resolver URL, e.g. 10.1234/abcd.",
+                    "pattern": "^10\\.\\d{4,9}/\\S+$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "text": {
+                    "description": "Free-text citation, for sources without a DOI or URL.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "description": "Web address of the source or its documentation.",
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_for_linkage": {
+                    "description": "True if this is the source actually used for the linkage. Replaces the old \"*\" marker.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Citation",
+            "type": "object"
+        },
+        "Cohort": {
+            "additionalProperties": false,
+            "description": "The cohort or study whose participants were linked. Replaces the CSV fields \"Cohort / Study Name\" and \"Country of Participant Data Collection\".",
+            "properties": {
+                "acronym": {
+                    "description": "Short name, e.g. UKB. Split out of the old \"Name (ACRONYM)\" string.",
+                    "type": "string"
+                },
+                "collection_countries": {
+                    "description": "Countries in which participant data were collected, as ISO 3166-1 alpha-2 codes.",
+                    "items": {
+                        "$ref": "#/$defs/CountryCodeEnum"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "description": "Full name of the cohort or study, e.g. UK Biobank.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "acronym",
+                "collection_countries"
+            ],
+            "title": "Cohort",
+            "type": "object"
+        },
+        "CountryCodeEnum": {
+            "description": "ISO 3166-1 alpha-2, officially assigned codes (GB, not UK).",
+            "enum": [
+                "AD",
+                "AE",
+                "AF",
+                "AG",
+                "AI",
+                "AL",
+                "AM",
+                "AO",
+                "AQ",
+                "AR",
+                "AS",
+                "AT",
+                "AU",
+                "AW",
+                "AX",
+                "AZ",
+                "BA",
+                "BB",
+                "BD",
+                "BE",
+                "BF",
+                "BG",
+                "BH",
+                "BI",
+                "BJ",
+                "BL",
+                "BM",
+                "BN",
+                "BO",
+                "BQ",
+                "BR",
+                "BS",
+                "BT",
+                "BV",
+                "BW",
+                "BY",
+                "BZ",
+                "CA",
+                "CC",
+                "CD",
+                "CF",
+                "CG",
+                "CH",
+                "CI",
+                "CK",
+                "CL",
+                "CM",
+                "CN",
+                "CO",
+                "CR",
+                "CU",
+                "CV",
+                "CW",
+                "CX",
+                "CY",
+                "CZ",
+                "DE",
+                "DJ",
+                "DK",
+                "DM",
+                "DO",
+                "DZ",
+                "EC",
+                "EE",
+                "EG",
+                "EH",
+                "ER",
+                "ES",
+                "ET",
+                "FI",
+                "FJ",
+                "FK",
+                "FM",
+                "FO",
+                "FR",
+                "GA",
+                "GB",
+                "GD",
+                "GE",
+                "GF",
+                "GG",
+                "GH",
+                "GI",
+                "GL",
+                "GM",
+                "GN",
+                "GP",
+                "GQ",
+                "GR",
+                "GS",
+                "GT",
+                "GU",
+                "GW",
+                "GY",
+                "HK",
+                "HM",
+                "HN",
+                "HR",
+                "HT",
+                "HU",
+                "ID",
+                "IE",
+                "IL",
+                "IM",
+                "IN",
+                "IO",
+                "IQ",
+                "IR",
+                "IS",
+                "IT",
+                "JE",
+                "JM",
+                "JO",
+                "JP",
+                "KE",
+                "KG",
+                "KH",
+                "KI",
+                "KM",
+                "KN",
+                "KP",
+                "KR",
+                "KW",
+                "KY",
+                "KZ",
+                "LA",
+                "LB",
+                "LC",
+                "LI",
+                "LK",
+                "LR",
+                "LS",
+                "LT",
+                "LU",
+                "LV",
+                "LY",
+                "MA",
+                "MC",
+                "MD",
+                "ME",
+                "MF",
+                "MG",
+                "MH",
+                "MK",
+                "ML",
+                "MM",
+                "MN",
+                "MO",
+                "MP",
+                "MQ",
+                "MR",
+                "MS",
+                "MT",
+                "MU",
+                "MV",
+                "MW",
+                "MX",
+                "MY",
+                "MZ",
+                "NA",
+                "NC",
+                "NE",
+                "NF",
+                "NG",
+                "NI",
+                "NL",
+                "NO",
+                "NP",
+                "NR",
+                "NU",
+                "NZ",
+                "OM",
+                "PA",
+                "PE",
+                "PF",
+                "PG",
+                "PH",
+                "PK",
+                "PL",
+                "PM",
+                "PN",
+                "PR",
+                "PS",
+                "PT",
+                "PW",
+                "PY",
+                "QA",
+                "RE",
+                "RO",
+                "RS",
+                "RU",
+                "RW",
+                "SA",
+                "SB",
+                "SC",
+                "SD",
+                "SE",
+                "SG",
+                "SH",
+                "SI",
+                "SJ",
+                "SK",
+                "SL",
+                "SM",
+                "SN",
+                "SO",
+                "SR",
+                "SS",
+                "ST",
+                "SV",
+                "SX",
+                "SY",
+                "SZ",
+                "TC",
+                "TD",
+                "TF",
+                "TG",
+                "TH",
+                "TJ",
+                "TK",
+                "TL",
+                "TM",
+                "TN",
+                "TO",
+                "TR",
+                "TT",
+                "TV",
+                "TW",
+                "TZ",
+                "UA",
+                "UG",
+                "UM",
+                "US",
+                "UY",
+                "UZ",
+                "VA",
+                "VC",
+                "VE",
+                "VG",
+                "VI",
+                "VN",
+                "VU",
+                "WF",
+                "WS",
+                "YE",
+                "YT",
+                "ZA",
+                "ZM",
+                "ZW"
+            ],
+            "title": "CountryCodeEnum",
+            "type": "string"
+        },
+        "CoverageUnitEnum": {
+            "description": "Unit that a coverage percentage counts.",
+            "enum": [
+                "PARTICIPANTS",
+                "HOUSEHOLDS",
+                "CLINICAL_SITES",
+                "HOSPITALS",
+                "GEOGRAPHIC_UNITS"
+            ],
+            "title": "CoverageUnitEnum",
+            "type": "string"
+        },
+        "DataOriginEnum": {
+            "description": "How the source exposure data were produced.",
+            "enum": [
+                "MONITORING_STATION",
+                "LAND_USE_REGRESSION",
+                "CHEMICAL_TRANSPORT_MODEL",
+                "SATELLITE_DERIVED",
+                "PERSONAL_MONITOR",
+                "QUESTIONNAIRE",
+                "ADMINISTRATIVE_RECORD",
+                "REANALYSIS",
+                "OTHER"
+            ],
+            "title": "DataOriginEnum",
+            "type": "string"
+        },
+        "ExposureDomainEnum": {
+            "description": "Broad domain of an environmental exposure.",
+            "enum": [
+                "AIR_POLLUTION",
+                "CLIMATE_WEATHER",
+                "GREEN_SPACE",
+                "BLUE_SPACE",
+                "NOISE",
+                "SOCIODEMOGRAPHIC",
+                "BUILT_ENVIRONMENT",
+                "WATER_QUALITY",
+                "LIGHT_POLLUTION",
+                "BIODIVERSITY",
+                "INDOOR_HOME_ENVIRONMENT",
+                "OTHER"
+            ],
+            "title": "ExposureDomainEnum",
+            "type": "string"
+        },
+        "ExposureLinkageCollection": {
+            "additionalProperties": false,
+            "description": "Container so that one file can hold many exposure linkage records.",
+            "properties": {
+                "records": {
+                    "description": "The exposure linkage records in this file.",
+                    "items": {
+                        "$ref": "#/$defs/ExposureLinkageRecord"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "records"
+            ],
+            "title": "ExposureLinkageCollection",
+            "type": "object"
+        },
+        "ExposureLinkageRecord": {
+            "additionalProperties": false,
+            "description": "One exposure variable linked to the participants of one cohort.",
+            "properties": {
+                "cohort": {
+                    "$ref": "#/$defs/Cohort",
+                    "description": "The cohort or study whose participants received the exposure values."
+                },
+                "creators": {
+                    "description": "People responsible for producing this linkage.",
+                    "items": {
+                        "$ref": "#/$defs/Person"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "exposure": {
+                    "$ref": "#/$defs/ExposureVariable",
+                    "description": "The exposure variable that was linked."
+                },
+                "id": {
+                    "description": "Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.",
+                    "type": "string"
+                },
+                "linkage": {
+                    "$ref": "#/$defs/Linkage",
+                    "description": "How exposure values were assigned to participants."
+                },
+                "source_data": {
+                    "$ref": "#/$defs/SourceDataset",
+                    "description": "The upstream exposure product the values were taken from."
+                }
+            },
+            "required": [
+                "id",
+                "cohort",
+                "exposure",
+                "source_data",
+                "linkage"
+            ],
+            "title": "ExposureLinkageRecord",
+            "type": "object"
+        },
+        "ExposureVariable": {
+            "additionalProperties": false,
+            "description": "The environmental exposure that was linked. Replaces the CSV fields \"Exposure Domain\", \"Exposure Variable Name\", \"Ontology / Taxonomy Term ID\" and \"Unit of Measure\".",
+            "if": {
+                "properties": {
+                    "domain": {
+                        "const": "OTHER"
+                    }
+                },
+                "required": [
+                    "domain"
+                ]
+            },
+            "properties": {
+                "domain": {
+                    "$ref": "#/$defs/ExposureDomainEnum",
+                    "description": "Broad exposure domain."
+                },
+                "domain_other": {
+                    "description": "Free-text domain. Required when domain = OTHER.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "is_categorical": {
+                    "description": "True if the variable takes categorical rather than numeric values.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "Descriptive term for the variable, e.g. NO2, PM2.5, Lden, NDVI.",
+                    "type": "string"
+                },
+                "ontology_terms": {
+                    "description": "Resolvable identifiers for the exposure. Chemicals: INCHIKEY (preferred), PUBCHEM, DTXSID, CAS. Physical or environmental exposures: ExO, ENVO, MESH. Leave empty if no term exists.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "unit": {
+                    "description": "UCUM code for the unit of the linked values. Omit for categorical variables.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "domain",
+                "name"
+            ],
+            "then": {
+                "properties": {
+                    "domain_other": {}
+                },
+                "required": [
+                    "domain_other"
+                ]
+            },
+            "title": "ExposureVariable",
+            "type": "object"
+        },
+        "ExposureWindowEnum": {
+            "description": "Period of exposure that linked values represent.",
+            "enum": [
+                "YEAR_BEFORE_RECRUITMENT",
+                "N_YEARS_BEFORE_INDEX",
+                "PRENATAL",
+                "PERICONCEPTION",
+                "INFANCY",
+                "EARLY_CHILDHOOD",
+                "ADOLESCENCE",
+                "LIFETIME_CUMULATIVE",
+                "TIME_VARYING_ANNUAL",
+                "CRITICAL_WINDOW"
+            ],
+            "title": "ExposureWindowEnum",
+            "type": "string"
+        },
+        "GeocodingPrecisionEnum": {
+            "description": "Precision of participant geocodes.",
+            "enum": [
+                "BUILDING",
+                "PARCEL",
+                "STREET",
+                "POSTCODE_CENTROID",
+                "CENSUS_UNIT_CENTROID",
+                "MIXED",
+                "UNKNOWN"
+            ],
+            "title": "GeocodingPrecisionEnum",
+            "type": "string"
+        },
+        "GeographicCoverage": {
+            "additionalProperties": false,
+            "description": "Area covered by a source dataset.",
+            "if": {
+                "properties": {
+                    "scope": {
+                        "const": "COUNTRIES_OR_REGIONS"
+                    }
+                },
+                "required": [
+                    "scope"
+                ]
+            },
+            "properties": {
+                "description": {
+                    "description": "Optional note, e.g. \"UK-wide\", \"multiple provinces\".",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "regions": {
+                    "description": "ISO 3166-1 / ISO 3166-2 codes. Required when scope = COUNTRIES_OR_REGIONS.",
+                    "items": {
+                        "pattern": "^(AD|AE|AF|AG|AI|AL|AM|AO|AQ|AR|AS|AT|AU|AW|AX|AZ|BA|BB|BD|BE|BF|BG|BH|BI|BJ|BL|BM|BN|BO|BQ|BR|BS|BT|BV|BW|BY|BZ|CA|CC|CD|CF|CG|CH|CI|CK|CL|CM|CN|CO|CR|CU|CV|CW|CX|CY|CZ|DE|DJ|DK|DM|DO|DZ|EC|EE|EG|EH|ER|ES|ET|FI|FJ|FK|FM|FO|FR|GA|GB|GD|GE|GF|GG|GH|GI|GL|GM|GN|GP|GQ|GR|GS|GT|GU|GW|GY|HK|HM|HN|HR|HT|HU|ID|IE|IL|IM|IN|IO|IQ|IR|IS|IT|JE|JM|JO|JP|KE|KG|KH|KI|KM|KN|KP|KR|KW|KY|KZ|LA|LB|LC|LI|LK|LR|LS|LT|LU|LV|LY|MA|MC|MD|ME|MF|MG|MH|MK|ML|MM|MN|MO|MP|MQ|MR|MS|MT|MU|MV|MW|MX|MY|MZ|NA|NC|NE|NF|NG|NI|NL|NO|NP|NR|NU|NZ|OM|PA|PE|PF|PG|PH|PK|PL|PM|PN|PR|PS|PT|PW|PY|QA|RE|RO|RS|RU|RW|SA|SB|SC|SD|SE|SG|SH|SI|SJ|SK|SL|SM|SN|SO|SR|SS|ST|SV|SX|SY|SZ|TC|TD|TF|TG|TH|TJ|TK|TL|TM|TN|TO|TR|TT|TV|TW|TZ|UA|UG|UM|US|UY|UZ|VA|VC|VE|VG|VI|VN|VU|WF|WS|YE|YT|ZA|ZM|ZW)(-[A-Z0-9]{1,3})?$",
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "scope": {
+                    "$ref": "#/$defs/GeographicScopeEnum",
+                    "description": "Kind of coverage."
+                }
+            },
+            "required": [
+                "scope"
+            ],
+            "then": {
+                "properties": {
+                    "regions": {
+                        "items": {},
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "regions"
+                ]
+            },
+            "title": "GeographicCoverage",
+            "type": "object"
+        },
+        "GeographicScopeEnum": {
+            "description": "Kind of geographic coverage.",
+            "enum": [
+                "COUNTRIES_OR_REGIONS",
+                "EU27",
+                "GLOBAL"
+            ],
+            "title": "GeographicScopeEnum",
+            "type": "string"
+        },
+        "Linkage": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "operation": {
+                                "const": "CIRCULAR_BUFFER"
+                            }
+                        },
+                        "required": [
+                            "operation"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "buffer_radii_m": {
+                                "items": {},
+                                "type": "array"
+                            }
+                        },
+                        "required": [
+                            "buffer_radii_m"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "operation": {
+                                "const": "NETWORK_BUFFER"
+                            }
+                        },
+                        "required": [
+                            "operation"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "network_mode": {}
+                        },
+                        "required": [
+                            "network_mode"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "operation": {
+                                "const": "KERNEL_DENSITY_WEIGHTED"
+                            }
+                        },
+                        "required": [
+                            "operation"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "kernel_bandwidth_m": {}
+                        },
+                        "required": [
+                            "kernel_bandwidth_m"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "aggregation": {
+                                "const": "MULTI_YEAR_MEAN"
+                            }
+                        },
+                        "required": [
+                            "aggregation"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "aggregation_n": {}
+                        },
+                        "required": [
+                            "aggregation_n"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "aggregation": {
+                                "const": "PERCENTILE"
+                            }
+                        },
+                        "required": [
+                            "aggregation"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "aggregation_n": {}
+                        },
+                        "required": [
+                            "aggregation_n"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "spatial_linkage_unit": {
+                                "const": "POSTCODE_CENTROID"
+                            }
+                        },
+                        "required": [
+                            "spatial_linkage_unit"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "centroid_weighting": {}
+                        },
+                        "required": [
+                            "centroid_weighting"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "spatial_linkage_unit": {
+                                "const": "CENSUS_TRACT_CENTROID"
+                            }
+                        },
+                        "required": [
+                            "spatial_linkage_unit"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "centroid_weighting": {}
+                        },
+                        "required": [
+                            "centroid_weighting"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "spatial_linkage_unit": {
+                                "const": "LSOA_CENTROID"
+                            }
+                        },
+                        "required": [
+                            "spatial_linkage_unit"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "centroid_weighting": {}
+                        },
+                        "required": [
+                            "centroid_weighting"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "spatial_linkage_unit": {
+                                "const": "MUNICIPALITY_CENTROID"
+                            }
+                        },
+                        "required": [
+                            "spatial_linkage_unit"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "centroid_weighting": {}
+                        },
+                        "required": [
+                            "centroid_weighting"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "spatial_linkage_unit": {
+                                "const": "OTHER_AREAL_CENTROID"
+                            }
+                        },
+                        "required": [
+                            "spatial_linkage_unit"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "centroid_weighting": {}
+                        },
+                        "required": [
+                            "centroid_weighting"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "centroid_weighting": {
+                                "const": "POPULATION_WEIGHTED"
+                            }
+                        },
+                        "required": [
+                            "centroid_weighting"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "population_dataset": {}
+                        },
+                        "required": [
+                            "population_dataset"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "geocoding_precision": {
+                                "const": "MIXED"
+                            }
+                        },
+                        "required": [
+                            "geocoding_precision"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "geocoding_mixed_breakdown": {}
+                        },
+                        "required": [
+                            "geocoding_mixed_breakdown"
+                        ]
+                    }
+                }
+            ],
+            "description": "How exposure values were assigned to participants.",
+            "properties": {
+                "aggregation": {
+                    "$ref": "#/$defs/AggregationEnum",
+                    "description": "Summary statistic applied to the exposure values. Buffer geometry is recorded once, under operation."
+                },
+                "aggregation_n": {
+                    "description": "N for MULTI_YEAR_MEAN (years) or PERCENTILE (the percentile).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "buffer_radii_m": {
+                    "description": "Buffer radii in metres. Required for CIRCULAR_BUFFER; list all radii if several were reported.",
+                    "items": {
+                        "minimum": 0,
+                        "type": "number"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "centroid_areal_unit": {
+                    "description": "The areal unit the centroid represents, e.g. \"output area\".",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "centroid_weighting": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CentroidWeightingEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "How the centroid was computed. Required for any *_CENTROID unit."
+                },
+                "coverage_unit": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CoverageUnitEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Unit that participant_coverage_pct counts."
+                },
+                "exposure_window": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExposureWindowEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Period of exposure the linked values represent."
+                },
+                "exposure_window_detail": {
+                    "description": "Further detail, e.g. trimester or age range.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exposure_window_years": {
+                    "description": "Length of the exposure window in years, e.g. N for N_YEARS_BEFORE_INDEX.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "geocoder": {
+                    "description": "Geocoding database name and version or release date.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "geocoding_mixed_breakdown": {
+                    "description": "For MIXED precision, the share of each level, e.g. \"80% building, 20% postcode\".",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "geocoding_precision": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeocodingPrecisionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Precision of participant geocodes."
+                },
+                "intersection_min_overlap_pct": {
+                    "description": "Minimum areal overlap, in percent, for INTERSECTION.",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "kernel_bandwidth_m": {
+                    "description": "Kernel bandwidth in metres. Required for KERNEL_DENSITY_WEIGHTED.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "kernel_grid_resolution_m": {
+                    "description": "Output grid resolution of the kernel density surface, in metres.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "linkage_date": {
+                    "description": "Date the linkage was performed.",
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "network_distance_m": {
+                    "description": "Network buffer distance in metres.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "network_mode": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/NetworkModeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Travel mode for NETWORK_BUFFER."
+                },
+                "network_time_min": {
+                    "description": "Network buffer travel time in minutes.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "operation": {
+                    "$ref": "#/$defs/LinkageOperationEnum",
+                    "description": "GIS operation used to assign values."
+                },
+                "participant_coverage_pct": {
+                    "description": "Percentage (0-100) of coverage units that received an exposure value.",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "population_dataset": {
+                    "description": "Population dataset used for POPULATION_WEIGHTED centroids.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "relinkages": {
+                    "description": "Later re-runs of the linkage, e.g. after a geocoder update.",
+                    "items": {
+                        "$ref": "#/$defs/Relinkage"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "residential_history": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ResidentialHistoryEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Extent to which residential moves were accounted for."
+                },
+                "residential_history_detail": {
+                    "description": "Free-text detail on how residential history was handled.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_linkage_unit": {
+                    "$ref": "#/$defs/SpatialLinkageUnitEnum",
+                    "description": "Participant location used for the linkage."
+                },
+                "study_area_coverage_pct": {
+                    "description": "Percentage (0-100) of the study area covered by the source dataset.",
+                    "maximum": 100,
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "spatial_linkage_unit",
+                "operation",
+                "aggregation"
+            ],
+            "title": "Linkage",
+            "type": "object"
+        },
+        "LinkageOperationEnum": {
+            "description": "GIS operation used to assign exposure values to locations.",
+            "enum": [
+                "POINT_IN_POLYGON",
+                "CIRCULAR_BUFFER",
+                "NETWORK_BUFFER",
+                "NEAREST_FEATURE",
+                "AREAL_INTERPOLATION",
+                "INTERSECTION",
+                "KERNEL_DENSITY_WEIGHTED",
+                "ADMINISTRATIVE_ASSIGNMENT"
+            ],
+            "title": "LinkageOperationEnum",
+            "type": "string"
+        },
+        "NetworkModeEnum": {
+            "description": "Travel mode for a network buffer.",
+            "enum": [
+                "WALKING",
+                "CYCLING",
+                "DRIVING",
+                "PUBLIC_TRANSPORT"
+            ],
+            "title": "NetworkModeEnum",
+            "type": "string"
+        },
+        "Person": {
+            "additionalProperties": false,
+            "description": "A creator of the linkage. Replaces the CSV field \"Creator(s)\".",
+            "properties": {
+                "email": {
+                    "description": "Contact email address.",
+                    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "description": "Full name of the person.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "orcid": {
+                    "description": "ORCID identifier as a CURIE, e.g. ORCID:0000-0002-1825-0097.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "role": {
+                    "description": "Role in producing the linkage, e.g. senior investigator.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Person",
+            "type": "object"
+        },
+        "Relinkage": {
+            "additionalProperties": false,
+            "description": "A later re-run of a linkage.",
+            "properties": {
+                "date": {
+                    "description": "Date of the re-run.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "Why the linkage was re-run, e.g. geocoder update.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "date",
+                "reason"
+            ],
+            "title": "Relinkage",
+            "type": "object"
+        },
+        "ResidentialHistoryEnum": {
+            "description": "Extent to which residential moves were accounted for.",
+            "enum": [
+                "BASELINE_ONLY",
+                "FULL_HISTORY",
+                "PARTIAL_HISTORY",
+                "NOT_APPLICABLE",
+                "UNKNOWN"
+            ],
+            "title": "ResidentialHistoryEnum",
+            "type": "string"
+        },
+        "SourceDataset": {
+            "additionalProperties": false,
+            "description": "The upstream exposure product (model, satellite product, monitoring network, ...).",
+            "if": {
+                "properties": {
+                    "temporal_resolution": {
+                        "const": "PERIODIC_UPDATE"
+                    }
+                },
+                "required": [
+                    "temporal_resolution"
+                ]
+            },
+            "properties": {
+                "citations": {
+                    "description": "Citations for the source dataset and the methods used to produce it.",
+                    "items": {
+                        "$ref": "#/$defs/Citation"
+                    },
+                    "type": "array"
+                },
+                "dataset_name": {
+                    "description": "Name of the model or dataset, e.g. ELAPSE LUR, ERA5, MODIS MOD13A3.",
+                    "type": "string"
+                },
+                "dataset_version": {
+                    "description": "Version number or release year, e.g. 2.0, 006, 2023.",
+                    "type": "string"
+                },
+                "geographic_coverage": {
+                    "$ref": "#/$defs/GeographicCoverage",
+                    "description": "Area covered by the source dataset."
+                },
+                "origin": {
+                    "$ref": "#/$defs/DataOriginEnum",
+                    "description": "How the source exposure data were produced."
+                },
+                "spatial_resolution": {
+                    "$ref": "#/$defs/SpatialResolution",
+                    "description": "Spatial resolution of the source dataset."
+                },
+                "temporal_coverage": {
+                    "$ref": "#/$defs/TemporalCoverage",
+                    "description": "Period covered by the source dataset."
+                },
+                "temporal_resolution": {
+                    "$ref": "#/$defs/TemporalResolutionEnum",
+                    "description": "Temporal resolution of the source dataset."
+                },
+                "uncertainty": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Uncertainty"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Uncertainty information available for the dataset."
+                },
+                "update_frequency": {
+                    "description": "For PERIODIC_UPDATE, the update interval as an ISO 8601 duration, e.g. P5Y.",
+                    "pattern": "^P(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "validation_metrics": {
+                    "description": "Reported validation metrics. An empty list with validation_reported = false means the dataset was not validated.",
+                    "items": {
+                        "$ref": "#/$defs/ValidationMetric"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "validation_reported": {
+                    "description": "True if the dataset producers report a validation of the dataset.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "origin",
+                "dataset_name",
+                "dataset_version",
+                "citations",
+                "geographic_coverage",
+                "spatial_resolution",
+                "temporal_coverage",
+                "temporal_resolution"
+            ],
+            "then": {
+                "properties": {
+                    "update_frequency": {}
+                },
+                "required": [
+                    "update_frequency"
+                ]
+            },
+            "title": "SourceDataset",
+            "type": "object"
+        },
+        "SpatialLinkageUnitEnum": {
+            "description": "Participant location used for the linkage.",
+            "enum": [
+                "GEOCODED_ADDRESS",
+                "GPS_COORDINATE",
+                "POSTCODE_CENTROID",
+                "CENSUS_TRACT_CENTROID",
+                "LSOA_CENTROID",
+                "MUNICIPALITY_CENTROID",
+                "OTHER_AREAL_CENTROID",
+                "GRID_CELL_CONTAINING_ADDRESS"
+            ],
+            "title": "SpatialLinkageUnitEnum",
+            "type": "string"
+        },
+        "SpatialResolution": {
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "GRID_METRIC"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "cell_height": {},
+                            "cell_width": {}
+                        },
+                        "required": [
+                            "cell_width",
+                            "cell_height"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "GRID_DEGREE"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "cell_height": {},
+                            "cell_width": {}
+                        },
+                        "required": [
+                            "cell_width",
+                            "cell_height"
+                        ]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "ADMINISTRATIVE_UNIT"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "properties": {
+                            "admin_unit_name": {}
+                        },
+                        "required": [
+                            "admin_unit_name"
+                        ]
+                    }
+                }
+            ],
+            "description": "Spatial resolution of a source dataset, as numbers rather than strings such as \"100 m x 100 m\".",
+            "properties": {
+                "admin_unit_approx_population": {
+                    "description": "Typical population of one administrative unit.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "admin_unit_name": {
+                    "description": "For ADMINISTRATIVE_UNIT, the unit type, e.g. LSOA, census tract.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cell_height": {
+                    "description": "Grid cell height; metres for GRID_METRIC, degrees for GRID_DEGREE.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "cell_width": {
+                    "description": "Grid cell width; metres for GRID_METRIC, degrees for GRID_DEGREE.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "$ref": "#/$defs/SpatialResolutionTypeEnum",
+                    "description": "Kind of spatial support."
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "title": "SpatialResolution",
+            "type": "object"
+        },
+        "SpatialResolutionTypeEnum": {
+            "description": "Kind of spatial support of a source dataset.",
+            "enum": [
+                "GRID_METRIC",
+                "GRID_DEGREE",
+                "ADMINISTRATIVE_UNIT",
+                "POINT_ADDRESS",
+                "POINT_GPS"
+            ],
+            "title": "SpatialResolutionTypeEnum",
+            "type": "string"
+        },
+        "TemporalCoverage": {
+            "additionalProperties": false,
+            "description": "Period covered by a source dataset.",
+            "if": {
+                "properties": {
+                    "ongoing": {
+                        "const": "true"
+                    }
+                },
+                "required": [
+                    "ongoing"
+                ]
+            },
+            "properties": {
+                "end": {
+                    "description": "Last date covered, as an ISO 8601 partial date. Omit when ongoing = true.",
+                    "pattern": "^\\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "last_updated": {
+                    "description": "Date of the most recent update. Required when ongoing = true.",
+                    "pattern": "^\\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "ongoing": {
+                    "description": "True if the dataset is still being extended. Replaces the magic string \"Ongoing\".",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "start": {
+                    "description": "First date covered, as an ISO 8601 partial date.",
+                    "pattern": "^\\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?$",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "start"
+            ],
+            "then": {
+                "properties": {
+                    "last_updated": {}
+                },
+                "required": [
+                    "last_updated"
+                ]
+            },
+            "title": "TemporalCoverage",
+            "type": "object"
+        },
+        "TemporalResolutionEnum": {
+            "description": "Temporal resolution of a source dataset.",
+            "enum": [
+                "SUB_HOURLY",
+                "HOURLY",
+                "DAILY",
+                "WEEKLY",
+                "MONTHLY",
+                "SEASONAL",
+                "ANNUAL",
+                "MULTI_YEAR_AVERAGE",
+                "EVENT_BASED",
+                "STATIC",
+                "PERIODIC_UPDATE"
+            ],
+            "title": "TemporalResolutionEnum",
+            "type": "string"
+        },
+        "Uncertainty": {
+            "additionalProperties": false,
+            "description": "Uncertainty information for a source dataset.",
+            "properties": {
+                "carried_to_participant_level": {
+                    "description": "True if uncertainty is propagated to the participant-level exposure values.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "lower": {
+                    "description": "Lower bound of the uncertainty interval.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "$ref": "#/$defs/UncertaintyTypeEnum",
+                    "description": "Form in which uncertainty is available."
+                },
+                "unit": {
+                    "description": "UCUM code for value, lower and upper.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "upper": {
+                    "description": "Upper bound of the uncertainty interval.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "value": {
+                    "description": "Point value of the uncertainty measure, if a single value applies.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "title": "Uncertainty",
+            "type": "object"
+        },
+        "UncertaintyTypeEnum": {
+            "description": "Form in which uncertainty is available.",
+            "enum": [
+                "NOT_AVAILABLE",
+                "SD_PER_UNIT",
+                "PREDICTION_INTERVAL_95",
+                "FULL_PREDICTIVE_DISTRIBUTION",
+                "MODEL_LEVEL_RMSE_ONLY"
+            ],
+            "title": "UncertaintyTypeEnum",
+            "type": "string"
+        },
+        "ValidationDesignEnum": {
+            "description": "How a validation was carried out.",
+            "enum": [
+                "LOOCV_SPATIAL",
+                "INDEPENDENT_TEST_SET_SPATIAL",
+                "TEMPORAL",
+                "OVERALL",
+                "GROUND_MONITOR_COMPARISON"
+            ],
+            "title": "ValidationDesignEnum",
+            "type": "string"
+        },
+        "ValidationMetric": {
+            "additionalProperties": false,
+            "description": "One reported validation metric of a source dataset.",
+            "properties": {
+                "metric": {
+                    "$ref": "#/$defs/ValidationMetricEnum",
+                    "description": "The validation statistic."
+                },
+                "unit": {
+                    "description": "UCUM code, for RMSE and mean bias. Omit for R2, r and percentages.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "validation_design": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ValidationDesignEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "How the validation was carried out."
+                },
+                "value": {
+                    "description": "Value of the statistic.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "metric",
+                "value"
+            ],
+            "title": "ValidationMetric",
+            "type": "object"
+        },
+        "ValidationMetricEnum": {
+            "description": "Validation statistic.",
+            "enum": [
+                "R2",
+                "RMSE",
+                "NRMSE_PCT",
+                "MEAN_BIAS",
+                "RELATIVE_BIAS_PCT",
+                "PEARSON_R"
+            ],
+            "title": "ValidationMetricEnum",
+            "type": "string"
+        }
+    },
+    "$id": "https://w3id.org/ga4gh/exposure-linkage",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "description": "Container so that one file can hold many exposure linkage records.",
+    "metamodel_version": "1.12.0",
+    "properties": {
+        "records": {
+            "description": "The exposure linkage records in this file.",
+            "items": {
+                "$ref": "#/$defs/ExposureLinkageRecord"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "records"
+    ],
+    "title": "exposure_linkage",
+    "type": "object",
+    "version": "0.1.0"
+}
+

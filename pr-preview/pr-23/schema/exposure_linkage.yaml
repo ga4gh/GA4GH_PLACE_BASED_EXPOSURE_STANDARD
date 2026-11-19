@@ -1,0 +1,3307 @@
+name: exposure_linkage
+description: Describes how an environmental exposure dataset was linked to cohort
+  participants. One ExposureLinkageRecord = one exposure variable linked in one cohort.
+  Converted from "Implementation 1 - GA4GH Metadata Schema".
+title: GA4GH Environmental Exposure Linkage Metadata
+id: https://w3id.org/ga4gh/exposure-linkage
+version: 0.1.0
+imports:
+- linkml:types
+license: Apache-2.0
+prefixes:
+  linkml:
+    prefix_prefix: linkml
+    prefix_reference: https://w3id.org/linkml/
+  expo:
+    prefix_prefix: expo
+    prefix_reference: https://w3id.org/ga4gh/exposure-linkage/
+  ENVO:
+    prefix_prefix: ENVO
+    prefix_reference: http://purl.obolibrary.org/obo/ENVO_
+  ExO:
+    prefix_prefix: ExO
+    prefix_reference: http://purl.obolibrary.org/obo/ExO_
+  MESH:
+    prefix_prefix: MESH
+    prefix_reference: http://id.nlm.nih.gov/mesh/
+  PUBCHEM:
+    prefix_prefix: PUBCHEM
+    prefix_reference: http://rdf.ncbi.nlm.nih.gov/pubchem/compound/CID
+  INCHIKEY:
+    prefix_prefix: INCHIKEY
+    prefix_reference: 'https://identifiers.org/inchikey:'
+  CAS:
+    prefix_prefix: CAS
+    prefix_reference: 'https://identifiers.org/cas:'
+  DTXSID:
+    prefix_prefix: DTXSID
+    prefix_reference: https://comptox.epa.gov/dashboard/chemical/details/
+  ORCID:
+    prefix_prefix: ORCID
+    prefix_reference: https://orcid.org/
+default_prefix: expo
+default_range: string
+types:
+  RegionCode:
+    name: RegionCode
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/RegionCode
+    description: ISO 3166-1 alpha-2 country code, or ISO 3166-2 subdivision code (e.g.
+      US-NC).
+    title: Region code
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    typeof: string
+    base: str
+    uri: xsd:string
+    pattern: ^(AD|AE|AF|AG|AI|AL|AM|AO|AQ|AR|AS|AT|AU|AW|AX|AZ|BA|BB|BD|BE|BF|BG|BH|BI|BJ|BL|BM|BN|BO|BQ|BR|BS|BT|BV|BW|BY|BZ|CA|CC|CD|CF|CG|CH|CI|CK|CL|CM|CN|CO|CR|CU|CV|CW|CX|CY|CZ|DE|DJ|DK|DM|DO|DZ|EC|EE|EG|EH|ER|ES|ET|FI|FJ|FK|FM|FO|FR|GA|GB|GD|GE|GF|GG|GH|GI|GL|GM|GN|GP|GQ|GR|GS|GT|GU|GW|GY|HK|HM|HN|HR|HT|HU|ID|IE|IL|IM|IN|IO|IQ|IR|IS|IT|JE|JM|JO|JP|KE|KG|KH|KI|KM|KN|KP|KR|KW|KY|KZ|LA|LB|LC|LI|LK|LR|LS|LT|LU|LV|LY|MA|MC|MD|ME|MF|MG|MH|MK|ML|MM|MN|MO|MP|MQ|MR|MS|MT|MU|MV|MW|MX|MY|MZ|NA|NC|NE|NF|NG|NI|NL|NO|NP|NR|NU|NZ|OM|PA|PE|PF|PG|PH|PK|PL|PM|PN|PR|PS|PT|PW|PY|QA|RE|RO|RS|RU|RW|SA|SB|SC|SD|SE|SG|SH|SI|SJ|SK|SL|SM|SN|SO|SR|SS|ST|SV|SX|SY|SZ|TC|TD|TF|TG|TH|TJ|TK|TL|TM|TN|TO|TR|TT|TV|TW|TZ|UA|UG|UM|US|UY|UZ|VA|VC|VE|VG|VI|VN|VU|WF|WS|YE|YT|ZA|ZM|ZW)(-[A-Z0-9]{1,3})?$
+  PartialDate:
+    name: PartialDate
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/PartialDate
+    description: ISO 8601 calendar date at year, month or day precision (YYYY, YYYY-MM
+      or YYYY-MM-DD).
+    title: Partial date
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    typeof: string
+    base: str
+    uri: xsd:string
+    pattern: ^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$
+  CURIE:
+    name: CURIE
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/CURIE
+    description: Compact identifier using a prefix declared in this schema, e.g. INCHIKEY:...,
+      ENVO:..., MESH:...
+    title: CURIE
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    typeof: uriorcurie
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  UcumCode:
+    name: UcumCode
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/UcumCode
+    description: UCUM case-sensitive code, e.g. ug/m3, ng/m3, [ppb], [ppm], Cel, mm,
+      m/s, W/m2, /km2, %, 1 (dimensionless index). dB(A) has no UCUM code - use "dB"
+      and record the weighting in the exposure variable name.
+    title: UCUM code
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    typeof: string
+    base: str
+    uri: xsd:string
+  string:
+    name: string
+    definition_uri: https://w3id.org/linkml/String
+    description: A character string
+    notes:
+    - In RDF serializations, a slot with range of string is treated as a literal or
+      type xsd:string. If you are authoring schemas in LinkML YAML, the type is referenced
+      with the lower case "string".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Text
+    base: str
+    uri: xsd:string
+  integer:
+    name: integer
+    definition_uri: https://w3id.org/linkml/Integer
+    description: An integer
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "integer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Integer
+    base: int
+    uri: xsd:integer
+  boolean:
+    name: boolean
+    definition_uri: https://w3id.org/linkml/Boolean
+    description: A binary (true or false) value
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "boolean".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Boolean
+    base: Bool
+    uri: xsd:boolean
+    repr: bool
+  float:
+    name: float
+    definition_uri: https://w3id.org/linkml/Float
+    description: A real number that conforms to the xsd:float specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "float".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:float
+  double:
+    name: double
+    definition_uri: https://w3id.org/linkml/Double
+    description: A real number that conforms to the xsd:double specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "double".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:Float
+    base: float
+    uri: xsd:double
+  decimal:
+    name: decimal
+    definition_uri: https://w3id.org/linkml/Decimal
+    description: A real number with arbitrary precision that conforms to the xsd:decimal
+      specification
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "decimal".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    broad_mappings:
+    - schema:Number
+    base: Decimal
+    uri: xsd:decimal
+  time:
+    name: time
+    definition_uri: https://w3id.org/linkml/Time
+    description: A time object represents a (local) time of day, independent of any
+      particular day
+    notes:
+    - URI is dateTime because OWL reasoners do not work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "time".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Time
+    base: XSDTime
+    uri: xsd:time
+    repr: str
+  date:
+    name: date
+    definition_uri: https://w3id.org/linkml/Date
+    description: a date (year, month and day) in an idealized calendar
+    notes:
+    - URI is dateTime because OWL reasoners don't work with straight date or time
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:Date
+    base: XSDDate
+    uri: xsd:date
+    repr: str
+  datetime:
+    name: datetime
+    definition_uri: https://w3id.org/linkml/Datetime
+    description: The combination of a date and time
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    exact_mappings:
+    - schema:DateTime
+    base: XSDDateTime
+    uri: xsd:dateTime
+    repr: str
+  date_or_datetime:
+    name: date_or_datetime
+    definition_uri: https://w3id.org/linkml/DateOrDatetime
+    description: Either a date or a datetime
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "date_or_datetime".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: linkml:DateOrDatetime
+    repr: str
+  uriorcurie:
+    name: uriorcurie
+    definition_uri: https://w3id.org/linkml/Uriorcurie
+    description: a URI or a CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uriorcurie".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: URIorCURIE
+    uri: xsd:anyURI
+    repr: str
+  curie:
+    name: curie
+    definition_uri: https://w3id.org/linkml/Curie
+    conforms_to: https://www.w3.org/TR/curie/
+    description: a compact URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "curie".
+    comments:
+    - in RDF serializations this MUST be expanded to a URI
+    - in non-RDF serializations MAY be serialized as the compact representation
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: Curie
+    uri: xsd:string
+    repr: str
+  uri:
+    name: uri
+    definition_uri: https://w3id.org/linkml/Uri
+    conforms_to: https://www.ietf.org/rfc/rfc3987.txt
+    description: a complete URI
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "uri".
+    comments:
+    - in RDF serializations a slot with range of uri is treated as a literal or type
+      xsd:anyURI unless it is an identifier or a reference to an identifier, in which
+      case it is translated directly to a node
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    close_mappings:
+    - schema:URL
+    base: URI
+    uri: xsd:anyURI
+    repr: str
+  ncname:
+    name: ncname
+    definition_uri: https://w3id.org/linkml/Ncname
+    description: Prefix part of CURIE
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "ncname".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NCName
+    uri: xsd:string
+    repr: str
+  objectidentifier:
+    name: objectidentifier
+    definition_uri: https://w3id.org/linkml/Objectidentifier
+    description: A URI or CURIE that represents an object in the model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "objectidentifier".
+    comments:
+    - Used for inheritance and type checking
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: ElementIdentifier
+    uri: shex:iri
+    repr: str
+  nodeidentifier:
+    name: nodeidentifier
+    definition_uri: https://w3id.org/linkml/Nodeidentifier
+    description: A URI, CURIE or BNODE that represents a node in a model.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "nodeidentifier".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: NodeIdentifier
+    uri: shex:nonLiteral
+    repr: str
+  jsonpointer:
+    name: jsonpointer
+    definition_uri: https://w3id.org/linkml/Jsonpointer
+    conforms_to: https://datatracker.ietf.org/doc/html/rfc6901
+    description: A string encoding a JSON Pointer. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to a valid object within the current
+      instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpointer".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  jsonpath:
+    name: jsonpath
+    definition_uri: https://w3id.org/linkml/Jsonpath
+    conforms_to: https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html
+    description: A string encoding a JSON Path. The value of the string MUST conform
+      to JSON Point syntax and SHOULD dereference to zero or more valid objects within
+      the current instance document when encoded in tree form.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "jsonpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+  sparqlpath:
+    name: sparqlpath
+    definition_uri: https://w3id.org/linkml/Sparqlpath
+    conforms_to: https://www.w3.org/TR/sparql11-query/#propertypaths
+    description: A string encoding a SPARQL Property Path. The value of the string
+      MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects
+      within the current instance document when encoded as RDF.
+    notes:
+    - If you are authoring schemas in LinkML YAML, the type is referenced with the
+      lower case "sparqlpath".
+    from_schema: https://w3id.org/linkml/types
+    imported_from: linkml:types
+    base: str
+    uri: xsd:string
+    repr: str
+enums:
+  CountryCodeEnum:
+    name: CountryCodeEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/CountryCodeEnum
+    description: ISO 3166-1 alpha-2, officially assigned codes (GB, not UK).
+    title: Country code
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      AD:
+        text: AD
+      AE:
+        text: AE
+      AF:
+        text: AF
+      AG:
+        text: AG
+      AI:
+        text: AI
+      AL:
+        text: AL
+      AM:
+        text: AM
+      AO:
+        text: AO
+      AQ:
+        text: AQ
+      AR:
+        text: AR
+      AS:
+        text: AS
+      AT:
+        text: AT
+      AU:
+        text: AU
+      AW:
+        text: AW
+      AX:
+        text: AX
+      AZ:
+        text: AZ
+      BA:
+        text: BA
+      BB:
+        text: BB
+      BD:
+        text: BD
+      BE:
+        text: BE
+      BF:
+        text: BF
+      BG:
+        text: BG
+      BH:
+        text: BH
+      BI:
+        text: BI
+      BJ:
+        text: BJ
+      BL:
+        text: BL
+      BM:
+        text: BM
+      BN:
+        text: BN
+      BO:
+        text: BO
+      BQ:
+        text: BQ
+      BR:
+        text: BR
+      BS:
+        text: BS
+      BT:
+        text: BT
+      BV:
+        text: BV
+      BW:
+        text: BW
+      BY:
+        text: BY
+      BZ:
+        text: BZ
+      CA:
+        text: CA
+      CC:
+        text: CC
+      CD:
+        text: CD
+      CF:
+        text: CF
+      CG:
+        text: CG
+      CH:
+        text: CH
+      CI:
+        text: CI
+      CK:
+        text: CK
+      CL:
+        text: CL
+      CM:
+        text: CM
+      CN:
+        text: CN
+      CO:
+        text: CO
+      CR:
+        text: CR
+      CU:
+        text: CU
+      CV:
+        text: CV
+      CW:
+        text: CW
+      CX:
+        text: CX
+      CY:
+        text: CY
+      CZ:
+        text: CZ
+      DE:
+        text: DE
+      DJ:
+        text: DJ
+      DK:
+        text: DK
+      DM:
+        text: DM
+      DO:
+        text: DO
+      DZ:
+        text: DZ
+      EC:
+        text: EC
+      EE:
+        text: EE
+      EG:
+        text: EG
+      EH:
+        text: EH
+      ER:
+        text: ER
+      ES:
+        text: ES
+      ET:
+        text: ET
+      FI:
+        text: FI
+      FJ:
+        text: FJ
+      FK:
+        text: FK
+      FM:
+        text: FM
+      FO:
+        text: FO
+      FR:
+        text: FR
+      GA:
+        text: GA
+      GB:
+        text: GB
+      GD:
+        text: GD
+      GE:
+        text: GE
+      GF:
+        text: GF
+      GG:
+        text: GG
+      GH:
+        text: GH
+      GI:
+        text: GI
+      GL:
+        text: GL
+      GM:
+        text: GM
+      GN:
+        text: GN
+      GP:
+        text: GP
+      GQ:
+        text: GQ
+      GR:
+        text: GR
+      GS:
+        text: GS
+      GT:
+        text: GT
+      GU:
+        text: GU
+      GW:
+        text: GW
+      GY:
+        text: GY
+      HK:
+        text: HK
+      HM:
+        text: HM
+      HN:
+        text: HN
+      HR:
+        text: HR
+      HT:
+        text: HT
+      HU:
+        text: HU
+      ID:
+        text: ID
+      IE:
+        text: IE
+      IL:
+        text: IL
+      IM:
+        text: IM
+      IN:
+        text: IN
+      IO:
+        text: IO
+      IQ:
+        text: IQ
+      IR:
+        text: IR
+      IS:
+        text: IS
+      IT:
+        text: IT
+      JE:
+        text: JE
+      JM:
+        text: JM
+      JO:
+        text: JO
+      JP:
+        text: JP
+      KE:
+        text: KE
+      KG:
+        text: KG
+      KH:
+        text: KH
+      KI:
+        text: KI
+      KM:
+        text: KM
+      KN:
+        text: KN
+      KP:
+        text: KP
+      KR:
+        text: KR
+      KW:
+        text: KW
+      KY:
+        text: KY
+      KZ:
+        text: KZ
+      LA:
+        text: LA
+      LB:
+        text: LB
+      LC:
+        text: LC
+      LI:
+        text: LI
+      LK:
+        text: LK
+      LR:
+        text: LR
+      LS:
+        text: LS
+      LT:
+        text: LT
+      LU:
+        text: LU
+      LV:
+        text: LV
+      LY:
+        text: LY
+      MA:
+        text: MA
+      MC:
+        text: MC
+      MD:
+        text: MD
+      ME:
+        text: ME
+      MF:
+        text: MF
+      MG:
+        text: MG
+      MH:
+        text: MH
+      MK:
+        text: MK
+      ML:
+        text: ML
+      MM:
+        text: MM
+      MN:
+        text: MN
+      MO:
+        text: MO
+      MP:
+        text: MP
+      MQ:
+        text: MQ
+      MR:
+        text: MR
+      MS:
+        text: MS
+      MT:
+        text: MT
+      MU:
+        text: MU
+      MV:
+        text: MV
+      MW:
+        text: MW
+      MX:
+        text: MX
+      MY:
+        text: MY
+      MZ:
+        text: MZ
+      NA:
+        text: NA
+      NC:
+        text: NC
+      NE:
+        text: NE
+      NF:
+        text: NF
+      NG:
+        text: NG
+      NI:
+        text: NI
+      NL:
+        text: NL
+      'NO':
+        text: 'NO'
+      NP:
+        text: NP
+      NR:
+        text: NR
+      NU:
+        text: NU
+      NZ:
+        text: NZ
+      OM:
+        text: OM
+      PA:
+        text: PA
+      PE:
+        text: PE
+      PF:
+        text: PF
+      PG:
+        text: PG
+      PH:
+        text: PH
+      PK:
+        text: PK
+      PL:
+        text: PL
+      PM:
+        text: PM
+      PN:
+        text: PN
+      PR:
+        text: PR
+      PS:
+        text: PS
+      PT:
+        text: PT
+      PW:
+        text: PW
+      PY:
+        text: PY
+      QA:
+        text: QA
+      RE:
+        text: RE
+      RO:
+        text: RO
+      RS:
+        text: RS
+      RU:
+        text: RU
+      RW:
+        text: RW
+      SA:
+        text: SA
+      SB:
+        text: SB
+      SC:
+        text: SC
+      SD:
+        text: SD
+      SE:
+        text: SE
+      SG:
+        text: SG
+      SH:
+        text: SH
+      SI:
+        text: SI
+      SJ:
+        text: SJ
+      SK:
+        text: SK
+      SL:
+        text: SL
+      SM:
+        text: SM
+      SN:
+        text: SN
+      SO:
+        text: SO
+      SR:
+        text: SR
+      SS:
+        text: SS
+      ST:
+        text: ST
+      SV:
+        text: SV
+      SX:
+        text: SX
+      SY:
+        text: SY
+      SZ:
+        text: SZ
+      TC:
+        text: TC
+      TD:
+        text: TD
+      TF:
+        text: TF
+      TG:
+        text: TG
+      TH:
+        text: TH
+      TJ:
+        text: TJ
+      TK:
+        text: TK
+      TL:
+        text: TL
+      TM:
+        text: TM
+      TN:
+        text: TN
+      TO:
+        text: TO
+      TR:
+        text: TR
+      TT:
+        text: TT
+      TV:
+        text: TV
+      TW:
+        text: TW
+      TZ:
+        text: TZ
+      UA:
+        text: UA
+      UG:
+        text: UG
+      UM:
+        text: UM
+      US:
+        text: US
+      UY:
+        text: UY
+      UZ:
+        text: UZ
+      VA:
+        text: VA
+      VC:
+        text: VC
+      VE:
+        text: VE
+      VG:
+        text: VG
+      VI:
+        text: VI
+      VN:
+        text: VN
+      VU:
+        text: VU
+      WF:
+        text: WF
+      WS:
+        text: WS
+      YE:
+        text: YE
+      YT:
+        text: YT
+      ZA:
+        text: ZA
+      ZM:
+        text: ZM
+      ZW:
+        text: ZW
+  ExposureDomainEnum:
+    name: ExposureDomainEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ExposureDomainEnum
+    description: Broad domain of an environmental exposure.
+    title: Exposure domain
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      AIR_POLLUTION:
+        text: AIR_POLLUTION
+      CLIMATE_WEATHER:
+        text: CLIMATE_WEATHER
+      GREEN_SPACE:
+        text: GREEN_SPACE
+      BLUE_SPACE:
+        text: BLUE_SPACE
+      NOISE:
+        text: NOISE
+      SOCIODEMOGRAPHIC:
+        text: SOCIODEMOGRAPHIC
+      BUILT_ENVIRONMENT:
+        text: BUILT_ENVIRONMENT
+      WATER_QUALITY:
+        text: WATER_QUALITY
+      LIGHT_POLLUTION:
+        text: LIGHT_POLLUTION
+      BIODIVERSITY:
+        text: BIODIVERSITY
+      INDOOR_HOME_ENVIRONMENT:
+        text: INDOOR_HOME_ENVIRONMENT
+      OTHER:
+        text: OTHER
+        description: Any other domain; give it in domain_other.
+  DataOriginEnum:
+    name: DataOriginEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/DataOriginEnum
+    description: How the source exposure data were produced.
+    title: Data origin
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      MONITORING_STATION:
+        text: MONITORING_STATION
+      LAND_USE_REGRESSION:
+        text: LAND_USE_REGRESSION
+      CHEMICAL_TRANSPORT_MODEL:
+        text: CHEMICAL_TRANSPORT_MODEL
+      SATELLITE_DERIVED:
+        text: SATELLITE_DERIVED
+      PERSONAL_MONITOR:
+        text: PERSONAL_MONITOR
+      QUESTIONNAIRE:
+        text: QUESTIONNAIRE
+      ADMINISTRATIVE_RECORD:
+        text: ADMINISTRATIVE_RECORD
+      REANALYSIS:
+        text: REANALYSIS
+        description: Reanalysis products such as ERA5. Added because they were otherwise
+          unclassifiable.
+      OTHER:
+        text: OTHER
+  GeographicScopeEnum:
+    name: GeographicScopeEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/GeographicScopeEnum
+    description: Kind of geographic coverage.
+    title: Geographic scope
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      COUNTRIES_OR_REGIONS:
+        text: COUNTRIES_OR_REGIONS
+        description: Listed countries or subdivisions; give them in regions.
+      EU27:
+        text: EU27
+        description: The 27 EU member states.
+      GLOBAL:
+        text: GLOBAL
+        description: Worldwide coverage.
+  SpatialResolutionTypeEnum:
+    name: SpatialResolutionTypeEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/SpatialResolutionTypeEnum
+    description: Kind of spatial support of a source dataset.
+    title: Spatial resolution type
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      GRID_METRIC:
+        text: GRID_METRIC
+        description: Regular grid with cell size in metres.
+      GRID_DEGREE:
+        text: GRID_DEGREE
+        description: Regular grid with cell size in degrees.
+      ADMINISTRATIVE_UNIT:
+        text: ADMINISTRATIVE_UNIT
+        description: Values per administrative area.
+      POINT_ADDRESS:
+        text: POINT_ADDRESS
+        description: Values at address points.
+      POINT_GPS:
+        text: POINT_GPS
+        description: Values at GPS points.
+  TemporalResolutionEnum:
+    name: TemporalResolutionEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/TemporalResolutionEnum
+    description: Temporal resolution of a source dataset.
+    title: Temporal resolution
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      SUB_HOURLY:
+        text: SUB_HOURLY
+      HOURLY:
+        text: HOURLY
+      DAILY:
+        text: DAILY
+      WEEKLY:
+        text: WEEKLY
+      MONTHLY:
+        text: MONTHLY
+      SEASONAL:
+        text: SEASONAL
+      ANNUAL:
+        text: ANNUAL
+      MULTI_YEAR_AVERAGE:
+        text: MULTI_YEAR_AVERAGE
+      EVENT_BASED:
+        text: EVENT_BASED
+      STATIC:
+        text: STATIC
+      PERIODIC_UPDATE:
+        text: PERIODIC_UPDATE
+        description: Static snapshots refreshed at an interval; give it in update_frequency.
+  ValidationMetricEnum:
+    name: ValidationMetricEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ValidationMetricEnum
+    description: Validation statistic.
+    title: Validation metric
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      R2:
+        text: R2
+        description: Coefficient of determination.
+      RMSE:
+        text: RMSE
+        description: Root mean squared error.
+      NRMSE_PCT:
+        text: NRMSE_PCT
+        description: Normalised root mean squared error, in percent.
+      MEAN_BIAS:
+        text: MEAN_BIAS
+        description: Mean bias.
+      RELATIVE_BIAS_PCT:
+        text: RELATIVE_BIAS_PCT
+        description: Relative bias, in percent.
+      PEARSON_R:
+        text: PEARSON_R
+        description: Pearson correlation coefficient.
+  ValidationDesignEnum:
+    name: ValidationDesignEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ValidationDesignEnum
+    description: How a validation was carried out.
+    title: Validation design
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      LOOCV_SPATIAL:
+        text: LOOCV_SPATIAL
+        description: Leave-one-out cross-validation over sites.
+      INDEPENDENT_TEST_SET_SPATIAL:
+        text: INDEPENDENT_TEST_SET_SPATIAL
+        description: Validation against held-out sites.
+      TEMPORAL:
+        text: TEMPORAL
+        description: Validation against held-out time periods.
+      OVERALL:
+        text: OVERALL
+        description: Validation reported without a stated design.
+      GROUND_MONITOR_COMPARISON:
+        text: GROUND_MONITOR_COMPARISON
+        description: Comparison against ground monitors.
+  UncertaintyTypeEnum:
+    name: UncertaintyTypeEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/UncertaintyTypeEnum
+    description: Form in which uncertainty is available.
+    title: Uncertainty type
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      NOT_AVAILABLE:
+        text: NOT_AVAILABLE
+      SD_PER_UNIT:
+        text: SD_PER_UNIT
+        description: Standard deviation per spatial unit.
+      PREDICTION_INTERVAL_95:
+        text: PREDICTION_INTERVAL_95
+        description: 95% prediction interval.
+      FULL_PREDICTIVE_DISTRIBUTION:
+        text: FULL_PREDICTIVE_DISTRIBUTION
+      MODEL_LEVEL_RMSE_ONLY:
+        text: MODEL_LEVEL_RMSE_ONLY
+        description: Only a model-level RMSE is available.
+  SpatialLinkageUnitEnum:
+    name: SpatialLinkageUnitEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/SpatialLinkageUnitEnum
+    description: Participant location used for the linkage.
+    title: Spatial linkage unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      GEOCODED_ADDRESS:
+        text: GEOCODED_ADDRESS
+      GPS_COORDINATE:
+        text: GPS_COORDINATE
+      POSTCODE_CENTROID:
+        text: POSTCODE_CENTROID
+      CENSUS_TRACT_CENTROID:
+        text: CENSUS_TRACT_CENTROID
+      LSOA_CENTROID:
+        text: LSOA_CENTROID
+        description: Centroid of a Lower Layer Super Output Area (England and Wales).
+      MUNICIPALITY_CENTROID:
+        text: MUNICIPALITY_CENTROID
+      OTHER_AREAL_CENTROID:
+        text: OTHER_AREAL_CENTROID
+      GRID_CELL_CONTAINING_ADDRESS:
+        text: GRID_CELL_CONTAINING_ADDRESS
+  CentroidWeightingEnum:
+    name: CentroidWeightingEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/CentroidWeightingEnum
+    description: How an areal centroid was computed.
+    title: Centroid weighting
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      GEOMETRIC:
+        text: GEOMETRIC
+      POPULATION_WEIGHTED:
+        text: POPULATION_WEIGHTED
+        description: Population-weighted centroid; give the population dataset.
+      AREA_WEIGHTED:
+        text: AREA_WEIGHTED
+  LinkageOperationEnum:
+    name: LinkageOperationEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/LinkageOperationEnum
+    description: GIS operation used to assign exposure values to locations.
+    title: Linkage operation
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      POINT_IN_POLYGON:
+        text: POINT_IN_POLYGON
+      CIRCULAR_BUFFER:
+        text: CIRCULAR_BUFFER
+        description: Euclidean buffer; give the radii in buffer_radii_m.
+      NETWORK_BUFFER:
+        text: NETWORK_BUFFER
+        description: Street-network buffer; give network_mode.
+      NEAREST_FEATURE:
+        text: NEAREST_FEATURE
+      AREAL_INTERPOLATION:
+        text: AREAL_INTERPOLATION
+      INTERSECTION:
+        text: INTERSECTION
+      KERNEL_DENSITY_WEIGHTED:
+        text: KERNEL_DENSITY_WEIGHTED
+        description: Kernel-weighted surface; give kernel_bandwidth_m.
+      ADMINISTRATIVE_ASSIGNMENT:
+        text: ADMINISTRATIVE_ASSIGNMENT
+  NetworkModeEnum:
+    name: NetworkModeEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/NetworkModeEnum
+    description: Travel mode for a network buffer.
+    title: Network mode
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      WALKING:
+        text: WALKING
+      CYCLING:
+        text: CYCLING
+      DRIVING:
+        text: DRIVING
+      PUBLIC_TRANSPORT:
+        text: PUBLIC_TRANSPORT
+  GeocodingPrecisionEnum:
+    name: GeocodingPrecisionEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/GeocodingPrecisionEnum
+    description: Precision of participant geocodes.
+    title: Geocoding precision
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      BUILDING:
+        text: BUILDING
+        description: < 5 m
+      PARCEL:
+        text: PARCEL
+        description: < 10 m
+      STREET:
+        text: STREET
+        description: < 50 m
+      POSTCODE_CENTROID:
+        text: POSTCODE_CENTROID
+        description: < 500 m
+      CENSUS_UNIT_CENTROID:
+        text: CENSUS_UNIT_CENTROID
+        description: '> 500 m'
+      MIXED:
+        text: MIXED
+        description: Several levels; give the shares in geocoding_mixed_breakdown.
+      UNKNOWN:
+        text: UNKNOWN
+  AggregationEnum:
+    name: AggregationEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/AggregationEnum
+    description: Summary statistic applied to exposure values.
+    title: Aggregation
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      ANNUAL_MEAN:
+        text: ANNUAL_MEAN
+      MONTHLY_MEAN:
+        text: MONTHLY_MEAN
+      DAILY_MEAN:
+        text: DAILY_MEAN
+      DAILY_MAX:
+        text: DAILY_MAX
+      DAILY_MIN:
+        text: DAILY_MIN
+      EIGHT_HOUR_MEAN:
+        text: EIGHT_HOUR_MEAN
+      WARM_SEASON_MEAN:
+        text: WARM_SEASON_MEAN
+      COLD_SEASON_MEAN:
+        text: COLD_SEASON_MEAN
+      NIGHT_TIME_MEAN:
+        text: NIGHT_TIME_MEAN
+      MULTI_YEAR_MEAN:
+        text: MULTI_YEAR_MEAN
+        description: Mean over N years; give N in aggregation_n.
+      CUMULATIVE_SUM:
+        text: CUMULATIVE_SUM
+      PERCENTILE:
+        text: PERCENTILE
+        description: The Nth percentile; give N in aggregation_n.
+      PRESENCE_ABSENCE:
+        text: PRESENCE_ABSENCE
+      DISTANCE_TO_NEAREST:
+        text: DISTANCE_TO_NEAREST
+      COUNT_WITHIN_BUFFER:
+        text: COUNT_WITHIN_BUFFER
+      MEAN_WITHIN_BUFFER:
+        text: MEAN_WITHIN_BUFFER
+        description: Buffer geometry lives in linkage.operation - not duplicated here.
+      COMPOSITE_INDEX:
+        text: COMPOSITE_INDEX
+      RAW_TIME_SERIES:
+        text: RAW_TIME_SERIES
+  CoverageUnitEnum:
+    name: CoverageUnitEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/CoverageUnitEnum
+    description: Unit that a coverage percentage counts.
+    title: Coverage unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      PARTICIPANTS:
+        text: PARTICIPANTS
+      HOUSEHOLDS:
+        text: HOUSEHOLDS
+      CLINICAL_SITES:
+        text: CLINICAL_SITES
+      HOSPITALS:
+        text: HOSPITALS
+      GEOGRAPHIC_UNITS:
+        text: GEOGRAPHIC_UNITS
+  ExposureWindowEnum:
+    name: ExposureWindowEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ExposureWindowEnum
+    description: Period of exposure that linked values represent.
+    title: Exposure window
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      YEAR_BEFORE_RECRUITMENT:
+        text: YEAR_BEFORE_RECRUITMENT
+      N_YEARS_BEFORE_INDEX:
+        text: N_YEARS_BEFORE_INDEX
+        description: N years before an index date; give N in exposure_window_years.
+      PRENATAL:
+        text: PRENATAL
+      PERICONCEPTION:
+        text: PERICONCEPTION
+      INFANCY:
+        text: INFANCY
+      EARLY_CHILDHOOD:
+        text: EARLY_CHILDHOOD
+      ADOLESCENCE:
+        text: ADOLESCENCE
+      LIFETIME_CUMULATIVE:
+        text: LIFETIME_CUMULATIVE
+      TIME_VARYING_ANNUAL:
+        text: TIME_VARYING_ANNUAL
+      CRITICAL_WINDOW:
+        text: CRITICAL_WINDOW
+  ResidentialHistoryEnum:
+    name: ResidentialHistoryEnum
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ResidentialHistoryEnum
+    description: Extent to which residential moves were accounted for.
+    title: Residential history
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    permissible_values:
+      BASELINE_ONLY:
+        text: BASELINE_ONLY
+      FULL_HISTORY:
+        text: FULL_HISTORY
+      PARTIAL_HISTORY:
+        text: PARTIAL_HISTORY
+      NOT_APPLICABLE:
+        text: NOT_APPLICABLE
+      UNKNOWN:
+        text: UNKNOWN
+slots:
+  exposureLinkageCollection__records:
+    name: exposureLinkageCollection__records
+    description: The exposure linkage records in this file.
+    title: Records
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:records
+    alias: records
+    owner: ExposureLinkageCollection
+    domain_of:
+    - ExposureLinkageCollection
+    range: ExposureLinkageRecord
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  exposureLinkageRecord__id:
+    name: exposureLinkageRecord__id
+    description: Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.
+    title: Record identifier
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:id
+    identifier: true
+    alias: id
+    owner: ExposureLinkageRecord
+    domain_of:
+    - ExposureLinkageRecord
+    range: string
+    required: true
+  exposureLinkageRecord__cohort:
+    name: exposureLinkageRecord__cohort
+    description: The cohort or study whose participants received the exposure values.
+    title: Cohort
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:cohort
+    alias: cohort
+    owner: ExposureLinkageRecord
+    domain_of:
+    - ExposureLinkageRecord
+    range: Cohort
+    required: true
+    inlined: true
+    inlined_as_list: true
+  exposureLinkageRecord__exposure:
+    name: exposureLinkageRecord__exposure
+    description: The exposure variable that was linked.
+    title: Exposure
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:exposure
+    alias: exposure
+    owner: ExposureLinkageRecord
+    domain_of:
+    - ExposureLinkageRecord
+    range: ExposureVariable
+    required: true
+    inlined: true
+    inlined_as_list: true
+  exposureLinkageRecord__source_data:
+    name: exposureLinkageRecord__source_data
+    description: The upstream exposure product the values were taken from.
+    title: Source data
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:source_data
+    alias: source_data
+    owner: ExposureLinkageRecord
+    domain_of:
+    - ExposureLinkageRecord
+    range: SourceDataset
+    required: true
+    inlined: true
+    inlined_as_list: true
+  exposureLinkageRecord__linkage:
+    name: exposureLinkageRecord__linkage
+    description: How exposure values were assigned to participants.
+    title: Linkage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:linkage
+    alias: linkage
+    owner: ExposureLinkageRecord
+    domain_of:
+    - ExposureLinkageRecord
+    range: Linkage
+    required: true
+    inlined: true
+    inlined_as_list: true
+  exposureLinkageRecord__creators:
+    name: exposureLinkageRecord__creators
+    description: People responsible for producing this linkage.
+    title: Creator(s)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:creators
+    alias: creators
+    owner: ExposureLinkageRecord
+    domain_of:
+    - ExposureLinkageRecord
+    range: Person
+    recommended: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  cohort__name:
+    name: cohort__name
+    description: Full name of the cohort or study, e.g. UK Biobank.
+    title: Cohort / Study Name
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:name
+    alias: name
+    owner: Cohort
+    domain_of:
+    - Cohort
+    range: string
+    required: true
+  cohort__acronym:
+    name: cohort__acronym
+    description: Short name, e.g. UKB. Split out of the old "Name (ACRONYM)" string.
+    title: Cohort acronym
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:acronym
+    alias: acronym
+    owner: Cohort
+    domain_of:
+    - Cohort
+    range: string
+    required: true
+  cohort__collection_countries:
+    name: cohort__collection_countries
+    description: Countries in which participant data were collected, as ISO 3166-1
+      alpha-2 codes.
+    title: Country of Participant Data Collection
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:collection_countries
+    alias: collection_countries
+    owner: Cohort
+    domain_of:
+    - Cohort
+    range: CountryCodeEnum
+    required: true
+    multivalued: true
+  exposureVariable__domain:
+    name: exposureVariable__domain
+    description: Broad exposure domain.
+    title: Exposure Domain
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:domain
+    alias: domain
+    owner: ExposureVariable
+    domain_of:
+    - ExposureVariable
+    range: ExposureDomainEnum
+    required: true
+  exposureVariable__domain_other:
+    name: exposureVariable__domain_other
+    description: Free-text domain. Required when domain = OTHER.
+    title: Exposure Domain (other)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:domain_other
+    alias: domain_other
+    owner: ExposureVariable
+    domain_of:
+    - ExposureVariable
+    range: string
+  exposureVariable__name:
+    name: exposureVariable__name
+    description: Descriptive term for the variable, e.g. NO2, PM2.5, Lden, NDVI.
+    title: Exposure Variable Name
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:name
+    alias: name
+    owner: ExposureVariable
+    domain_of:
+    - ExposureVariable
+    range: string
+    required: true
+  exposureVariable__ontology_terms:
+    name: exposureVariable__ontology_terms
+    description: 'Resolvable identifiers for the exposure. Chemicals: INCHIKEY (preferred),
+      PUBCHEM, DTXSID, CAS. Physical or environmental exposures: ExO, ENVO, MESH.
+      Leave empty if no term exists.'
+    title: Ontology / Taxonomy Term ID
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:ontology_terms
+    alias: ontology_terms
+    owner: ExposureVariable
+    domain_of:
+    - ExposureVariable
+    range: CURIE
+    recommended: true
+    multivalued: true
+  exposureVariable__unit:
+    name: exposureVariable__unit
+    description: UCUM code for the unit of the linked values. Omit for categorical
+      variables.
+    title: Unit of Measure
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:unit
+    alias: unit
+    owner: ExposureVariable
+    domain_of:
+    - ExposureVariable
+    range: UcumCode
+  exposureVariable__is_categorical:
+    name: exposureVariable__is_categorical
+    description: True if the variable takes categorical rather than numeric values.
+    title: Is categorical
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:is_categorical
+    alias: is_categorical
+    owner: ExposureVariable
+    domain_of:
+    - ExposureVariable
+    range: boolean
+  sourceDataset__origin:
+    name: sourceDataset__origin
+    description: How the source exposure data were produced.
+    title: Origin of the Data
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:origin
+    alias: origin
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: DataOriginEnum
+    required: true
+  sourceDataset__dataset_name:
+    name: sourceDataset__dataset_name
+    description: Name of the model or dataset, e.g. ELAPSE LUR, ERA5, MODIS MOD13A3.
+    title: Model / Dataset Name
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:dataset_name
+    alias: dataset_name
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: string
+    required: true
+  sourceDataset__dataset_version:
+    name: sourceDataset__dataset_version
+    description: Version number or release year, e.g. 2.0, 006, 2023.
+    title: Model / Dataset Version
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:dataset_version
+    alias: dataset_version
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: string
+    required: true
+  sourceDataset__citations:
+    name: sourceDataset__citations
+    description: Citations for the source dataset and the methods used to produce
+      it.
+    title: Data Source Citation / URL
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:citations
+    alias: citations
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: Citation
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  sourceDataset__geographic_coverage:
+    name: sourceDataset__geographic_coverage
+    description: Area covered by the source dataset.
+    title: Geographic Coverage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:geographic_coverage
+    alias: geographic_coverage
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: GeographicCoverage
+    required: true
+    inlined: true
+    inlined_as_list: true
+  sourceDataset__spatial_resolution:
+    name: sourceDataset__spatial_resolution
+    description: Spatial resolution of the source dataset.
+    title: Spatial Resolution
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:spatial_resolution
+    alias: spatial_resolution
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: SpatialResolution
+    required: true
+    inlined: true
+    inlined_as_list: true
+  sourceDataset__temporal_coverage:
+    name: sourceDataset__temporal_coverage
+    description: Period covered by the source dataset.
+    title: Date Coverage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:temporal_coverage
+    alias: temporal_coverage
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: TemporalCoverage
+    required: true
+    inlined: true
+    inlined_as_list: true
+  sourceDataset__temporal_resolution:
+    name: sourceDataset__temporal_resolution
+    description: Temporal resolution of the source dataset.
+    title: Temporal Resolution
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:temporal_resolution
+    alias: temporal_resolution
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: TemporalResolutionEnum
+    required: true
+  sourceDataset__update_frequency:
+    name: sourceDataset__update_frequency
+    description: For PERIODIC_UPDATE, the update interval as an ISO 8601 duration,
+      e.g. P5Y.
+    title: Update frequency
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:update_frequency
+    alias: update_frequency
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: string
+    pattern: ^P(\d+Y)?(\d+M)?(\d+W)?(\d+D)?$
+  sourceDataset__validation_metrics:
+    name: sourceDataset__validation_metrics
+    description: Reported validation metrics. An empty list with validation_reported
+      = false means the dataset was not validated.
+    title: Validation Status
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:validation_metrics
+    alias: validation_metrics
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: ValidationMetric
+    recommended: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  sourceDataset__validation_reported:
+    name: sourceDataset__validation_reported
+    description: True if the dataset producers report a validation of the dataset.
+    title: Validation reported
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:validation_reported
+    alias: validation_reported
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: boolean
+  sourceDataset__uncertainty:
+    name: sourceDataset__uncertainty
+    description: Uncertainty information available for the dataset.
+    title: Uncertainty
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:uncertainty
+    alias: uncertainty
+    owner: SourceDataset
+    domain_of:
+    - SourceDataset
+    range: Uncertainty
+    recommended: true
+    inlined: true
+    inlined_as_list: true
+  citation__doi:
+    name: citation__doi
+    description: 'Bare DOI, without the doi: prefix or resolver URL, e.g. 10.1234/abcd.'
+    title: DOI
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:doi
+    alias: doi
+    owner: Citation
+    domain_of:
+    - Citation
+    range: string
+    pattern: ^10\.\d{4,9}/\S+$
+  citation__url:
+    name: citation__url
+    description: Web address of the source or its documentation.
+    title: URL
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:url
+    alias: url
+    owner: Citation
+    domain_of:
+    - Citation
+    range: uri
+  citation__accessed:
+    name: citation__accessed
+    description: Date the URL was accessed. Required when url is given without a DOI.
+    title: Accessed
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:accessed
+    alias: accessed
+    owner: Citation
+    domain_of:
+    - Citation
+    range: date
+  citation__text:
+    name: citation__text
+    description: Free-text citation, for sources without a DOI or URL.
+    title: Citation text
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:text
+    alias: text
+    owner: Citation
+    domain_of:
+    - Citation
+    range: string
+  citation__used_for_linkage:
+    name: citation__used_for_linkage
+    description: True if this is the source actually used for the linkage. Replaces
+      the old "*" marker.
+    title: Used for linkage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:used_for_linkage
+    alias: used_for_linkage
+    owner: Citation
+    domain_of:
+    - Citation
+    range: boolean
+  geographicCoverage__scope:
+    name: geographicCoverage__scope
+    description: Kind of coverage.
+    title: Scope
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:scope
+    alias: scope
+    owner: GeographicCoverage
+    domain_of:
+    - GeographicCoverage
+    range: GeographicScopeEnum
+    required: true
+  geographicCoverage__regions:
+    name: geographicCoverage__regions
+    description: ISO 3166-1 / ISO 3166-2 codes. Required when scope = COUNTRIES_OR_REGIONS.
+    title: Regions
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:regions
+    alias: regions
+    owner: GeographicCoverage
+    domain_of:
+    - GeographicCoverage
+    range: RegionCode
+    multivalued: true
+  geographicCoverage__description:
+    name: geographicCoverage__description
+    description: Optional note, e.g. "UK-wide", "multiple provinces".
+    title: Coverage description
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:description
+    alias: description
+    owner: GeographicCoverage
+    domain_of:
+    - GeographicCoverage
+    range: string
+  spatialResolution__type:
+    name: spatialResolution__type
+    description: Kind of spatial support.
+    title: Resolution type
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:type
+    alias: type
+    owner: SpatialResolution
+    domain_of:
+    - SpatialResolution
+    range: SpatialResolutionTypeEnum
+    required: true
+  spatialResolution__cell_width:
+    name: spatialResolution__cell_width
+    description: Grid cell width; metres for GRID_METRIC, degrees for GRID_DEGREE.
+    title: Cell width
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:cell_width
+    alias: cell_width
+    owner: SpatialResolution
+    domain_of:
+    - SpatialResolution
+    range: float
+  spatialResolution__cell_height:
+    name: spatialResolution__cell_height
+    description: Grid cell height; metres for GRID_METRIC, degrees for GRID_DEGREE.
+    title: Cell height
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:cell_height
+    alias: cell_height
+    owner: SpatialResolution
+    domain_of:
+    - SpatialResolution
+    range: float
+  spatialResolution__admin_unit_name:
+    name: spatialResolution__admin_unit_name
+    description: For ADMINISTRATIVE_UNIT, the unit type, e.g. LSOA, census tract.
+    title: Administrative unit name
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:admin_unit_name
+    alias: admin_unit_name
+    owner: SpatialResolution
+    domain_of:
+    - SpatialResolution
+    range: string
+  spatialResolution__admin_unit_approx_population:
+    name: spatialResolution__admin_unit_approx_population
+    description: Typical population of one administrative unit.
+    title: Administrative unit approximate population
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:admin_unit_approx_population
+    alias: admin_unit_approx_population
+    owner: SpatialResolution
+    domain_of:
+    - SpatialResolution
+    range: integer
+  temporalCoverage__start:
+    name: temporalCoverage__start
+    description: First date covered, as an ISO 8601 partial date.
+    title: Date Coverage - Start
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:start
+    alias: start
+    owner: TemporalCoverage
+    domain_of:
+    - TemporalCoverage
+    range: PartialDate
+    required: true
+  temporalCoverage__end:
+    name: temporalCoverage__end
+    description: Last date covered, as an ISO 8601 partial date. Omit when ongoing
+      = true.
+    title: Date Coverage - End
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:end
+    alias: end
+    owner: TemporalCoverage
+    domain_of:
+    - TemporalCoverage
+    range: PartialDate
+  temporalCoverage__ongoing:
+    name: temporalCoverage__ongoing
+    description: True if the dataset is still being extended. Replaces the magic string
+      "Ongoing".
+    title: Ongoing
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:ongoing
+    alias: ongoing
+    owner: TemporalCoverage
+    domain_of:
+    - TemporalCoverage
+    range: boolean
+  temporalCoverage__last_updated:
+    name: temporalCoverage__last_updated
+    description: Date of the most recent update. Required when ongoing = true.
+    title: Last updated
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:last_updated
+    alias: last_updated
+    owner: TemporalCoverage
+    domain_of:
+    - TemporalCoverage
+    range: PartialDate
+  validationMetric__metric:
+    name: validationMetric__metric
+    description: The validation statistic.
+    title: Metric
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:metric
+    alias: metric
+    owner: ValidationMetric
+    domain_of:
+    - ValidationMetric
+    range: ValidationMetricEnum
+    required: true
+  validationMetric__validation_design:
+    name: validationMetric__validation_design
+    description: How the validation was carried out.
+    title: Validation design
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:validation_design
+    alias: validation_design
+    owner: ValidationMetric
+    domain_of:
+    - ValidationMetric
+    range: ValidationDesignEnum
+  validationMetric__value:
+    name: validationMetric__value
+    description: Value of the statistic.
+    title: Value
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:value
+    alias: value
+    owner: ValidationMetric
+    domain_of:
+    - ValidationMetric
+    range: float
+    required: true
+  validationMetric__unit:
+    name: validationMetric__unit
+    description: UCUM code, for RMSE and mean bias. Omit for R2, r and percentages.
+    title: Unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:unit
+    alias: unit
+    owner: ValidationMetric
+    domain_of:
+    - ValidationMetric
+    range: UcumCode
+  uncertainty__type:
+    name: uncertainty__type
+    description: Form in which uncertainty is available.
+    title: Uncertainty type
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:type
+    alias: type
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: UncertaintyTypeEnum
+    required: true
+  uncertainty__value:
+    name: uncertainty__value
+    description: Point value of the uncertainty measure, if a single value applies.
+    title: Value
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:value
+    alias: value
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: float
+  uncertainty__lower:
+    name: uncertainty__lower
+    description: Lower bound of the uncertainty interval.
+    title: Lower bound
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:lower
+    alias: lower
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: float
+  uncertainty__upper:
+    name: uncertainty__upper
+    description: Upper bound of the uncertainty interval.
+    title: Upper bound
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:upper
+    alias: upper
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: float
+  uncertainty__unit:
+    name: uncertainty__unit
+    description: UCUM code for value, lower and upper.
+    title: Unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:unit
+    alias: unit
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: UcumCode
+  uncertainty__carried_to_participant_level:
+    name: uncertainty__carried_to_participant_level
+    description: True if uncertainty is propagated to the participant-level exposure
+      values.
+    title: Carried to participant level
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:carried_to_participant_level
+    alias: carried_to_participant_level
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: boolean
+  linkage__spatial_linkage_unit:
+    name: linkage__spatial_linkage_unit
+    description: Participant location used for the linkage.
+    title: Spatial Linkage Unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:spatial_linkage_unit
+    alias: spatial_linkage_unit
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: SpatialLinkageUnitEnum
+    required: true
+  linkage__centroid_weighting:
+    name: linkage__centroid_weighting
+    description: How the centroid was computed. Required for any *_CENTROID unit.
+    title: Centroid weighting
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:centroid_weighting
+    alias: centroid_weighting
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: CentroidWeightingEnum
+  linkage__centroid_areal_unit:
+    name: linkage__centroid_areal_unit
+    description: The areal unit the centroid represents, e.g. "output area".
+    title: Centroid areal unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:centroid_areal_unit
+    alias: centroid_areal_unit
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: string
+  linkage__population_dataset:
+    name: linkage__population_dataset
+    description: Population dataset used for POPULATION_WEIGHTED centroids.
+    title: Population dataset
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:population_dataset
+    alias: population_dataset
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: string
+  linkage__operation:
+    name: linkage__operation
+    description: GIS operation used to assign values.
+    title: Spatial Linkage Operation
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:operation
+    alias: operation
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: LinkageOperationEnum
+    required: true
+  linkage__buffer_radii_m:
+    name: linkage__buffer_radii_m
+    description: Buffer radii in metres. Required for CIRCULAR_BUFFER; list all radii
+      if several were reported.
+    title: Buffer Distance
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:buffer_radii_m
+    alias: buffer_radii_m
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+    multivalued: true
+    minimum_value: 0
+  linkage__network_mode:
+    name: linkage__network_mode
+    description: Travel mode for NETWORK_BUFFER.
+    title: Network mode
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:network_mode
+    alias: network_mode
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: NetworkModeEnum
+  linkage__network_distance_m:
+    name: linkage__network_distance_m
+    description: Network buffer distance in metres.
+    title: Network distance (m)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:network_distance_m
+    alias: network_distance_m
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+  linkage__network_time_min:
+    name: linkage__network_time_min
+    description: Network buffer travel time in minutes.
+    title: Network time (min)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:network_time_min
+    alias: network_time_min
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+  linkage__intersection_min_overlap_pct:
+    name: linkage__intersection_min_overlap_pct
+    description: Minimum areal overlap, in percent, for INTERSECTION.
+    title: Intersection minimum overlap (%)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:intersection_min_overlap_pct
+    alias: intersection_min_overlap_pct
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+    minimum_value: 0
+    maximum_value: 100
+  linkage__kernel_bandwidth_m:
+    name: linkage__kernel_bandwidth_m
+    description: Kernel bandwidth in metres. Required for KERNEL_DENSITY_WEIGHTED.
+    title: Kernel bandwidth (m)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:kernel_bandwidth_m
+    alias: kernel_bandwidth_m
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+  linkage__kernel_grid_resolution_m:
+    name: linkage__kernel_grid_resolution_m
+    description: Output grid resolution of the kernel density surface, in metres.
+    title: Kernel grid resolution (m)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:kernel_grid_resolution_m
+    alias: kernel_grid_resolution_m
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+  linkage__geocoding_precision:
+    name: linkage__geocoding_precision
+    description: Precision of participant geocodes.
+    title: Geocoding Precision
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:geocoding_precision
+    alias: geocoding_precision
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: GeocodingPrecisionEnum
+    recommended: true
+  linkage__geocoding_mixed_breakdown:
+    name: linkage__geocoding_mixed_breakdown
+    description: For MIXED precision, the share of each level, e.g. "80% building,
+      20% postcode".
+    title: Geocoding mixed breakdown
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:geocoding_mixed_breakdown
+    alias: geocoding_mixed_breakdown
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: string
+  linkage__geocoder:
+    name: linkage__geocoder
+    description: Geocoding database name and version or release date.
+    title: Geocoding Database Version
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:geocoder
+    alias: geocoder
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: string
+    recommended: true
+  linkage__aggregation:
+    name: linkage__aggregation
+    description: Summary statistic applied to the exposure values. Buffer geometry
+      is recorded once, under operation.
+    title: Summary Statistic / Aggregation
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:aggregation
+    alias: aggregation
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: AggregationEnum
+    required: true
+  linkage__aggregation_n:
+    name: linkage__aggregation_n
+    description: N for MULTI_YEAR_MEAN (years) or PERCENTILE (the percentile).
+    title: Aggregation N
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:aggregation_n
+    alias: aggregation_n
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: integer
+  linkage__participant_coverage_pct:
+    name: linkage__participant_coverage_pct
+    description: Percentage (0-100) of coverage units that received an exposure value.
+    title: Missing Data / Coverage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:participant_coverage_pct
+    alias: participant_coverage_pct
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+    recommended: true
+    minimum_value: 0
+    maximum_value: 100
+  linkage__coverage_unit:
+    name: linkage__coverage_unit
+    description: Unit that participant_coverage_pct counts.
+    title: Coverage unit
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:coverage_unit
+    alias: coverage_unit
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: CoverageUnitEnum
+  linkage__study_area_coverage_pct:
+    name: linkage__study_area_coverage_pct
+    description: Percentage (0-100) of the study area covered by the source dataset.
+    title: Study area coverage (%)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:study_area_coverage_pct
+    alias: study_area_coverage_pct
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: float
+    minimum_value: 0
+    maximum_value: 100
+  linkage__exposure_window:
+    name: linkage__exposure_window
+    description: Period of exposure the linked values represent.
+    title: Exposure Window
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:exposure_window
+    alias: exposure_window
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: ExposureWindowEnum
+    recommended: true
+  linkage__exposure_window_years:
+    name: linkage__exposure_window_years
+    description: Length of the exposure window in years, e.g. N for N_YEARS_BEFORE_INDEX.
+    title: Exposure window (years)
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:exposure_window_years
+    alias: exposure_window_years
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: integer
+  linkage__exposure_window_detail:
+    name: linkage__exposure_window_detail
+    description: Further detail, e.g. trimester or age range.
+    title: Exposure window detail
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:exposure_window_detail
+    alias: exposure_window_detail
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: string
+  linkage__residential_history:
+    name: linkage__residential_history
+    description: Extent to which residential moves were accounted for.
+    title: Residential History
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:residential_history
+    alias: residential_history
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: ResidentialHistoryEnum
+    recommended: true
+  linkage__residential_history_detail:
+    name: linkage__residential_history_detail
+    description: Free-text detail on how residential history was handled.
+    title: Residential history detail
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:residential_history_detail
+    alias: residential_history_detail
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: string
+  linkage__linkage_date:
+    name: linkage__linkage_date
+    description: Date the linkage was performed.
+    title: Linkage Date
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:linkage_date
+    alias: linkage_date
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: date
+    recommended: true
+  linkage__relinkages:
+    name: linkage__relinkages
+    description: Later re-runs of the linkage, e.g. after a geocoder update.
+    title: Relinkages
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:relinkages
+    alias: relinkages
+    owner: Linkage
+    domain_of:
+    - Linkage
+    range: Relinkage
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  relinkage__date:
+    name: relinkage__date
+    description: Date of the re-run.
+    title: Relinkage date
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:date
+    alias: date
+    owner: Relinkage
+    domain_of:
+    - Relinkage
+    range: date
+    required: true
+  relinkage__reason:
+    name: relinkage__reason
+    description: Why the linkage was re-run, e.g. geocoder update.
+    title: Reason
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:reason
+    alias: reason
+    owner: Relinkage
+    domain_of:
+    - Relinkage
+    range: string
+    required: true
+  person__name:
+    name: person__name
+    description: Full name of the person.
+    title: Name
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:name
+    alias: name
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+  person__email:
+    name: person__email
+    description: Contact email address.
+    title: Email
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:email
+    alias: email
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+    pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+  person__orcid:
+    name: person__orcid
+    description: ORCID identifier as a CURIE, e.g. ORCID:0000-0002-1825-0097.
+    title: ORCID
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:orcid
+    alias: orcid
+    owner: Person
+    domain_of:
+    - Person
+    range: CURIE
+  person__role:
+    name: person__role
+    description: Role in producing the linkage, e.g. senior investigator.
+    title: Role
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slot_uri: expo:role
+    alias: role
+    owner: Person
+    domain_of:
+    - Person
+    range: string
+classes:
+  ExposureLinkageCollection:
+    name: ExposureLinkageCollection
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ExposureLinkageCollection
+    description: Container so that one file can hold many exposure linkage records.
+    title: Exposure linkage collection
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - exposureLinkageCollection__records
+    attributes:
+      records:
+        name: records
+        description: The exposure linkage records in this file.
+        title: Records
+        range: ExposureLinkageRecord
+        required: true
+        multivalued: true
+        inlined_as_list: true
+    class_uri: expo:ExposureLinkageCollection
+    tree_root: true
+  ExposureLinkageRecord:
+    name: ExposureLinkageRecord
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ExposureLinkageRecord
+    description: One exposure variable linked to the participants of one cohort.
+    title: Exposure linkage record
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - exposureLinkageRecord__id
+    - exposureLinkageRecord__cohort
+    - exposureLinkageRecord__exposure
+    - exposureLinkageRecord__source_data
+    - exposureLinkageRecord__linkage
+    - exposureLinkageRecord__creators
+    attributes:
+      id:
+        name: id
+        description: Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.
+        title: Record identifier
+        identifier: true
+      cohort:
+        name: cohort
+        description: The cohort or study whose participants received the exposure
+          values.
+        title: Cohort
+        range: Cohort
+        required: true
+        inlined: true
+      exposure:
+        name: exposure
+        description: The exposure variable that was linked.
+        title: Exposure
+        range: ExposureVariable
+        required: true
+        inlined: true
+      source_data:
+        name: source_data
+        description: The upstream exposure product the values were taken from.
+        title: Source data
+        range: SourceDataset
+        required: true
+        inlined: true
+      linkage:
+        name: linkage
+        description: How exposure values were assigned to participants.
+        title: Linkage
+        range: Linkage
+        required: true
+        inlined: true
+      creators:
+        name: creators
+        description: People responsible for producing this linkage.
+        title: Creator(s)
+        range: Person
+        recommended: true
+        multivalued: true
+        inlined_as_list: true
+    class_uri: expo:ExposureLinkageRecord
+  Cohort:
+    name: Cohort
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/Cohort
+    description: The cohort or study whose participants were linked. Replaces the
+      CSV fields "Cohort / Study Name" and "Country of Participant Data Collection".
+    title: Cohort
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - cohort__name
+    - cohort__acronym
+    - cohort__collection_countries
+    attributes:
+      name:
+        name: name
+        description: Full name of the cohort or study, e.g. UK Biobank.
+        title: Cohort / Study Name
+        required: true
+      acronym:
+        name: acronym
+        description: Short name, e.g. UKB. Split out of the old "Name (ACRONYM)" string.
+        title: Cohort acronym
+        required: true
+      collection_countries:
+        name: collection_countries
+        description: Countries in which participant data were collected, as ISO 3166-1
+          alpha-2 codes.
+        title: Country of Participant Data Collection
+        range: CountryCodeEnum
+        required: true
+        multivalued: true
+    class_uri: expo:Cohort
+  ExposureVariable:
+    name: ExposureVariable
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ExposureVariable
+    description: The environmental exposure that was linked. Replaces the CSV fields
+      "Exposure Domain", "Exposure Variable Name", "Ontology / Taxonomy Term ID" and
+      "Unit of Measure".
+    title: Exposure variable
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - exposureVariable__domain
+    - exposureVariable__domain_other
+    - exposureVariable__name
+    - exposureVariable__ontology_terms
+    - exposureVariable__unit
+    - exposureVariable__is_categorical
+    attributes:
+      domain:
+        name: domain
+        description: Broad exposure domain.
+        title: Exposure Domain
+        range: ExposureDomainEnum
+        required: true
+      domain_other:
+        name: domain_other
+        description: Free-text domain. Required when domain = OTHER.
+        title: Exposure Domain (other)
+      name:
+        name: name
+        description: Descriptive term for the variable, e.g. NO2, PM2.5, Lden, NDVI.
+        title: Exposure Variable Name
+        required: true
+      ontology_terms:
+        name: ontology_terms
+        description: 'Resolvable identifiers for the exposure. Chemicals: INCHIKEY
+          (preferred), PUBCHEM, DTXSID, CAS. Physical or environmental exposures:
+          ExO, ENVO, MESH. Leave empty if no term exists.'
+        title: Ontology / Taxonomy Term ID
+        range: CURIE
+        recommended: true
+        multivalued: true
+      unit:
+        name: unit
+        description: UCUM code for the unit of the linked values. Omit for categorical
+          variables.
+        title: Unit of Measure
+        range: UcumCode
+      is_categorical:
+        name: is_categorical
+        description: True if the variable takes categorical rather than numeric values.
+        title: Is categorical
+        range: boolean
+    class_uri: expo:ExposureVariable
+    rules:
+    - preconditions:
+        slot_conditions:
+          domain:
+            name: domain
+            equals_string: OTHER
+      postconditions:
+        slot_conditions:
+          domain_other:
+            name: domain_other
+            required: true
+      description: OTHER domain must be specified.
+  SourceDataset:
+    name: SourceDataset
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/SourceDataset
+    description: The upstream exposure product (model, satellite product, monitoring
+      network, ...).
+    title: Source dataset
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - sourceDataset__origin
+    - sourceDataset__dataset_name
+    - sourceDataset__dataset_version
+    - sourceDataset__citations
+    - sourceDataset__geographic_coverage
+    - sourceDataset__spatial_resolution
+    - sourceDataset__temporal_coverage
+    - sourceDataset__temporal_resolution
+    - sourceDataset__update_frequency
+    - sourceDataset__validation_metrics
+    - sourceDataset__validation_reported
+    - sourceDataset__uncertainty
+    attributes:
+      origin:
+        name: origin
+        description: How the source exposure data were produced.
+        title: Origin of the Data
+        range: DataOriginEnum
+        required: true
+      dataset_name:
+        name: dataset_name
+        description: Name of the model or dataset, e.g. ELAPSE LUR, ERA5, MODIS MOD13A3.
+        title: Model / Dataset Name
+        required: true
+      dataset_version:
+        name: dataset_version
+        description: Version number or release year, e.g. 2.0, 006, 2023.
+        title: Model / Dataset Version
+        required: true
+      citations:
+        name: citations
+        description: Citations for the source dataset and the methods used to produce
+          it.
+        title: Data Source Citation / URL
+        range: Citation
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      geographic_coverage:
+        name: geographic_coverage
+        description: Area covered by the source dataset.
+        title: Geographic Coverage
+        range: GeographicCoverage
+        required: true
+        inlined: true
+      spatial_resolution:
+        name: spatial_resolution
+        description: Spatial resolution of the source dataset.
+        title: Spatial Resolution
+        range: SpatialResolution
+        required: true
+        inlined: true
+      temporal_coverage:
+        name: temporal_coverage
+        description: Period covered by the source dataset.
+        title: Date Coverage
+        range: TemporalCoverage
+        required: true
+        inlined: true
+      temporal_resolution:
+        name: temporal_resolution
+        description: Temporal resolution of the source dataset.
+        title: Temporal Resolution
+        range: TemporalResolutionEnum
+        required: true
+      update_frequency:
+        name: update_frequency
+        description: For PERIODIC_UPDATE, the update interval as an ISO 8601 duration,
+          e.g. P5Y.
+        title: Update frequency
+        pattern: ^P(\d+Y)?(\d+M)?(\d+W)?(\d+D)?$
+      validation_metrics:
+        name: validation_metrics
+        description: Reported validation metrics. An empty list with validation_reported
+          = false means the dataset was not validated.
+        title: Validation Status
+        range: ValidationMetric
+        recommended: true
+        multivalued: true
+        inlined_as_list: true
+      validation_reported:
+        name: validation_reported
+        description: True if the dataset producers report a validation of the dataset.
+        title: Validation reported
+        range: boolean
+      uncertainty:
+        name: uncertainty
+        description: Uncertainty information available for the dataset.
+        title: Uncertainty
+        range: Uncertainty
+        recommended: true
+        inlined: true
+    class_uri: expo:SourceDataset
+    rules:
+    - preconditions:
+        slot_conditions:
+          temporal_resolution:
+            name: temporal_resolution
+            equals_string: PERIODIC_UPDATE
+      postconditions:
+        slot_conditions:
+          update_frequency:
+            name: update_frequency
+            required: true
+      description: Periodic update needs a frequency.
+  Citation:
+    name: Citation
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/Citation
+    description: A reference to the source data or its documentation. At least one
+      of doi, url or text is required.
+    title: Citation
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - citation__doi
+    - citation__url
+    - citation__accessed
+    - citation__text
+    - citation__used_for_linkage
+    attributes:
+      doi:
+        name: doi
+        description: 'Bare DOI, without the doi: prefix or resolver URL, e.g. 10.1234/abcd.'
+        title: DOI
+        pattern: ^10\.\d{4,9}/\S+$
+      url:
+        name: url
+        description: Web address of the source or its documentation.
+        title: URL
+        range: uri
+      accessed:
+        name: accessed
+        description: Date the URL was accessed. Required when url is given without
+          a DOI.
+        title: Accessed
+        range: date
+      text:
+        name: text
+        description: Free-text citation, for sources without a DOI or URL.
+        title: Citation text
+      used_for_linkage:
+        name: used_for_linkage
+        description: True if this is the source actually used for the linkage. Replaces
+          the old "*" marker.
+        title: Used for linkage
+        range: boolean
+    class_uri: expo:Citation
+    any_of:
+    - slot_conditions:
+        doi:
+          name: doi
+          required: true
+    - slot_conditions:
+        url:
+          name: url
+          required: true
+    - slot_conditions:
+        text:
+          name: text
+          required: true
+  GeographicCoverage:
+    name: GeographicCoverage
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/GeographicCoverage
+    description: Area covered by a source dataset.
+    title: Geographic coverage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - geographicCoverage__scope
+    - geographicCoverage__regions
+    - geographicCoverage__description
+    attributes:
+      scope:
+        name: scope
+        description: Kind of coverage.
+        title: Scope
+        range: GeographicScopeEnum
+        required: true
+      regions:
+        name: regions
+        description: ISO 3166-1 / ISO 3166-2 codes. Required when scope = COUNTRIES_OR_REGIONS.
+        title: Regions
+        range: RegionCode
+        multivalued: true
+      description:
+        name: description
+        description: Optional note, e.g. "UK-wide", "multiple provinces".
+        title: Coverage description
+    class_uri: expo:GeographicCoverage
+    rules:
+    - preconditions:
+        slot_conditions:
+          scope:
+            name: scope
+            equals_string: COUNTRIES_OR_REGIONS
+      postconditions:
+        slot_conditions:
+          regions:
+            name: regions
+            required: true
+      description: Country/region scope needs region codes.
+  SpatialResolution:
+    name: SpatialResolution
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/SpatialResolution
+    description: Spatial resolution of a source dataset, as numbers rather than strings
+      such as "100 m x 100 m".
+    title: Spatial resolution
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - spatialResolution__type
+    - spatialResolution__cell_width
+    - spatialResolution__cell_height
+    - spatialResolution__admin_unit_name
+    - spatialResolution__admin_unit_approx_population
+    attributes:
+      type:
+        name: type
+        description: Kind of spatial support.
+        title: Resolution type
+        range: SpatialResolutionTypeEnum
+        required: true
+      cell_width:
+        name: cell_width
+        description: Grid cell width; metres for GRID_METRIC, degrees for GRID_DEGREE.
+        title: Cell width
+        range: float
+      cell_height:
+        name: cell_height
+        description: Grid cell height; metres for GRID_METRIC, degrees for GRID_DEGREE.
+        title: Cell height
+        range: float
+      admin_unit_name:
+        name: admin_unit_name
+        description: For ADMINISTRATIVE_UNIT, the unit type, e.g. LSOA, census tract.
+        title: Administrative unit name
+      admin_unit_approx_population:
+        name: admin_unit_approx_population
+        description: Typical population of one administrative unit.
+        title: Administrative unit approximate population
+        range: integer
+    class_uri: expo:SpatialResolution
+    rules:
+    - preconditions:
+        slot_conditions:
+          type:
+            name: type
+            equals_string: GRID_METRIC
+      postconditions:
+        slot_conditions:
+          cell_width:
+            name: cell_width
+            required: true
+          cell_height:
+            name: cell_height
+            required: true
+      description: Metric grid needs cell size.
+    - preconditions:
+        slot_conditions:
+          type:
+            name: type
+            equals_string: GRID_DEGREE
+      postconditions:
+        slot_conditions:
+          cell_width:
+            name: cell_width
+            required: true
+          cell_height:
+            name: cell_height
+            required: true
+      description: Degree grid needs cell size.
+    - preconditions:
+        slot_conditions:
+          type:
+            name: type
+            equals_string: ADMINISTRATIVE_UNIT
+      postconditions:
+        slot_conditions:
+          admin_unit_name:
+            name: admin_unit_name
+            required: true
+      description: Admin unit needs a unit name.
+  TemporalCoverage:
+    name: TemporalCoverage
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/TemporalCoverage
+    description: Period covered by a source dataset.
+    title: Temporal coverage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - temporalCoverage__start
+    - temporalCoverage__end
+    - temporalCoverage__ongoing
+    - temporalCoverage__last_updated
+    attributes:
+      start:
+        name: start
+        description: First date covered, as an ISO 8601 partial date.
+        title: Date Coverage - Start
+        range: PartialDate
+        required: true
+      end:
+        name: end
+        description: Last date covered, as an ISO 8601 partial date. Omit when ongoing
+          = true.
+        title: Date Coverage - End
+        range: PartialDate
+      ongoing:
+        name: ongoing
+        description: True if the dataset is still being extended. Replaces the magic
+          string "Ongoing".
+        title: Ongoing
+        range: boolean
+      last_updated:
+        name: last_updated
+        description: Date of the most recent update. Required when ongoing = true.
+        title: Last updated
+        range: PartialDate
+    class_uri: expo:TemporalCoverage
+    rules:
+    - preconditions:
+        slot_conditions:
+          ongoing:
+            name: ongoing
+            equals_string: 'true'
+      postconditions:
+        slot_conditions:
+          last_updated:
+            name: last_updated
+            required: true
+      description: Ongoing datasets need a last-updated date.
+  ValidationMetric:
+    name: ValidationMetric
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/ValidationMetric
+    description: One reported validation metric of a source dataset.
+    title: Validation metric
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - validationMetric__metric
+    - validationMetric__validation_design
+    - validationMetric__value
+    - validationMetric__unit
+    attributes:
+      metric:
+        name: metric
+        description: The validation statistic.
+        title: Metric
+        range: ValidationMetricEnum
+        required: true
+      validation_design:
+        name: validation_design
+        description: How the validation was carried out.
+        title: Validation design
+        range: ValidationDesignEnum
+      value:
+        name: value
+        description: Value of the statistic.
+        title: Value
+        range: float
+        required: true
+      unit:
+        name: unit
+        description: UCUM code, for RMSE and mean bias. Omit for R2, r and percentages.
+        title: Unit
+        range: UcumCode
+    class_uri: expo:ValidationMetric
+  Uncertainty:
+    name: Uncertainty
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/Uncertainty
+    description: Uncertainty information for a source dataset.
+    title: Uncertainty
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - uncertainty__type
+    - uncertainty__value
+    - uncertainty__lower
+    - uncertainty__upper
+    - uncertainty__unit
+    - uncertainty__carried_to_participant_level
+    attributes:
+      type:
+        name: type
+        description: Form in which uncertainty is available.
+        title: Uncertainty type
+        range: UncertaintyTypeEnum
+        required: true
+      value:
+        name: value
+        description: Point value of the uncertainty measure, if a single value applies.
+        title: Value
+        range: float
+      lower:
+        name: lower
+        description: Lower bound of the uncertainty interval.
+        title: Lower bound
+        range: float
+      upper:
+        name: upper
+        description: Upper bound of the uncertainty interval.
+        title: Upper bound
+        range: float
+      unit:
+        name: unit
+        description: UCUM code for value, lower and upper.
+        title: Unit
+        range: UcumCode
+      carried_to_participant_level:
+        name: carried_to_participant_level
+        description: True if uncertainty is propagated to the participant-level exposure
+          values.
+        title: Carried to participant level
+        range: boolean
+    class_uri: expo:Uncertainty
+  Linkage:
+    name: Linkage
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/Linkage
+    description: How exposure values were assigned to participants.
+    title: Linkage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - linkage__spatial_linkage_unit
+    - linkage__centroid_weighting
+    - linkage__centroid_areal_unit
+    - linkage__population_dataset
+    - linkage__operation
+    - linkage__buffer_radii_m
+    - linkage__network_mode
+    - linkage__network_distance_m
+    - linkage__network_time_min
+    - linkage__intersection_min_overlap_pct
+    - linkage__kernel_bandwidth_m
+    - linkage__kernel_grid_resolution_m
+    - linkage__geocoding_precision
+    - linkage__geocoding_mixed_breakdown
+    - linkage__geocoder
+    - linkage__aggregation
+    - linkage__aggregation_n
+    - linkage__participant_coverage_pct
+    - linkage__coverage_unit
+    - linkage__study_area_coverage_pct
+    - linkage__exposure_window
+    - linkage__exposure_window_years
+    - linkage__exposure_window_detail
+    - linkage__residential_history
+    - linkage__residential_history_detail
+    - linkage__linkage_date
+    - linkage__relinkages
+    attributes:
+      spatial_linkage_unit:
+        name: spatial_linkage_unit
+        description: Participant location used for the linkage.
+        title: Spatial Linkage Unit
+        range: SpatialLinkageUnitEnum
+        required: true
+      centroid_weighting:
+        name: centroid_weighting
+        description: How the centroid was computed. Required for any *_CENTROID unit.
+        title: Centroid weighting
+        range: CentroidWeightingEnum
+      centroid_areal_unit:
+        name: centroid_areal_unit
+        description: The areal unit the centroid represents, e.g. "output area".
+        title: Centroid areal unit
+      population_dataset:
+        name: population_dataset
+        description: Population dataset used for POPULATION_WEIGHTED centroids.
+        title: Population dataset
+      operation:
+        name: operation
+        description: GIS operation used to assign values.
+        title: Spatial Linkage Operation
+        range: LinkageOperationEnum
+        required: true
+      buffer_radii_m:
+        name: buffer_radii_m
+        description: Buffer radii in metres. Required for CIRCULAR_BUFFER; list all
+          radii if several were reported.
+        title: Buffer Distance
+        range: float
+        multivalued: true
+        minimum_value: 0
+      network_mode:
+        name: network_mode
+        description: Travel mode for NETWORK_BUFFER.
+        title: Network mode
+        range: NetworkModeEnum
+      network_distance_m:
+        name: network_distance_m
+        description: Network buffer distance in metres.
+        title: Network distance (m)
+        range: float
+      network_time_min:
+        name: network_time_min
+        description: Network buffer travel time in minutes.
+        title: Network time (min)
+        range: float
+      intersection_min_overlap_pct:
+        name: intersection_min_overlap_pct
+        description: Minimum areal overlap, in percent, for INTERSECTION.
+        title: Intersection minimum overlap (%)
+        range: float
+        minimum_value: 0
+        maximum_value: 100
+      kernel_bandwidth_m:
+        name: kernel_bandwidth_m
+        description: Kernel bandwidth in metres. Required for KERNEL_DENSITY_WEIGHTED.
+        title: Kernel bandwidth (m)
+        range: float
+      kernel_grid_resolution_m:
+        name: kernel_grid_resolution_m
+        description: Output grid resolution of the kernel density surface, in metres.
+        title: Kernel grid resolution (m)
+        range: float
+      geocoding_precision:
+        name: geocoding_precision
+        description: Precision of participant geocodes.
+        title: Geocoding Precision
+        range: GeocodingPrecisionEnum
+        recommended: true
+      geocoding_mixed_breakdown:
+        name: geocoding_mixed_breakdown
+        description: For MIXED precision, the share of each level, e.g. "80% building,
+          20% postcode".
+        title: Geocoding mixed breakdown
+      geocoder:
+        name: geocoder
+        description: Geocoding database name and version or release date.
+        title: Geocoding Database Version
+        recommended: true
+      aggregation:
+        name: aggregation
+        description: Summary statistic applied to the exposure values. Buffer geometry
+          is recorded once, under operation.
+        title: Summary Statistic / Aggregation
+        range: AggregationEnum
+        required: true
+      aggregation_n:
+        name: aggregation_n
+        description: N for MULTI_YEAR_MEAN (years) or PERCENTILE (the percentile).
+        title: Aggregation N
+        range: integer
+      participant_coverage_pct:
+        name: participant_coverage_pct
+        description: Percentage (0-100) of coverage units that received an exposure
+          value.
+        title: Missing Data / Coverage
+        range: float
+        recommended: true
+        minimum_value: 0
+        maximum_value: 100
+      coverage_unit:
+        name: coverage_unit
+        description: Unit that participant_coverage_pct counts.
+        title: Coverage unit
+        range: CoverageUnitEnum
+      study_area_coverage_pct:
+        name: study_area_coverage_pct
+        description: Percentage (0-100) of the study area covered by the source dataset.
+        title: Study area coverage (%)
+        range: float
+        minimum_value: 0
+        maximum_value: 100
+      exposure_window:
+        name: exposure_window
+        description: Period of exposure the linked values represent.
+        title: Exposure Window
+        range: ExposureWindowEnum
+        recommended: true
+      exposure_window_years:
+        name: exposure_window_years
+        description: Length of the exposure window in years, e.g. N for N_YEARS_BEFORE_INDEX.
+        title: Exposure window (years)
+        range: integer
+      exposure_window_detail:
+        name: exposure_window_detail
+        description: Further detail, e.g. trimester or age range.
+        title: Exposure window detail
+      residential_history:
+        name: residential_history
+        description: Extent to which residential moves were accounted for.
+        title: Residential History
+        range: ResidentialHistoryEnum
+        recommended: true
+      residential_history_detail:
+        name: residential_history_detail
+        description: Free-text detail on how residential history was handled.
+        title: Residential history detail
+      linkage_date:
+        name: linkage_date
+        description: Date the linkage was performed.
+        title: Linkage Date
+        range: date
+        recommended: true
+      relinkages:
+        name: relinkages
+        description: Later re-runs of the linkage, e.g. after a geocoder update.
+        title: Relinkages
+        range: Relinkage
+        multivalued: true
+        inlined_as_list: true
+    class_uri: expo:Linkage
+    rules:
+    - preconditions:
+        slot_conditions:
+          operation:
+            name: operation
+            equals_string: CIRCULAR_BUFFER
+      postconditions:
+        slot_conditions:
+          buffer_radii_m:
+            name: buffer_radii_m
+            required: true
+      description: Circular buffer needs a radius.
+    - preconditions:
+        slot_conditions:
+          operation:
+            name: operation
+            equals_string: NETWORK_BUFFER
+      postconditions:
+        slot_conditions:
+          network_mode:
+            name: network_mode
+            required: true
+      description: Network buffer needs a mode.
+    - preconditions:
+        slot_conditions:
+          operation:
+            name: operation
+            equals_string: KERNEL_DENSITY_WEIGHTED
+      postconditions:
+        slot_conditions:
+          kernel_bandwidth_m:
+            name: kernel_bandwidth_m
+            required: true
+      description: Kernel density needs bandwidth.
+    - preconditions:
+        slot_conditions:
+          aggregation:
+            name: aggregation
+            equals_string: MULTI_YEAR_MEAN
+      postconditions:
+        slot_conditions:
+          aggregation_n:
+            name: aggregation_n
+            required: true
+      description: Multi-year mean needs N.
+    - preconditions:
+        slot_conditions:
+          aggregation:
+            name: aggregation
+            equals_string: PERCENTILE
+      postconditions:
+        slot_conditions:
+          aggregation_n:
+            name: aggregation_n
+            required: true
+      description: Percentile needs N.
+    - preconditions:
+        slot_conditions:
+          spatial_linkage_unit:
+            name: spatial_linkage_unit
+            equals_string: POSTCODE_CENTROID
+      postconditions:
+        slot_conditions:
+          centroid_weighting:
+            name: centroid_weighting
+            required: true
+      description: POSTCODE_CENTROID needs centroid weighting.
+    - preconditions:
+        slot_conditions:
+          spatial_linkage_unit:
+            name: spatial_linkage_unit
+            equals_string: CENSUS_TRACT_CENTROID
+      postconditions:
+        slot_conditions:
+          centroid_weighting:
+            name: centroid_weighting
+            required: true
+      description: CENSUS_TRACT_CENTROID needs centroid weighting.
+    - preconditions:
+        slot_conditions:
+          spatial_linkage_unit:
+            name: spatial_linkage_unit
+            equals_string: LSOA_CENTROID
+      postconditions:
+        slot_conditions:
+          centroid_weighting:
+            name: centroid_weighting
+            required: true
+      description: LSOA_CENTROID needs centroid weighting.
+    - preconditions:
+        slot_conditions:
+          spatial_linkage_unit:
+            name: spatial_linkage_unit
+            equals_string: MUNICIPALITY_CENTROID
+      postconditions:
+        slot_conditions:
+          centroid_weighting:
+            name: centroid_weighting
+            required: true
+      description: MUNICIPALITY_CENTROID needs centroid weighting.
+    - preconditions:
+        slot_conditions:
+          spatial_linkage_unit:
+            name: spatial_linkage_unit
+            equals_string: OTHER_AREAL_CENTROID
+      postconditions:
+        slot_conditions:
+          centroid_weighting:
+            name: centroid_weighting
+            required: true
+      description: OTHER_AREAL_CENTROID needs centroid weighting.
+    - preconditions:
+        slot_conditions:
+          centroid_weighting:
+            name: centroid_weighting
+            equals_string: POPULATION_WEIGHTED
+      postconditions:
+        slot_conditions:
+          population_dataset:
+            name: population_dataset
+            required: true
+      description: Population weighting needs the population dataset.
+    - preconditions:
+        slot_conditions:
+          geocoding_precision:
+            name: geocoding_precision
+            equals_string: MIXED
+      postconditions:
+        slot_conditions:
+          geocoding_mixed_breakdown:
+            name: geocoding_mixed_breakdown
+            required: true
+      description: Mixed geocoding needs a breakdown.
+  Relinkage:
+    name: Relinkage
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/Relinkage
+    description: A later re-run of a linkage.
+    title: Relinkage
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - relinkage__date
+    - relinkage__reason
+    attributes:
+      date:
+        name: date
+        description: Date of the re-run.
+        title: Relinkage date
+        range: date
+        required: true
+      reason:
+        name: reason
+        description: Why the linkage was re-run, e.g. geocoder update.
+        title: Reason
+        required: true
+    class_uri: expo:Relinkage
+  Person:
+    name: Person
+    definition_uri: https://w3id.org/ga4gh/exposure-linkage/Person
+    description: A creator of the linkage. Replaces the CSV field "Creator(s)".
+    title: Person
+    from_schema: https://w3id.org/ga4gh/exposure-linkage
+    slots:
+    - person__name
+    - person__email
+    - person__orcid
+    - person__role
+    attributes:
+      name:
+        name: name
+        description: Full name of the person.
+        title: Name
+      email:
+        name: email
+        description: Contact email address.
+        title: Email
+        pattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+      orcid:
+        name: orcid
+        description: ORCID identifier as a CURIE, e.g. ORCID:0000-0002-1825-0097.
+        title: ORCID
+        range: CURIE
+      role:
+        name: role
+        description: Role in producing the linkage, e.g. senior investigator.
+        title: Role
+    class_uri: expo:Person
+metamodel_version: 1.12.0
+source_file: exposure_linkage.yaml
+source_file_date: '2026-11-19T14:01:30'
+source_file_size: 36840
+
