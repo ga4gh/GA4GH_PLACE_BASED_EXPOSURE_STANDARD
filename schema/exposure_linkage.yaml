@@ -1,8 +1,29 @@
 name: exposure_linkage
+annotations:
+  ga4gh_maturity:
+    tag: ga4gh_maturity
+    value: Draft
+  ga4gh_product_type:
+    tag: ga4gh_product_type
+    value: Data Model or Ontology
 description: Describes how an environmental exposure dataset was linked to cohort
-  participants. One ExposureLinkageRecord = one exposure variable linked in one cohort.
-  Converted from "Implementation 1 - GA4GH Metadata Schema".
-title: GA4GH Environmental Exposure Linkage Metadata
+  participants. One ExposureLinkageRecord describes one exposure variable linked in
+  one cohort. Developed by the GA4GH Human Exposome Data Standards Study Group; converted
+  from "Implementation 1 - GA4GH Metadata Schema".
+title: GA4GH Place-Based Exposure Metadata Schema
+in_language: en
+see_also:
+- https://www.ga4gh.org/product/human-exposome-data-standards/
+- https://doi.org/10.5281/zenodo.21877291
+- https://github.com/ga4gh/GA4GH_PLACE_BASED_EXPOSURE_STANDARD
+status: bibo:draft
+keywords:
+- exposome
+- environmental exposure
+- place-based exposure
+- spatial linkage
+- cohort metadata
+- GA4GH
 id: https://w3id.org/ga4gh/exposure-linkage
 version: 0.1.0
 imports:
@@ -15,6 +36,9 @@ prefixes:
   expo:
     prefix_prefix: expo
     prefix_reference: https://w3id.org/ga4gh/exposure-linkage/
+  bibo:
+    prefix_prefix: bibo
+    prefix_reference: http://purl.org/ontology/bibo/
   ENVO:
     prefix_prefix: ENVO
     prefix_reference: http://purl.obolibrary.org/obo/ENVO_
@@ -2881,6 +2905,6 @@ classes:
     class_uri: expo:Person
 metamodel_version: 1.12.0
 source_file: exposure_linkage.yaml
-source_file_date: '2026-11-13T10:58:05'
-source_file_size: 24226
+source_file_date: '2026-11-19T18:27:48'
+source_file_size: 24764
 
