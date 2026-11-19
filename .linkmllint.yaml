@@ -1,0 +1,19 @@
+# linkml-lint configuration, picked up by `just lint`.
+extends: recommended
+rules:
+  standard_naming:
+    level: warning
+    # Enum values are UPPER_SNAKE_CASE (and ISO 3166 codes are upper case).
+    permissible_values_upper_case: true
+  canonical_prefixes:
+    level: warning
+    # Bioregistry carries the resolvable, preferred URI formats (orcid.org,
+    # id.nlm.nih.gov/mesh) rather than identifiers.org redirects.
+    prefixmaps_contexts:
+      - bioregistry
+  no_empty_title:
+    level: warning
+  tree_root_class:
+    level: error
+    root_class_name: ExposureLinkageCollection
+    validate_existing_class_name: true

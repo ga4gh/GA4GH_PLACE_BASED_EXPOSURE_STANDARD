@@ -30,104 +30,143 @@ types:
     typeof: string
     base: str
     uri: xsd:string
-    description: ISO 3166-1 alpha-2 or ISO 3166-2 subdivision (e.g. US-NC).
+    title: Region code
+    description: ISO 3166-1 alpha-2 country code, or ISO 3166-2 subdivision code (e.g. US-NC).
     pattern: "^(AD|AE|AF|AG|AI|AL|AM|AO|AQ|AR|AS|AT|AU|AW|AX|AZ|BA|BB|BD|BE|BF|BG|BH|BI|BJ|BL|BM|BN|BO|BQ|BR|BS|BT|BV|BW|BY|BZ|CA|CC|CD|CF|CG|CH|CI|CK|CL|CM|CN|CO|CR|CU|CV|CW|CX|CY|CZ|DE|DJ|DK|DM|DO|DZ|EC|EE|EG|EH|ER|ES|ET|FI|FJ|FK|FM|FO|FR|GA|GB|GD|GE|GF|GG|GH|GI|GL|GM|GN|GP|GQ|GR|GS|GT|GU|GW|GY|HK|HM|HN|HR|HT|HU|ID|IE|IL|IM|IN|IO|IQ|IR|IS|IT|JE|JM|JO|JP|KE|KG|KH|KI|KM|KN|KP|KR|KW|KY|KZ|LA|LB|LC|LI|LK|LR|LS|LT|LU|LV|LY|MA|MC|MD|ME|MF|MG|MH|MK|ML|MM|MN|MO|MP|MQ|MR|MS|MT|MU|MV|MW|MX|MY|MZ|NA|NC|NE|NF|NG|NI|NL|NO|NP|NR|NU|NZ|OM|PA|PE|PF|PG|PH|PK|PL|PM|PN|PR|PS|PT|PW|PY|QA|RE|RO|RS|RU|RW|SA|SB|SC|SD|SE|SG|SH|SI|SJ|SK|SL|SM|SN|SO|SR|SS|ST|SV|SX|SY|SZ|TC|TD|TF|TG|TH|TJ|TK|TL|TM|TN|TO|TR|TT|TV|TW|TZ|UA|UG|UM|US|UY|UZ|VA|VC|VE|VG|VI|VN|VU|WF|WS|YE|YT|ZA|ZM|ZW)(-[A-Z0-9]{1,3})?$"
   PartialDate:
     typeof: string
     base: str
     uri: xsd:string
-    description: ISO 8601 YYYY, YYYY-MM or YYYY-MM-DD.
+    title: Partial date
+    description: ISO 8601 calendar date at year, month or day precision (YYYY, YYYY-MM or YYYY-MM-DD).
     pattern: "^\\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?$"
   CURIE:
     typeof: uriorcurie
     base: URIorCURIE
     uri: xsd:anyURI
-    description: Compact identifier, e.g. INCHIKEY:..., ENVO:..., MESH:...
+    title: CURIE
+    description: Compact identifier using a prefix declared in this schema, e.g. INCHIKEY:..., ENVO:..., MESH:...
   UcumCode:
     typeof: string
     base: str
     uri: xsd:string
+    title: UCUM code
     description: >-
       UCUM case-sensitive code, e.g. ug/m3, ng/m3, [ppb], [ppm], Cel, mm,
       m/s, W/m2, /km2, %, 1 (dimensionless index). dB(A) has no UCUM code -
-      use "dB" with weighting recorded in exposure_variable.
+      use "dB" and record the weighting in the exposure variable name.
 
 # ---------------------------------------------------------------- classes
 classes:
   ExposureLinkageCollection:
     tree_root: true
-    description: Container so one file can hold many records.
+    title: Exposure linkage collection
+    description: Container so that one file can hold many exposure linkage records.
     attributes:
       records:
+        title: Records
+        description: The exposure linkage records in this file.
         range: ExposureLinkageRecord
         multivalued: true
         inlined_as_list: true
         required: true
 
   ExposureLinkageRecord:
-    description: One exposure variable linked to one cohort.
+    title: Exposure linkage record
+    description: One exposure variable linked to the participants of one cohort.
     attributes:
       id:
         identifier: true
+        title: Record identifier
         description: Stable record identifier, e.g. UKB-NO2-ELAPSE-2010.
       cohort:
+        title: Cohort
+        description: The cohort or study whose participants received the exposure values.
         range: Cohort
         required: true
         inlined: true
       exposure:
+        title: Exposure
+        description: The exposure variable that was linked.
         range: ExposureVariable
         required: true
         inlined: true
       source_data:
+        title: Source data
+        description: The upstream exposure product the values were taken from.
         range: SourceDataset
         required: true
         inlined: true
       linkage:
+        title: Linkage
+        description: How exposure values were assigned to participants.
         range: Linkage
         required: true
         inlined: true
       creators:
+        title: Creator(s)
+        description: People responsible for producing this linkage.
         range: Person
         multivalued: true
         inlined_as_list: true
         recommended: true
 
   Cohort:
-    description: "CSV: Cohort / Study Name; Country of Participant Data Collection"
+    title: Cohort
+    description: >-
+      The cohort or study whose participants were linked. Replaces the CSV
+      fields "Cohort / Study Name" and "Country of Participant Data Collection".
     attributes:
       name:
+        title: Cohort / Study Name
+        description: Full name of the cohort or study, e.g. UK Biobank.
         required: true
-        description: Full name, e.g. UK Biobank.
       acronym:
+        title: Cohort acronym
+        description: Short name, e.g. UKB. Split out of the old "Name (ACRONYM)" string.
         required: true
-        description: e.g. UKB. Split out of the old "Name (ACRONYM)" string.
       collection_countries:
+        title: Country of Participant Data Collection
+        description: Countries in which participant data were collected, as ISO 3166-1 alpha-2 codes.
         range: CountryCodeEnum
         multivalued: true
         required: true
 
   ExposureVariable:
-    description: "CSV: Exposure Domain; Exposure Variable Name; Ontology Term ID; Unit"
+    title: Exposure variable
+    description: >-
+      The environmental exposure that was linked. Replaces the CSV fields
+      "Exposure Domain", "Exposure Variable Name", "Ontology / Taxonomy Term ID"
+      and "Unit of Measure".
     attributes:
       domain:
+        title: Exposure Domain
+        description: Broad exposure domain.
         range: ExposureDomainEnum
         required: true
       domain_other:
-        description: Required when domain = OTHER.
+        title: Exposure Domain (other)
+        description: Free-text domain. Required when domain = OTHER.
       name:
+        title: Exposure Variable Name
+        description: Descriptive term for the variable, e.g. NO2, PM2.5, Lden, NDVI.
         required: true
-        description: Descriptive term, e.g. NO2, PM2.5, Lden, NDVI.
       ontology_terms:
+        title: Ontology / Taxonomy Term ID
+        description: >-
+          Resolvable identifiers for the exposure. Chemicals: INCHIKEY
+          (preferred), PUBCHEM, DTXSID, CAS. Physical or environmental
+          exposures: ExO, ENVO, MESH. Leave empty if no term exists.
         range: CURIE
         multivalued: true
         recommended: true
-        description: >-
-          Chemicals: INCHIKEY (preferred), PUBCHEM, DTXSID, CAS.
-          Physical/environmental: ExO, ENVO, MESH. Leave empty if none exists.
       unit:
+        title: Unit of Measure
+        description: UCUM code for the unit of the linked values. Omit for categorical variables.
         range: UcumCode
-        description: Omit for categorical variables.
       is_categorical:
+        title: Is categorical
+        description: True if the variable takes categorical rather than numeric values.
         range: boolean
     rules:
       - description: OTHER domain must be specified.
@@ -141,49 +180,72 @@ classes:
               required: true
 
   SourceDataset:
-    description: The upstream exposure product (model, satellite, monitors...).
+    title: Source dataset
+    description: The upstream exposure product (model, satellite product, monitoring network, ...).
     attributes:
       origin:
+        title: Origin of the Data
+        description: How the source exposure data were produced.
         range: DataOriginEnum
         required: true
       dataset_name:
+        title: Model / Dataset Name
+        description: Name of the model or dataset, e.g. ELAPSE LUR, ERA5, MODIS MOD13A3.
         required: true
-        description: e.g. ELAPSE LUR, ERA5, MODIS MOD13A3.
       dataset_version:
-        required: true
+        title: Model / Dataset Version
         description: Version number or release year, e.g. 2.0, 006, 2023.
+        required: true
       citations:
+        title: Data Source Citation / URL
+        description: Citations for the source dataset and the methods used to produce it.
         range: Citation
         multivalued: true
         required: true
         inlined_as_list: true
       geographic_coverage:
+        title: Geographic Coverage
+        description: Area covered by the source dataset.
         range: GeographicCoverage
         required: true
         inlined: true
       spatial_resolution:
+        title: Spatial Resolution
+        description: Spatial resolution of the source dataset.
         range: SpatialResolution
         required: true
         inlined: true
       temporal_coverage:
+        title: Date Coverage
+        description: Period covered by the source dataset.
         range: TemporalCoverage
         required: true
         inlined: true
       temporal_resolution:
+        title: Temporal Resolution
+        description: Temporal resolution of the source dataset.
         range: TemporalResolutionEnum
         required: true
       update_frequency:
-        description: For PERIODIC_UPDATE, e.g. P5Y (ISO 8601 duration).
+        title: Update frequency
+        description: For PERIODIC_UPDATE, the update interval as an ISO 8601 duration, e.g. P5Y.
         pattern: "^P(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?$"
       validation_metrics:
+        title: Validation Status
+        description: >-
+          Reported validation metrics. An empty list with
+          validation_reported = false means the dataset was not validated.
         range: ValidationMetric
         multivalued: true
         inlined_as_list: true
         recommended: true
-        description: Empty list + validation_reported=false means not validated.
       validation_reported:
+        title: Validation reported
+        description: True if the dataset producers report a validation of the dataset.
         range: boolean
       uncertainty:
+        title: Uncertainty
+        description: Uncertainty information available for the dataset.
         range: Uncertainty
         inlined: true
         recommended: true
@@ -199,20 +261,30 @@ classes:
               required: true
 
   Citation:
+    title: Citation
+    description: >-
+      A reference to the source data or its documentation. At least one of
+      doi, url or text is required.
     attributes:
       doi:
+        title: DOI
+        description: "Bare DOI, without the doi: prefix or resolver URL, e.g. 10.1234/abcd."
         pattern: "^10\\.\\d{4,9}/\\S+$"
-        description: "Bare DOI, without the doi: prefix."
       url:
+        title: URL
+        description: Web address of the source or its documentation.
         range: uri
       accessed:
+        title: Accessed
+        description: Date the URL was accessed. Required when url is given without a DOI.
         range: date
-        description: Required when url is given without a DOI.
       text:
-        description: Free-text citation if no DOI/URL.
+        title: Citation text
+        description: Free-text citation, for sources without a DOI or URL.
       used_for_linkage:
+        title: Used for linkage
+        description: True if this is the source actually used for the linkage. Replaces the old "*" marker.
         range: boolean
-        description: Replaces the old "*" marker.
     any_of:
       - slot_conditions:
           doi:
@@ -225,15 +297,21 @@ classes:
             required: true
 
   GeographicCoverage:
+    title: Geographic coverage
+    description: Area covered by a source dataset.
     attributes:
       scope:
+        title: Scope
+        description: Kind of coverage.
         range: GeographicScopeEnum
         required: true
       regions:
+        title: Regions
+        description: ISO 3166-1 / ISO 3166-2 codes. Required when scope = COUNTRIES_OR_REGIONS.
         range: RegionCode
         multivalued: true
-        description: Required when scope = COUNTRIES_OR_REGIONS.
       description:
+        title: Coverage description
         description: Optional note, e.g. "UK-wide", "multiple provinces".
     rules:
       - description: Country/region scope needs region codes.
@@ -247,18 +325,30 @@ classes:
               required: true
 
   SpatialResolution:
+    title: Spatial resolution
+    description: >-
+      Spatial resolution of a source dataset, as numbers rather than strings
+      such as "100 m x 100 m".
     attributes:
       type:
+        title: Resolution type
+        description: Kind of spatial support.
         range: SpatialResolutionTypeEnum
         required: true
       cell_width:
+        title: Cell width
+        description: Grid cell width; metres for GRID_METRIC, degrees for GRID_DEGREE.
         range: float
-        description: For GRID_METRIC (metres) or GRID_DEGREE (degrees).
       cell_height:
+        title: Cell height
+        description: Grid cell height; metres for GRID_METRIC, degrees for GRID_DEGREE.
         range: float
       admin_unit_name:
-        description: For ADMINISTRATIVE_UNIT, e.g. LSOA, census tract.
+        title: Administrative unit name
+        description: For ADMINISTRATIVE_UNIT, the unit type, e.g. LSOA, census tract.
       admin_unit_approx_population:
+        title: Administrative unit approximate population
+        description: Typical population of one administrative unit.
         range: integer
     rules:
       - description: Metric grid needs cell size.
@@ -294,18 +384,26 @@ classes:
               required: true
 
   TemporalCoverage:
+    title: Temporal coverage
+    description: Period covered by a source dataset.
     attributes:
       start:
+        title: Date Coverage - Start
+        description: First date covered, as an ISO 8601 partial date.
         range: PartialDate
         required: true
       end:
+        title: Date Coverage - End
+        description: Last date covered, as an ISO 8601 partial date. Omit when ongoing = true.
         range: PartialDate
-        description: Omit when ongoing = true.
       ongoing:
+        title: Ongoing
+        description: True if the dataset is still being extended. Replaces the magic string "Ongoing".
         range: boolean
       last_updated:
+        title: Last updated
+        description: Date of the most recent update. Required when ongoing = true.
         range: PartialDate
-        description: Required when ongoing = true.
     rules:
       # Not enforced by the generated JSON Schema: gen-json-schema emits
       # `const: "true"` (a string) for this boolean slot. See
@@ -321,109 +419,182 @@ classes:
               required: true
 
   ValidationMetric:
+    title: Validation metric
+    description: One reported validation metric of a source dataset.
     attributes:
       metric:
+        title: Metric
+        description: The validation statistic.
         range: ValidationMetricEnum
         required: true
       validation_design:
+        title: Validation design
+        description: How the validation was carried out.
         range: ValidationDesignEnum
       value:
+        title: Value
+        description: Value of the statistic.
         range: float
         required: true
       unit:
+        title: Unit
+        description: UCUM code, for RMSE and mean bias. Omit for R2, r and percentages.
         range: UcumCode
-        description: For RMSE / mean bias; omit for R2, r, %.
 
   Uncertainty:
+    title: Uncertainty
+    description: Uncertainty information for a source dataset.
     attributes:
       type:
+        title: Uncertainty type
+        description: Form in which uncertainty is available.
         range: UncertaintyTypeEnum
         required: true
       value:
+        title: Value
+        description: Point value of the uncertainty measure, if a single value applies.
         range: float
       lower:
+        title: Lower bound
+        description: Lower bound of the uncertainty interval.
         range: float
       upper:
+        title: Upper bound
+        description: Upper bound of the uncertainty interval.
         range: float
       unit:
+        title: Unit
+        description: UCUM code for value, lower and upper.
         range: UcumCode
       carried_to_participant_level:
+        title: Carried to participant level
+        description: True if uncertainty is propagated to the participant-level exposure values.
         range: boolean
 
   Linkage:
+    title: Linkage
     description: How exposure values were assigned to participants.
     attributes:
       spatial_linkage_unit:
+        title: Spatial Linkage Unit
+        description: Participant location used for the linkage.
         range: SpatialLinkageUnitEnum
         required: true
       centroid_weighting:
+        title: Centroid weighting
+        description: How the centroid was computed. Required for any *_CENTROID unit.
         range: CentroidWeightingEnum
-        description: Required for any *_CENTROID unit.
       centroid_areal_unit:
+        title: Centroid areal unit
+        description: The areal unit the centroid represents, e.g. "output area".
       population_dataset:
-        description: For population-weighted centroids.
+        title: Population dataset
+        description: Population dataset used for POPULATION_WEIGHTED centroids.
       operation:
+        title: Spatial Linkage Operation
+        description: GIS operation used to assign values.
         range: LinkageOperationEnum
         required: true
       buffer_radii_m:
+        title: Buffer Distance
+        description: Buffer radii in metres. Required for CIRCULAR_BUFFER; list all radii if several were reported.
         range: float
         multivalued: true
         minimum_value: 0
-        description: Required for CIRCULAR_BUFFER; list all if several reported.
       network_mode:
+        title: Network mode
+        description: Travel mode for NETWORK_BUFFER.
         range: NetworkModeEnum
       network_distance_m:
+        title: Network distance (m)
+        description: Network buffer distance in metres.
         range: float
       network_time_min:
+        title: Network time (min)
+        description: Network buffer travel time in minutes.
         range: float
       intersection_min_overlap_pct:
+        title: Intersection minimum overlap (%)
+        description: Minimum areal overlap, in percent, for INTERSECTION.
         range: float
         minimum_value: 0
         maximum_value: 100
       kernel_bandwidth_m:
+        title: Kernel bandwidth (m)
+        description: Kernel bandwidth in metres. Required for KERNEL_DENSITY_WEIGHTED.
         range: float
       kernel_grid_resolution_m:
+        title: Kernel grid resolution (m)
+        description: Output grid resolution of the kernel density surface, in metres.
         range: float
       geocoding_precision:
+        title: Geocoding Precision
+        description: Precision of participant geocodes.
         range: GeocodingPrecisionEnum
         recommended: true
       geocoding_mixed_breakdown:
-        description: For MIXED, e.g. "80% building, 20% postcode".
+        title: Geocoding mixed breakdown
+        description: For MIXED precision, the share of each level, e.g. "80% building, 20% postcode".
       geocoder:
-        description: Geocoding database name and version/release date.
+        title: Geocoding Database Version
+        description: Geocoding database name and version or release date.
         recommended: true
       aggregation:
+        title: Summary Statistic / Aggregation
+        description: >-
+          Summary statistic applied to the exposure values. Buffer geometry is
+          recorded once, under operation.
         range: AggregationEnum
         required: true
       aggregation_n:
+        title: Aggregation N
+        description: N for MULTI_YEAR_MEAN (years) or PERCENTILE (the percentile).
         range: integer
-        description: N for MULTI_YEAR_MEAN (years) or PERCENTILE.
       participant_coverage_pct:
+        title: Missing Data / Coverage
+        description: Percentage (0-100) of coverage units that received an exposure value.
         range: float
         minimum_value: 0
         maximum_value: 100
         recommended: true
       coverage_unit:
+        title: Coverage unit
+        description: Unit that participant_coverage_pct counts.
         range: CoverageUnitEnum
       study_area_coverage_pct:
+        title: Study area coverage (%)
+        description: Percentage (0-100) of the study area covered by the source dataset.
         range: float
         minimum_value: 0
         maximum_value: 100
       exposure_window:
+        title: Exposure Window
+        description: Period of exposure the linked values represent.
         range: ExposureWindowEnum
         recommended: true
       exposure_window_years:
+        title: Exposure window (years)
+        description: Length of the exposure window in years, e.g. N for N_YEARS_BEFORE_INDEX.
         range: integer
       exposure_window_detail:
-        description: Trimester, age range, etc.
+        title: Exposure window detail
+        description: Further detail, e.g. trimester or age range.
       residential_history:
+        title: Residential History
+        description: Extent to which residential moves were accounted for.
         range: ResidentialHistoryEnum
         recommended: true
       residential_history_detail:
+        title: Residential history detail
+        description: Free-text detail on how residential history was handled.
       linkage_date:
+        title: Linkage Date
+        description: Date the linkage was performed.
         range: date
         recommended: true
       relinkages:
+        title: Relinkages
+        description: Later re-runs of the linkage, e.g. after a geocoder update.
         range: Relinkage
         multivalued: true
         inlined_as_list: true
@@ -538,30 +709,44 @@ classes:
               required: true
 
   Relinkage:
+    title: Relinkage
+    description: A later re-run of a linkage.
     attributes:
       date:
+        title: Relinkage date
+        description: Date of the re-run.
         range: date
         required: true
       reason:
+        title: Reason
+        description: Why the linkage was re-run, e.g. geocoder update.
         required: true
 
   Person:
-    description: "CSV: Creator(s)"
+    title: Person
+    description: A creator of the linkage. Replaces the CSV field "Creator(s)".
     attributes:
       name:
+        title: Name
+        description: Full name of the person.
       email:
+        title: Email
+        description: Contact email address.
         pattern: "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
       orcid:
+        title: ORCID
+        description: ORCID identifier as a CURIE, e.g. ORCID:0000-0002-1825-0097.
         range: CURIE
-        description: e.g. ORCID:0000-0002-1825-0097
       role:
-        description: e.g. senior investigator
+        title: Role
+        description: Role in producing the linkage, e.g. senior investigator.
 
 # ---------------------------------------------------------------- enums
 # TODO: bind permissible values to ENVO/ExO/NCIT terms via `meaning:` once
 # curated by the Work Stream - left unbound to avoid guessed IDs.
 enums:
   CountryCodeEnum:
+    title: Country code
     description: ISO 3166-1 alpha-2, officially assigned codes (GB, not UK).
     permissible_values:
       "AD":
@@ -814,6 +999,8 @@ enums:
       "ZM":
       "ZW":
   ExposureDomainEnum:
+    title: Exposure domain
+    description: Broad domain of an environmental exposure.
     permissible_values:
       AIR_POLLUTION:
       CLIMATE_WEATHER:
@@ -827,7 +1014,10 @@ enums:
       BIODIVERSITY:
       INDOOR_HOME_ENVIRONMENT:
       OTHER:
+        description: Any other domain; give it in domain_other.
   DataOriginEnum:
+    title: Data origin
+    description: How the source exposure data were produced.
     permissible_values:
       MONITORING_STATION:
       LAND_USE_REGRESSION:
@@ -837,21 +1027,35 @@ enums:
       QUESTIONNAIRE:
       ADMINISTRATIVE_RECORD:
       REANALYSIS:
-        description: Added - ERA5-type products were otherwise unclassifiable.
+        description: Reanalysis products such as ERA5. Added because they were otherwise unclassifiable.
       OTHER:
   GeographicScopeEnum:
+    title: Geographic scope
+    description: Kind of geographic coverage.
     permissible_values:
       COUNTRIES_OR_REGIONS:
+        description: Listed countries or subdivisions; give them in regions.
       EU27:
+        description: The 27 EU member states.
       GLOBAL:
+        description: Worldwide coverage.
   SpatialResolutionTypeEnum:
+    title: Spatial resolution type
+    description: Kind of spatial support of a source dataset.
     permissible_values:
       GRID_METRIC:
+        description: Regular grid with cell size in metres.
       GRID_DEGREE:
+        description: Regular grid with cell size in degrees.
       ADMINISTRATIVE_UNIT:
+        description: Values per administrative area.
       POINT_ADDRESS:
+        description: Values at address points.
       POINT_GPS:
+        description: Values at GPS points.
   TemporalResolutionEnum:
+    title: Temporal resolution
+    description: Temporal resolution of a source dataset.
     permissible_values:
       SUB_HOURLY:
       HOURLY:
@@ -864,60 +1068,96 @@ enums:
       EVENT_BASED:
       STATIC:
       PERIODIC_UPDATE:
+        description: Static snapshots refreshed at an interval; give it in update_frequency.
   ValidationMetricEnum:
+    title: Validation metric
+    description: Validation statistic.
     permissible_values:
       R2:
+        description: Coefficient of determination.
       RMSE:
+        description: Root mean squared error.
       NRMSE_PCT:
+        description: Normalised root mean squared error, in percent.
       MEAN_BIAS:
+        description: Mean bias.
       RELATIVE_BIAS_PCT:
+        description: Relative bias, in percent.
       PEARSON_R:
+        description: Pearson correlation coefficient.
   ValidationDesignEnum:
+    title: Validation design
+    description: How a validation was carried out.
     permissible_values:
       LOOCV_SPATIAL:
+        description: Leave-one-out cross-validation over sites.
       INDEPENDENT_TEST_SET_SPATIAL:
+        description: Validation against held-out sites.
       TEMPORAL:
+        description: Validation against held-out time periods.
       OVERALL:
+        description: Validation reported without a stated design.
       GROUND_MONITOR_COMPARISON:
+        description: Comparison against ground monitors.
   UncertaintyTypeEnum:
+    title: Uncertainty type
+    description: Form in which uncertainty is available.
     permissible_values:
       NOT_AVAILABLE:
       SD_PER_UNIT:
+        description: Standard deviation per spatial unit.
       PREDICTION_INTERVAL_95:
+        description: 95% prediction interval.
       FULL_PREDICTIVE_DISTRIBUTION:
       MODEL_LEVEL_RMSE_ONLY:
+        description: Only a model-level RMSE is available.
   SpatialLinkageUnitEnum:
+    title: Spatial linkage unit
+    description: Participant location used for the linkage.
     permissible_values:
       GEOCODED_ADDRESS:
       GPS_COORDINATE:
       POSTCODE_CENTROID:
       CENSUS_TRACT_CENTROID:
       LSOA_CENTROID:
+        description: Centroid of a Lower Layer Super Output Area (England and Wales).
       MUNICIPALITY_CENTROID:
       OTHER_AREAL_CENTROID:
       GRID_CELL_CONTAINING_ADDRESS:
   CentroidWeightingEnum:
+    title: Centroid weighting
+    description: How an areal centroid was computed.
     permissible_values:
       GEOMETRIC:
       POPULATION_WEIGHTED:
+        description: Population-weighted centroid; give the population dataset.
       AREA_WEIGHTED:
   LinkageOperationEnum:
+    title: Linkage operation
+    description: GIS operation used to assign exposure values to locations.
     permissible_values:
       POINT_IN_POLYGON:
       CIRCULAR_BUFFER:
+        description: Euclidean buffer; give the radii in buffer_radii_m.
       NETWORK_BUFFER:
+        description: Street-network buffer; give network_mode.
       NEAREST_FEATURE:
       AREAL_INTERPOLATION:
       INTERSECTION:
       KERNEL_DENSITY_WEIGHTED:
+        description: Kernel-weighted surface; give kernel_bandwidth_m.
       ADMINISTRATIVE_ASSIGNMENT:
   NetworkModeEnum:
+    title: Network mode
+    description: Travel mode for a network buffer.
     permissible_values:
       WALKING:
       CYCLING:
       DRIVING:
       PUBLIC_TRANSPORT:
   GeocodingPrecisionEnum:
+    title: Geocoding precision
+    description: Precision of participant geocodes.
     permissible_values:
       BUILDING:
         description: "< 5 m"
@@ -930,8 +1170,11 @@ enums:
       CENSUS_UNIT_CENTROID:
         description: "> 500 m"
       MIXED:
+        description: Several levels; give the shares in geocoding_mixed_breakdown.
       UNKNOWN:
   AggregationEnum:
+    title: Aggregation
+    description: Summary statistic applied to exposure values.
     permissible_values:
       ANNUAL_MEAN:
       MONTHLY_MEAN:
@@ -943,8 +1186,10 @@ enums:
       COLD_SEASON_MEAN:
       NIGHT_TIME_MEAN:
       MULTI_YEAR_MEAN:
+        description: Mean over N years; give N in aggregation_n.
       CUMULATIVE_SUM:
       PERCENTILE:
+        description: The Nth percentile; give N in aggregation_n.
       PRESENCE_ABSENCE:
       DISTANCE_TO_NEAREST:
       COUNT_WITHIN_BUFFER:
@@ -953,6 +1198,8 @@ enums:
       COMPOSITE_INDEX:
       RAW_TIME_SERIES:
   CoverageUnitEnum:
+    title: Coverage unit
+    description: Unit that a coverage percentage counts.
     permissible_values:
       PARTICIPANTS:
       HOUSEHOLDS:
@@ -960,9 +1207,12 @@ enums:
       HOSPITALS:
       GEOGRAPHIC_UNITS:
   ExposureWindowEnum:
+    title: Exposure window
+    description: Period of exposure that linked values represent.
     permissible_values:
       YEAR_BEFORE_RECRUITMENT:
       N_YEARS_BEFORE_INDEX:
+        description: N years before an index date; give N in exposure_window_years.
       PRENATAL:
       PERICONCEPTION:
       INFANCY:
@@ -972,6 +1222,8 @@ enums:
       TIME_VARYING_ANNUAL:
       CRITICAL_WINDOW:
   ResidentialHistoryEnum:
+    title: Residential history
+    description: Extent to which residential moves were accounted for.
     permissible_values:
       BASELINE_ONLY:
       FULL_HISTORY:
